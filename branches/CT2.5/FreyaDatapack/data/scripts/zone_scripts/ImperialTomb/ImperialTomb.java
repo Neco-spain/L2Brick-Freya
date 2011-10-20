@@ -407,7 +407,7 @@ public class ImperialTomb extends Quest
 	private static final int cubeId = 29061;
     //private static final teleCoord enterLoc = new teleCoord();
     //-88172, -141076, -9170
-	private static final int EXIT_TIME = 5;
+	//private static final int EXIT_TIME = 5;
     private static final int[] allDoors = {17130042,17130043,17130045,17130046,17130051,17130052,17130053,17130054,17130055,17130056,17130057,17130058,17130061,17130062,17130063,17130064,17130065,17130066,17130067,17130068,17130069,17130070};
     private static long nextUpdate = 0;
 
@@ -448,7 +448,7 @@ public class ImperialTomb extends Quest
             final Instance instance = InstanceManager.getInstance().getInstance(world.instanceId);
             final int time = 1200000; // 20 minutes (only for empty instance)
             //TODO: retail time for duration 
-            instance.setDuration(EXIT_TIME * 60000);
+            //instance.setDuration(EXIT_TIME * 60000);
             instance.setEmptyDestroyTime(time);
             final int[] returnLoc = {player.getX(), player.getY(), player.getZ()};
             instance.setSpawnLoc(returnLoc);
@@ -705,7 +705,7 @@ public class ImperialTomb extends Quest
                         StringId = 1000527;
                     if (StringId != 0)
                     	//TODO: Fix Error
-                    	//world._Zone.broadcastPacket(new ExShowScreenMessage(StringId, 3000, ExShowScreenMessage.ScreenMessageAlign.TOP_CENTER, true, false, -1, true));
+                    	//world._Zone.broadcastPacket(new Align(StringId, 3000, Align.ScreenMessageAlign.TOP_CENTER, true, false, -1, true));
                     startQuestTimer("songs_play", world.Song.getHitTime(), world.frintezza, null);
                 }
             }
@@ -868,9 +868,9 @@ public class ImperialTomb extends Quest
                         ThreadPoolManager.getInstance().scheduleGeneral(new Spawn(8, world), 400);
                         break;
                     case 8:
-                        world.portrait1 = addSpawn(29048, -89381, -153981, -9168, 3368, false, 0, true, world.instanceId);
+                        world.portrait1 = addSpawn(29048, -89381, -153981, -9168, 3368, false, 0, true, world.instanceId); // leva dal od dveri
                         world.portrait1.setIsOverloaded(true);
-                        world.portrait4 = addSpawn(29049, -86189, -153968, -9168, 29456, false, 0, true, world.instanceId);
+                        world.portrait4 = addSpawn(29049, -86189, -153968, -9168, 29456, false, 0, true, world.instanceId); // pravo dal od dveri
                         world.portrait4.setIsOverloaded(true);
                         ThreadPoolManager.getInstance().scheduleGeneral(new Spawn(21, world), 1000);
                         break;
@@ -948,9 +948,9 @@ public class ImperialTomb extends Quest
                         startQuestTimer("spawn_minions", 20000, world.frintezza, null, true);
                         break;
                     case 21:
-                        world.portrait2 = addSpawn(29048, -86234, -152467, -9168, 37656, false, 0, true, world.instanceId);
+                        world.portrait2 = addSpawn(29048, -86234, -152467, -9168, 37656, false, 0, true, world.instanceId); // V pravo u dveri
                         world.portrait2.setIsOverloaded(true);
-                        world.portrait3 = addSpawn(29049, -89342,-152479, -9168, 60384, false, 0, true, world.instanceId);
+                        world.portrait3 = addSpawn(29049, -89342,-152479, -9168, 60384, false, 0, true, world.instanceId); // leva u dvere
                         world.portrait3.setIsOverloaded(true);
                         ThreadPoolManager.getInstance().scheduleGeneral(new Spawn(9, world), 1500);
                         break;
