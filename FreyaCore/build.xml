@@ -49,7 +49,7 @@
 	</target>
 
 	<target name="jar" depends="compile" description="Create the jar file">
-		<jar destfile="${build}/l2brick_server.jar">
+		<jar destfile="${build}/freyacore.jar">
 			<fileset dir="${build.classes}">
 				<exclude name="**/loginserver/**" />
 				<exclude name="**/accountmanager/**" />
@@ -234,7 +234,7 @@
 				<include name="*.pn" />
 			</fileset>
 		</copy>
-		<zip destfile="${build}/L2Brick_Server.zip" basedir="${build.dist}" />
+		<zip destfile="${build}/L2FREYA_Core.zip" basedir="${build.dist}" />
 	</target>
 
 	<target name="version" depends="init" description="Create l2brick-version.properties file">
