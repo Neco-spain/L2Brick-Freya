@@ -79,7 +79,7 @@
 	</target>
 
 	<target name="dist" depends="distclean" description="Creates a ZIP file. Suitable for distribution but building takes longer. See dist-deflate for faster builds.">
-		<zip destfile="${build}/L2Brick_Datapack.zip" basedir="${build.dist}" update="true" />
+		<zip destfile="${build}/L2FREYA_Datapack.zip" basedir="${build.dist}" update="true" />
 	</target>
 
 	<target name="dist-deflate" depends="distclean" description="Creates a datapack ZIP file with NO compression (bigger ZIP file but faster than regular dist target)">
@@ -115,7 +115,7 @@
 	</target>
 
 	<target name="distclean" depends="export" description="Deletes the datapack distribution ZIP file only, preserving synchronized build files.">
-		<delete file="${build}/L2Brick_Datapack.zip" />
-		<delete file="${build}/L2Brick_Datapack-nocompress.zip" />
+		<delete file="${build}/L2FREYA_Datapack.zip" />
+		<delete file="${build}/L2FREYA_Datapack-nocompress.zip" />
 	</target>
 </project>
