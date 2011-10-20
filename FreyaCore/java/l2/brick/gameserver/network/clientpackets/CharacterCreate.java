@@ -185,9 +185,10 @@ public final class CharacterCreate extends L2GameClientPacket
 			newChar = L2PcInstance.create(objectId, template, getClient().getAccountName(), _name, _hairStyle, _hairColor, _face, _sex != 0);
 		}
 		
-		newChar.setCurrentHp(template.baseHpMax);
-		newChar.setCurrentCp(template.baseCpMax);
-		newChar.setCurrentMp(template.baseMpMax);
+		newChar.setCurrentHp(newChar.getMaxHp());//L2Off like
+		//newChar.setCurrentCp(template.baseCpMax);
+		newChar.setCurrentCp(0); //L2Off like
+		newChar.setCurrentMp(newChar.getMaxMp());//L2Off like
 		// newChar.setMaxLoad(template.baseLoad);
 		
 		CharCreateOk cco = new CharCreateOk();
