@@ -49,7 +49,7 @@
 	</target>
 
 	<target name="jar" depends="compile" description="Create the jar file">
-		<jar destfile="${build}/freyacore.jar">
+		<jar destfile="${build}/l2brick_server.jar">
 			<fileset dir="${build.classes}">
 				<exclude name="**/loginserver/**" />
 				<exclude name="**/accountmanager/**" />
