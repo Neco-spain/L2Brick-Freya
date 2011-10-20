@@ -354,7 +354,7 @@
 	</skill>
 	<skill id="11" levels="12" name="Trick">
 		<!-- Confirmed CT2.5 -->
-		<!-- NOTE: skill desc says "Requires a dagger" but is client typo -->
+		<set name="weaponsAllowed" val="Dagger, Dual Dagger" /> <!-- Dagger/Dual Daggers -->
 		<table name="#magicLvl"> 49 52 55 58 60 62 64 66 68 70 72 74 </table>
 		<table name="#mpConsume"> 22 24 25 27 28 29 30 31 32 33 34 34 </table>
 		<set name="castRange" val="400" />
@@ -373,7 +373,7 @@
 	</skill>
 	<skill id="12" levels="14" name="Switch">
 		<!-- Confirmed CT2.5 -->
-		<!-- NOTE: skill desc says "Requires a dagger" but is client typo -->
+		<set name="weaponsAllowed" val="Dagger, Dual Dagger" /> <!-- Dagger/Dual Daggers -->
 		<table name="#magicLvl"> 43 46 49 52 55 58 60 62 64 66 68 70 72 74 </table>
 		<table name="#mpConsume"> 19 21 22 24 25 27 28 29 30 31 32 33 34 34 </table>
 		<set name="castRange" val="600" />
