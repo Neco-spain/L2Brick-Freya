@@ -2519,6 +2519,9 @@ public final class Formulas
 	
 	public static boolean calcEffectSuccess(L2Character attacker, L2Character target, EffectTemplate effect, L2Skill skill, byte shld, boolean ss, boolean sps, boolean bss)
 	{
+		if (skill.getPower() == -1) 
+ 	        return true;
+		
 		final L2SkillType type = effect.effectType;
 		final int value = (int)effect.effectPower;
 		if (type == null)
@@ -2624,6 +2627,9 @@ public final class Formulas
 	
 	public static boolean calcSkillSuccess(L2Character attacker, L2Character target, L2Skill skill, byte shld, boolean ss, boolean sps, boolean bss)
 	{
+		if (skill.getPower() == -1) 
+ 		    return true;
+		
 		final boolean isPvP = (attacker instanceof L2Playable) && (target instanceof L2Playable);
 		if (skill.ignoreResists())
 		{
@@ -2727,6 +2733,9 @@ public final class Formulas
 	
 	public static boolean calcCubicSkillSuccess(L2CubicInstance attacker, L2Character target, L2Skill skill, byte shld)
 	{
+		if (skill.getPower() == -1) 
+ 		    return true;
+		
 		if (shld == SHIELD_DEFENSE_PERFECT_BLOCK) // perfect block
 			return false;
 		
@@ -2828,6 +2837,9 @@ public final class Formulas
 	
 	public static boolean calcMagicSuccess(L2Character attacker, L2Character target, L2Skill skill)
 	{
+		if (skill.getPower() == -1) 
+ 		    return true;
+		
 		// DS: remove skill magic level dependence from nukes
 		//int lvlDifference = (target.getLevel() - (skill.getMagicLevel() > 0 ? skill.getMagicLevel() : attacker.getLevel()));
 		int lvlDifference = (target.getLevel() - (skill.getSkillType() == L2SkillType.SPOIL ? skill.getMagicLevel() : attacker.getLevel()));
