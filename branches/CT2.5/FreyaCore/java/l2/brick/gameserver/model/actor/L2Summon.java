@@ -294,8 +294,10 @@ public abstract class L2Summon extends L2Playable
 			stopNoblesseBlessing(null);
 			storeEffect(true);
 		}
-		
- 		if (!super.doDie(killer))
+		else 
+ 	        storeEffect(false);
+ 		
+		if (!super.doDie(killer))
  			return false;
  		if (this instanceof L2MerchantSummonInstance)
 			return true;
