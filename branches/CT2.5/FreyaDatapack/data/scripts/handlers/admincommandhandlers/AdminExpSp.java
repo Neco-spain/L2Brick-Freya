@@ -24,7 +24,8 @@ import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.network.SystemMessageId;
 import l2.brick.gameserver.network.serverpackets.NpcHtmlMessage;
 import l2.brick.gameserver.network.serverpackets.SystemMessage;
-
+import l2.brick.gameserver.util.IllegalPlayerAction;
+import l2.brick.gameserver.util.Util;
 
 /**
  * This class handles following admin commands:
@@ -135,9 +136,25 @@ public class AdminExpSp implements IAdminCommandHandler
 			{
 				return false;
 			}
-			if (expval != 0 || spval != 0)
-			{
-				//Common character information
+			             /**
+                           * Anti-Corrupt GMs Protection.
+                           * If GMEdit enabled, a GM won't be able to Add Exp or SP to any other
+                           * player that's NOT  a GM character. And in addition.. both player and
+                           * GM WILL be banned.
+                           */
+                                                if(Config.GM_EDIT && (expval != 0 || spval != 0)&& !player.isGM())
+                                                {
+                           //Warn the player about his inmediate ban.
+                                                        player.sendMessage("A GM tried to edit you in "+expval+" exp points and in "+spval+" sp points.You will both be banned.");
+                                                        Util.handleIllegalPlayerAction(player,"The player "+player.getName()+" has been edited. BAN!!", IllegalPlayerAction.PUNISH_KICKBAN);
+                           //Warn the GM about his inmediate ban.
+                                                        player.sendMessage("You tried to edit "+player.getName()+" by "+expval+" exp points and "+spval+". You both be banned now.");
+                                                        Util.handleIllegalPlayerAction(activeChar,"El GM "+activeChar.getName()+" ha editado a alguien. BAN!!", IllegalPlayerAction.PUNISH_KICKBAN);
+                                                        _log.severe("GM "+activeChar.getName()+" tried to edit "+player.getName()+". They both have been Banned.");
+                                                }
+                                                else if(expval != 0 || spval != 0)
+                                        {
+                //Common character information
 				player.sendMessage("Admin is adding you " + expval + " xp and " + spval + " sp.");
 				player.addExpAndSp(expval, spval);
 				//Admin information
