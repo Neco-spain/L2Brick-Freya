@@ -239,7 +239,7 @@ public final class Config
 	//antimulti
 	public static int MAX_PLAYERS_FROM_ONE_PC;
 	public static boolean ALLOW_MAX_PLAYERS_FROM_ONE_PC;
-
+    
 	//CTF
 	public static boolean CTF_EVENT_ENABLED;
 	public static String[] CTF_EVENT_INTERVAL;
@@ -1244,6 +1244,7 @@ public final class Config
 	public static String SERVER_VERSION;
 	public static String SERVER_BUILD_DATE;
 	public static String DATAPACK_VERSION;
+	public static boolean GM_EDIT;
 	public static int PVP_NORMAL_TIME;
 	public static int PVP_PVP_TIME;
 	public static enum IdFactoryType
@@ -3315,6 +3316,7 @@ public final class Config
 					SERVER_LIST_TYPE = getServerTypeId(General.getProperty("ServerListType", "Normal").split(","));
 					SERVER_LIST_AGE = Integer.parseInt(General.getProperty("ServerListAge", "0"));
 					DEBUG = Boolean.parseBoolean(General.getProperty("Debug", "false"));
+					GM_EDIT = Boolean.valueOf(serversecurity.getProperty("GMEdit", "False"));
 					PACKET_HANDLER_DEBUG = Boolean.parseBoolean(General.getProperty("PacketHandlerDebug", "false"));
 					DEVELOPER = Boolean.parseBoolean(General.getProperty("Developer", "false"));
 					ACCEPT_GEOEDITOR_CONN = Boolean.parseBoolean(General.getProperty("AcceptGeoeditorConn", "false"));
