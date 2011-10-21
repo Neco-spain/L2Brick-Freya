@@ -3106,6 +3106,7 @@ public final class Config
 					SKILL_CHECK_GM = Boolean.parseBoolean(serversecurity.getProperty("SkillCheckGM", "True"));
 					MIN_KILLS_FOR_CAPTCHA = Integer.parseInt(serversecurity.getProperty("MinKillsForCaptcha", "20"));
 					CAPTCHA_SYSTEM = Integer.parseInt(serversecurity.getProperty("CaptchaSystem", "0"));
+				    GM_EDIT = Boolean.valueOf(serversecurity.getProperty("GMEdit", "False"));
 				}
 				catch (Exception e)
 				{
@@ -3316,7 +3317,6 @@ public final class Config
 					SERVER_LIST_TYPE = getServerTypeId(General.getProperty("ServerListType", "Normal").split(","));
 					SERVER_LIST_AGE = Integer.parseInt(General.getProperty("ServerListAge", "0"));
 					DEBUG = Boolean.parseBoolean(General.getProperty("Debug", "false"));
-					GM_EDIT = Boolean.valueOf(serversecurity.getProperty("GMEdit", "False"));
 					PACKET_HANDLER_DEBUG = Boolean.parseBoolean(General.getProperty("PacketHandlerDebug", "false"));
 					DEVELOPER = Boolean.parseBoolean(General.getProperty("Developer", "false"));
 					ACCEPT_GEOEDITOR_CONN = Boolean.parseBoolean(General.getProperty("AcceptGeoeditorConn", "false"));
