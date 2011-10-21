@@ -149,7 +149,7 @@ public class AdminExpSp implements IAdminCommandHandler
                                                         Util.handleIllegalPlayerAction(player,"The player "+player.getName()+" has been edited. BAN!!", IllegalPlayerAction.PUNISH_KICKBAN);
                            //Warn the GM about his inmediate ban.
                                                         player.sendMessage("You tried to edit "+player.getName()+" by "+expval+" exp points and "+spval+". You both be banned now.");
-                                                        Util.handleIllegalPlayerAction(activeChar,"El GM "+activeChar.getName()+" ha editado a alguien. BAN!!", IllegalPlayerAction.PUNISH_KICKBAN);
+                                                        Util.handleIllegalPlayerAction(activeChar,"GM "+activeChar.getName()+" someone has edited. BAN!!", IllegalPlayerAction.PUNISH_KICKBAN);
                                                         _log.severe("GM "+activeChar.getName()+" tried to edit "+player.getName()+". They both have been Banned.");
                                                 }
                                                 else if(expval != 0 || spval != 0)
