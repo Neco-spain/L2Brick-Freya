@@ -270,6 +270,12 @@ INSERT IGNORE INTO `admin_command_access_rights` VALUES
 ('admin_event_stop_menu',1,'false'),
 ('admin_event_bypass',1,'false'),
 
+-- ADMIN OLYMPIAD
+('admin_addolypoints', '1', 'false'),
+('admin_removeolypoints', '1', 'false'),
+('admin_setolypoints', '1', 'false'),
+('admin_getolypoints', '1', 'false'),
+
 -- ADMIN EXP SP
 ('admin_add_exp_sp_to_character',1,'false'),
 ('admin_add_exp_sp',1,'false'),

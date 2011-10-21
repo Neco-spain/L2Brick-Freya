@@ -83,6 +83,7 @@ import handlers.admincommandhandlers.AdminMessages;
 import handlers.admincommandhandlers.AdminMobGroup;
 import handlers.admincommandhandlers.AdminMonsterRace;
 import handlers.admincommandhandlers.AdminMovieMaker;
+import handlers.admincommandhandlers.AdminOlympiad;
 import handlers.admincommandhandlers.AdminPForge;
 import handlers.admincommandhandlers.AdminPathNode;
 import handlers.admincommandhandlers.AdminPetition;
@@ -383,6 +384,7 @@ public class MasterHandler
 		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminMobGroup());
 		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminMonsterRace());
 		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminMovieMaker());
+		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminOlympiad());
 		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminPathNode());
 		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminPetition());
 		AdminCommandHandler.getInstance().registerAdminCommandHandler(new AdminPForge());
