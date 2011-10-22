@@ -21,6 +21,7 @@ import l2.brick.gameserver.skills.l2skills.L2SkillAgathion;
 import l2.brick.gameserver.skills.l2skills.L2SkillAppearance;
 import l2.brick.gameserver.skills.l2skills.L2SkillChangeWeapon;
 import l2.brick.gameserver.skills.l2skills.L2SkillChargeDmg;
+import l2.brick.gameserver.skills.l2skills.L2SkillCpDrain;
 import l2.brick.gameserver.skills.l2skills.L2SkillCreateItem;
 import l2.brick.gameserver.skills.l2skills.L2SkillDecoy;
 import l2.brick.gameserver.skills.l2skills.L2SkillDefault;
@@ -48,6 +49,7 @@ public enum L2SkillType
 	PDAM,
 	MDAM,
 	CPDAM,
+	CPDRAIN(L2SkillCpDrain.class),
 	MANADAM,
 	CPDAMPERCENT,
 	DOT,
