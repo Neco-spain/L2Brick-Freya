@@ -180,7 +180,7 @@ public class Baium extends L2AttackableAIScript
 				for (int i = 0; i < ANGEL_LOCATION.length; i++)
 				{
 					L2Npc angel = addSpawn(ARCHANGEL, ANGEL_LOCATION[i][0], ANGEL_LOCATION[i][1], ANGEL_LOCATION[i][2], ANGEL_LOCATION[i][3], false, 0, true);
-					//angel.setIsInvul(true);
+					angel.setIsInvul(true);
 					_Minions.add(angel);
 				}
 			}
