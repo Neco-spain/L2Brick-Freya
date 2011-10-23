@@ -3,9 +3,9 @@
 	<classpathentry including="**/*.java" kind="src" path="data/scripts" />
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
 	<classpathentry combineaccessrules="false" kind="src" path="/FreyaCore" />
-	<classpathentry kind="lib" path="/L2Brick_Server/lib/javolution-5.5.1.jar" />
-	<classpathentry kind="lib" path="/L2Brick_Server/lib/mmocore.jar" />
-	<classpathentry kind="lib" path="/L2Brick_Server/lib/netcon.jar" />
-	<classpathentry kind="lib" path="/L2Brick_Server/lib/trove-2.1.0.jar" />
+	<classpathentry kind="lib" path="/FreyaCore/lib/javolution-5.5.1.jar" />
+	<classpathentry kind="lib" path="/FreyaCore/lib/mmocore.jar" />
+	<classpathentry kind="lib" path="/FreyaCore/lib/netcon.jar" />
+	<classpathentry kind="lib" path="/FreyaCore/lib/trove-2.1.0.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>
