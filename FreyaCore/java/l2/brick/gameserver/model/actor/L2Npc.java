@@ -146,10 +146,7 @@ public class L2Npc extends L2Character
 	/** Support for random animation switching*/
 	private boolean _isRandomAnimationEnabled = true;
 	
-	/** Support for random animation switching*/
-	private boolean _isRandomAnimationEnabled = true;
-	
-	protected RandomAnimationTask _rAniTask = null;
+    protected RandomAnimationTask _rAniTask = null;
 	private int _currentLHandId; // normally this shouldn't change from the template, but there exist exceptions
 	private int _currentRHandId; // normally this shouldn't change from the template, but there exist exceptions
 	private int _currentEnchant; // normally this shouldn't change from the template, but there exist exceptions
@@ -546,16 +543,8 @@ public class L2Npc extends L2Character
 	}
 
 	/**
-	 * Switches Random Animation state.<BR><BR>
-	 */
-	public void setRandomAnimationEnabled(boolean val)
-	{
-		_isRandomAnimationEnabled = val;
-	}
-	
-	/**
-	 * Switches Random Animation state.<BR><BR>
-	 */
+	* Switches Random Animation state.<BR><BR>
+	*/
 	public void setRandomAnimationEnabled(boolean val)
 	{
 		_isRandomAnimationEnabled = val;
