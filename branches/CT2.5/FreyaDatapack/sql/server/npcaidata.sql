@@ -4753,9 +4753,9 @@ INSERT INTO `npcaidata` VALUES
 (22783,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'sel_mahum_clan',300,NULL,NULL,NULL,'fighter'),
 (22784,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'sel_mahum_clan',400,NULL,NULL,NULL,'fighter'),
 (22785,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'sel_mahum_clan',300,NULL,NULL,NULL,'fighter'),
-(22786,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'xel_private_clan',400,NULL,NULL,NULL,'fighter'),
-(22787,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'xel_private_clan',400,NULL,NULL,NULL,'fighter'),
-(22788,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'xel_private_clan',400,NULL,NULL,NULL,'fighter'),
+(22786,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'sel_mahum_clan',400,NULL,NULL,NULL,'fighter'),
+(22787,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'sel_mahum_clan',400,NULL,NULL,NULL,'fighter'),
+(22788,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'sel_mahum_clan',400,NULL,NULL,NULL,'fighter'),
 (22789,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'solina_n_clan',300,NULL,NULL,NULL,'balanced'),
 (22790,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'solina_n_clan',300,NULL,NULL,NULL,'balanced'),
 (22791,15,NULL,1,NULL,NULL,NULL,NULL,0,0,0,0,NULL,'solina_n_clan',300,NULL,NULL,NULL,'balanced'),
@@ -10125,3 +10125,4 @@ UPDATE npcaidata SET clan='lilith_clan', enemyClan = 'anakim_clan' WHERE npc_id 
 UPDATE npcaidata SET clan='anakim_clan', enemyClan = 'lilith_clan' WHERE npc_id IN (32718, 32719, 32720, 32721);
 UPDATE npcaidata SET enemyRange = 2000 WHERE npc_id IN (32715, 32716, 32717);
 UPDATE npcaidata SET enemyRange = 500, clan_range=500 WHERE npc_id IN (32718, 32719, 32720, 32721);
+UPDATE `npcaidata` SET `clan` = 'sel_mahum_clan' WHERE npc_id IN (22775,22776,22778,22780,22782,22783,22784,22785);

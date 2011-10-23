@@ -1,42 +1,76 @@
+/*
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package zone_scripts.Oren;
 
-import l2.brick.Config;
+import l2.brick.bflmpsvz.a.L2AttackableAIScript;
+
 import l2.brick.gameserver.ThreadPoolManager;
 import l2.brick.gameserver.ai.CtrlIntention;
 import l2.brick.gameserver.datatables.SpawnTable;
 import l2.brick.gameserver.instancemanager.ZoneManager;
 import l2.brick.gameserver.model.L2CharPosition;
 import l2.brick.gameserver.model.L2Spawn;
-import l2.brick.gameserver.model.actor.L2Character;
 import l2.brick.gameserver.model.actor.L2Npc;
 import l2.brick.gameserver.model.actor.instance.L2MonsterInstance;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.model.zone.L2ZoneType;
 import l2.brick.gameserver.network.clientpackets.Say2;
 import l2.brick.gameserver.network.serverpackets.NpcSay;
-import l2.brick.gameserver.network.serverpackets.SocialAction;
 import l2.brick.gameserver.util.Util;
 import l2.brick.util.Rnd;
 
 import gnu.trove.TIntHashSet;
-
-import l2.brick.bflmpsvz.a.L2AttackableAIScript;
-
 import java.util.List;
 import javolution.util.FastList;
 
+/**
+ * Sel Mahum Training Ground AI. Now controls only "tribune-based" Mahums
+ * @author GKR
+ */
+
 public class SelMahums extends L2AttackableAIScript
 {
-	private static final int[] MAHUM_CHIEFS = { 22775, 22776, 22778 };
-	private static final int[] MAHUM_SOLDIERS = { 22780, 22782, 22783, 22784, 22785 };
-	private static final int[] CHIEF_SOCIAL_ACTIONS = { 1, 4, 5, 7 };
-	private static final int[] SOLDIER_SOCIAL_ACTIONS = { 1, 5, 6, 7 };
-	private static final String[] CHIEF_FSTRINGS = { "Who is mucking with my recruits!?!", "You are entering a world of hurt!" };
-	private static final String[] SOLDIER_FSTRINGS = { "They done killed da Sarge... Run!!", "Don't Panic... Okay, Panic!" };
-	private static List<L2Spawn> _spawns = new FastList<L2Spawn>();
-	private static TIntHashSet _scheduledReturnTasks = new TIntHashSet();
 
-	public SelMahums (int questId, String name, String descr)
+	//Sel Mahum Drill Sergeant, Sel Mahum Training Officer, Sel Mahum Drill Sergeant respectively
+	private static final int[] MAHUM_CHIEFS = { 22775, 22776, 22778 };
+
+	//Sel Mahum Recruit, Sel Mahum Recruit, Sel Mahum Soldier, Sel Mahum Recruit, Sel Mahum Soldier respectively 
+	private static final int[] MAHUM_SOLDIERS = { 22780, 22782, 22783, 22784, 22785 };
+	
+	private static final int[] CHIEF_SOCIAL_ACTIONS = { 1, 4, 5, 7 };
+	
+	/**
+	 * 1801112 - Who is mucking with my recruits!?!
+	 * 1801113 - You are entering a world of hurt!
+	 */	 	 	
+	//I get crash of client, if use "int" constructor, so I use "String" constructor here
+	//private static final int[] CHIEF_FSTRINGS = { 1801112, 1801113 };
+	private static final String[] CHIEF_FSTRINGS = { "Who is mucking with my recruits!?!", "You are entering a world of hurt!" };
+
+	/**
+	 * 1801114 - They done killed da Sarge... Run!!
+	 * 1801115 - Don't Panic... Okay, Panic!
+	 */	 	 	
+	//I get crash of client, if use "int" constructor, so I use "String" constructor here
+	//private static final int[] SOLDIER_FSTRINGS = { 1801114, 1801115 };
+	private static final String[] SOLDIER_FSTRINGS = { "They done killed da Sarge... Run!!", "Don't Panic... Okay, Panic!" };
+	
+	private static List<L2Spawn> _spawns = new FastList<L2Spawn>(); //all Mahum's spawns are stored here
+	private static TIntHashSet _scheduledReturnTasks = new TIntHashSet(); //Used to track scheduled Return Tasks
+
+	public SelMahum (int questId, String name, String descr)
 	{
 		super(questId, name, descr);
 		
@@ -50,10 +84,14 @@ public class SelMahums extends L2AttackableAIScript
 		for (int i : MAHUM_SOLDIERS)
 			addSpawnId(i);
 	
+		//Send event to monsters, that was spawned through SpawnTable at server start (it is impossible to track first spawn)
     for (L2Spawn npcSpawn : SpawnTable.getInstance().getSpawnTable())
     {
       if (Util.contains(MAHUM_CHIEFS, npcSpawn.getNpcid()) || Util.contains(MAHUM_SOLDIERS, npcSpawn.getNpcid()))
-          onSpawn(npcSpawn.getLastSpawn());
+      {
+        onSpawn(npcSpawn.getLastSpawn());
+        _spawns.add(npcSpawn);
+      }
     }
 	}
 
@@ -70,18 +108,6 @@ public class SelMahums extends L2AttackableAIScript
 					int idx = Rnd.get(6);
 					if (idx <= CHIEF_SOCIAL_ACTIONS.length - 1)
 					{
-						npc.broadcastPacket(new SocialAction(npc, CHIEF_SOCIAL_ACTIONS[idx]));
-
-						L2ZoneType zone = getZone(npc);
-					
-						if (zone != null )
-						for (L2Character ch : zone.getCharactersInsideArray())
-						{
-							if (ch != null && !ch.isDead() && ch instanceof L2MonsterInstance && !((L2MonsterInstance) ch).isBusy() && 
-									Util.contains(MAHUM_SOLDIERS, ((L2MonsterInstance) ch).getNpcId()) && ch.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE && 
-									ch.getX() == ((L2MonsterInstance) ch).getSpawn().getLocx() && ch.getY() == ((L2MonsterInstance) ch).getSpawn().getLocy())
-								ch.broadcastPacket(new SocialAction(ch, SOLDIER_SOCIAL_ACTIONS[idx]));
-						}
 					}
 				}	
 
@@ -125,6 +151,10 @@ public class SelMahums extends L2AttackableAIScript
 		{
 			for (L2Spawn sp : _spawns)
 			{
+
+               if (sp == null)
+                   continue;
+
 				L2MonsterInstance soldier = (L2MonsterInstance) sp.getLastSpawn();
 				if (soldier != null && !soldier.isDead())
 				{
@@ -143,10 +173,12 @@ public class SelMahums extends L2AttackableAIScript
 					}
 				}
 			}
-			if (!_scheduledReturnTasks.contains(leaderZone.getId()))
+			//Soldiers should return into spawn location, if they have "NO_DESIRE" state. It looks like AI_INTENTION_ACTIVE in L2J terms,
+			//but we have no possibility to track AI intention change, so timer is used here. Time can be ajusted, if needed.
+			if (!_scheduledReturnTasks.contains(leaderZone.getId())) //Check for shceduled task presence for this zone
 			{
-				_scheduledReturnTasks.add(leaderZone.getId());
-				ThreadPoolManager.getInstance().scheduleGeneral(new ReturnTask(leaderZone.getId()), 120000);
+				_scheduledReturnTasks.add(leaderZone.getId()); //register scheduled task for zone
+				ThreadPoolManager.getInstance().scheduleGeneral(new ReturnTask(leaderZone.getId()), 120000); //schedule task
 			}
 		}
 
@@ -165,7 +197,6 @@ public class SelMahums extends L2AttackableAIScript
 			npc.setBusy(false);
 			npc.setIsNoRndWalk(true);
 			npc.setRandomAnimationEnabled(false);
-			_spawns.add(npc.getSpawn());
 		}
 
 		return super.onSpawn(npc);
@@ -191,7 +222,10 @@ public class SelMahums extends L2AttackableAIScript
 		
 		return zone;
 	}
-	 	
+	
+	/**
+	 * Returns monsters in their spawn location
+	 */	 	
 	private class ReturnTask implements Runnable
 	{
 		private final int _zoneId;
@@ -215,22 +249,23 @@ public class SelMahums extends L2AttackableAIScript
 					L2ZoneType zone = getZone(monster);
 					if (zone != null && zone.getId() == _zoneId)
 					{
-						if (monster.getX() != sp.getLocx() && monster.getY() != sp.getLocy())
+						if (monster.getX() != sp.getLocx() && monster.getY() != sp.getLocy()) //Check if there is monster not in spawn location
 						{
+							//Teleport him if not engaged in battle / not flee
 							if (monster.getAI().getIntention() == CtrlIntention.AI_INTENTION_ACTIVE || monster.getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) 
 							{
 								monster.setHeading(sp.getHeading());
 								monster.teleToLocation(sp.getLocx(), sp.getLocy(), sp.getLocz());
 							}
-							else
+							else //There is monster('s) not in spawn location, but engaged in battle / flee. Set flag to repeat Return Task for this zone 
 								_runAgain = true;
 						}
 					}
 				}   
 			}
-			if (_runAgain)
+			if (_runAgain) //repeat task
 				ThreadPoolManager.getInstance().scheduleGeneral(new ReturnTask(_zoneId), 120000);
-			else
+			else // Task is not sheduled ahain for this zone, unregister it
 				_scheduledReturnTasks.remove(_zoneId);
 		}
 	}
@@ -238,8 +273,7 @@ public class SelMahums extends L2AttackableAIScript
 	
 	public static void main(String[] args)
 	{
-		new SelMahums(-1,"sel_mahums","ai");
-		if (Config.ENABLE_LOADING_INFO_FOR_SCRIPTS)
-			_log.info("Loaded Oren: Sel Mahums");
+		// now call the constructor (starts up the ai)
+		new SelMahum(-1,"sel_mahums","ai");
 	}
 }
