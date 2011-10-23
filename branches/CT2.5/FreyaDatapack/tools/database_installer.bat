@@ -1,9 +1,9 @@
 @echo off
-REM ##############################################
-REM ## L2Brick Database Installer - (by DrLecter) ##
-REM ##############################################
-REM ## Interactive script setup -  (by TanelTM) ##
-REM ##############################################
+REM ################################
+REM ## L2Freya Database Installer ##
+REM ################################
+REM ## Interactive script setup   ##
+REM ################################
 REM Copyright (C) 2010 L2J DataPack
 REM This program is free software; you can redistribute it and/or modify 
 REM it under the terms of the GNU General Public License as published by 
@@ -89,7 +89,7 @@ cls
 set config_version=2
 if NOT %upgrade_mode% == 2 (
 set fresh_setup=1
-set mysqlBinPath=%ProgramFiles%\MySQL\MySQL Server 5.5\bin
+set mysqlBinPath=%ProgramFiles%\MySQL\MySQL Server 5.1\bin
 set lsuser=root
 set lspass=
 set lsdb=l2_freya
