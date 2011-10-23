@@ -29970,8 +29970,6 @@ INSERT INTO `droplist` VALUES
 (22347,6689,1,1,-1,47082), -- Basalt Battlehammer Head
 (22349,57,28003,56059,0,700000),-- Adena
 (22349,9599,2,6,100,613000),-- Ancient Tome of the Demon
-(22349,9680,1,1,101,13699),-- Dim Life Force
-(22349,9681,1,1,101,3012),-- Life Force
 (22349,5480,1,1,1,26410),-- Sealed Leather Armor of Nightmare Fabric
 (22349,5481,1,1,1,26410),-- Sealed Majestic Leather Armor Fabric
 (22349,960,1,1,2,1345),-- Scroll: Enchant Armor (S)
@@ -29987,8 +29985,6 @@ INSERT INTO `droplist` VALUES
 (22349,6690,1,1,-1,103484),-- Imperial Staff Head
 (22350,57,29112,58280,0,700000),-- Adena
 (22350,9599,2,6,100,637300),-- Ancient Tome of the Demon
-(22350,9680,1,1,101,25641),-- Dim Life Force
-(22350,9681,1,1,101,6803),-- Life Force
 (22350,5480,1,1,1,27456),-- Sealed Leather Armor of Nightmare Fabric
 (22350,5481,1,1,1,27456),-- Sealed Majestic Leather Armor Fabric
 (22350,6901,1,1,2,3496),-- Recipe: Shining Arrow (100%)
@@ -30005,8 +30001,6 @@ INSERT INTO `droplist` VALUES
 (22350,959,1,1,-1,1987),-- Scroll: Enchant Weapon (Grade S)
 (22351,57,29112,58280,0,700000),-- Adena
 (22351,9599,2,6,100,637300),-- Ancient Tome of the Demon
-(22351,9680,1,1,101,55556),-- Dim Life Force
-(22351,9681,1,1,101,9174),-- Life Force
 (22351,5545,1,1,1,11185),-- Dark Legion's Edge Blade
 (22351,5546,1,1,1,12286),-- Sword of Miracles Edge
 (22351,5529,1,1,1,11185),-- Dragon Slayer Edge
@@ -30029,14 +30023,12 @@ INSERT INTO `droplist` VALUES
 (22351,6693,1,1,-1,109325),-- Dragon Hunter Axe Blade
 (22352,57,28120,56293,0,700000),-- Adena
 (22352,9599,2,6,100,615600),-- Ancient Tome of the Demon
-(22352,9680,1,1,101,520000),-- Dim Life Force
-(22352,9681,1,1,101,125000),-- Life Force
 (22352,5545,1,1,1,10804),-- Dark Legion's Edge Blade
 (22352,5546,1,1,1,11867),-- Sword of Miracles Edge
 (22352,5529,1,1,1,10804),-- Dragon Slayer Edge
 (22352,81,1,1,1,38),-- Dragon Slayer
 (22352,151,1,1,1,38),-- Sword of Miracles 
-(22352,2500,1,1,1,38),-- Dark Legion\'s Edge
+(22352,2500,1,1,1,38),-- Dark Legion's Edge
 (22352,1868,135,405,2,25014),-- Thread
 (22352,1873,16,48,2,42210),-- Silver Nugget
 (22352,1876,3,9,2,96481),-- Mithril Ore
@@ -30049,7 +30041,6 @@ INSERT INTO `droplist` VALUES
 (22352,6694,1,1,-1,105598),-- Saint Spear Blade
 (22353,57,121177,242584,0,700000),-- Adena
 (22353,9599,6,18,100,884200),-- Ancient Tome of the Demon
-(22353,9682,1,1,101,1000000),-- Contained Life Force
 (22353,5534,1,1,1,139828),-- Soul Bow Stave
 (22353,9551,1,1,200,116413),-- Divine Stone
 (22353,6901,1,1,2,14552),-- Recipe: Shining Arrow (100%)
