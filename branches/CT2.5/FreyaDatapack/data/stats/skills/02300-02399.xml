@@ -884,6 +884,7 @@
 		</cond>
 	</skill>
 	<skill id="2359" levels="1" name="Magic Bottle">
+		<set name="itemConsumeCount" val="1" />
 		<set name="target" val="TARGET_ONE" />
 		<set name="hitTime" val="500" />
 		<set name="staticHitTime" val="true" />
