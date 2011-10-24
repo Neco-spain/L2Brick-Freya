@@ -867,15 +867,16 @@
 		</for>
 	</skill>
 	<skill id="2358" levels="1" name="Holy Water">
-		<set name="target" val="TARGET_ONE" />
-		<set name="hitTime" val="500" />
-		<set name="staticHitTime" val="true" />
-		<set name="reuseDelay" val="3000" />
-		<set name="saveVs" val="MEN" />
-		<set name="skillType" val="DEBUFF" />
-		<set name="operateType" val="OP_ACTIVE" />
-		<set name="castRange" val="150" />
-		<set name="effectRange" val="400" />
+		<set name="target" val="TARGET_ONE"/>
+  		<set name="staticReuse" val="true"/>
+  		<set name="hitTime" val="500"/>
+  		<set name="staticHitTime" val="true"/>
+  		<set name="reuseDelay" val="3000"/>
+  		<set name="skillType" val="DEBUFF"/>
+  		<set name="operateType" val="OP_ACTIVE"/>
+  		<set name="castRange" val="40"/>
+  		<set name="effectRange" val="400"/>
+  		<set name="isPotion" val="true" />
 		<cond msgId="113" addName="1">
 			<and>
 				<player flyMounted="False" />
@@ -884,16 +885,16 @@
 		</cond>
 	</skill>
 	<skill id="2359" levels="1" name="Magic Bottle">
-		<set name="itemConsumeCount" val="1" />
 		<set name="target" val="TARGET_ONE" />
+		<set name="staticReuse" val="true"/>
 		<set name="hitTime" val="500" />
 		<set name="staticHitTime" val="true" />
 		<set name="reuseDelay" val="3000" />
-		<set name="saveVs" val="MEN" />
-		<set name="skillType" val="DEBUFF" />
+		<set name="skillType" val="BEAST_FEED" />
 		<set name="operateType" val="OP_ACTIVE" />
-		<set name="castRange" val="150" />
+		<set name="castRange" val="40" />
 		<set name="effectRange" val="400" />
+		<set name="isPotion" val="true" />
 		<cond msgId="113" addName="1">
 			<and>
 				<player flyMounted="False" />
