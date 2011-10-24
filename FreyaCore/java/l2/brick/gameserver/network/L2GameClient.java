@@ -745,6 +745,10 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 								if (player.getPet() != null)
 									player.getPet().broadcastNpcInfo(0);
 							}
+							
+							if (Config.OFFLINE_MODE_SET_INVULNERABLE) 
+ 		                            getActiveChar().setIsInvul(true);
+							
 							if (Config.OFFLINE_SET_NAME_COLOR)
 							{
 								player.getAppearance().setNameColor(Config.OFFLINE_NAME_COLOR);
