@@ -995,6 +995,7 @@ public final class Config
 	public static boolean OFFLINE_SUPER_MODE_ENABLE;
 	public static boolean OFFLINE_TRADE_ENABLE;
 	public static boolean OFFLINE_CRAFT_ENABLE;
+	public static boolean OFFLINE_MODE_SET_INVULNERABLE;
 	public static boolean RESTORE_OFFLINERS;
 	public static int OFFLINE_MAX_DAYS;
 	public static boolean OFFLINE_DISCONNECT_FINISHED;
@@ -3686,7 +3687,9 @@ public final class Config
 					RESTORE_OFFLINERS = Boolean.parseBoolean(OfflineMod.getProperty("RestoreOffliners", "false"));
 					OFFLINE_MAX_DAYS = Integer.parseInt(OfflineMod.getProperty("OfflineMaxDays", "10"));
 					OFFLINE_DISCONNECT_FINISHED = Boolean.parseBoolean(OfflineMod.getProperty("OfflineDisconnectFinished", "true"));
+				    OFFLINE_MODE_SET_INVULNERABLE = Boolean.parseBoolean(OfflineMod.getProperty("OfflineModeSetInvulnerable", "False"));
 				}
+
 				
 				catch (Exception e)
 					{
