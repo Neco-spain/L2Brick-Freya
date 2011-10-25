@@ -864,7 +864,7 @@ public final class L2PcInstance extends L2Playable
 	private int _movieId = 0;
 	
 	private String _adminConfirmCmd = null;
-	private String _voiceConfirmCmd = null;
+	
 	
 	private volatile long _lastItemAuctionInfoRequest = 0;
 	
@@ -15257,16 +15257,6 @@ public final class L2PcInstance extends L2Playable
 			_pcBangPoints = i;
 		else
 			_pcBangPoints = 200000;
-	}
-	
-	public String getVoiceConfirmCmd()
-	{
-	return _voiceConfirmCmd;
-	}
-	
-	public void setVoiceConfirmCmd(String voiceConfirmCmd)
-	{
-	_voiceConfirmCmd = voiceConfirmCmd;
 	}
 	
 	/**
