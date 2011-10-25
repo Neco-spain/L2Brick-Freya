@@ -1981,6 +1981,13 @@ public abstract class L2Character extends L2Object
 				}
 		}
 		
+		//Remove effects from caster if need
+		for (int negateSkillId : skill.getNegateCasterId())
+		{
+		if (negateSkillId != 0)
+		this.stopSkillEffects(negateSkillId);
+		}
+		
 		// Before start AI Cast Broadcast Fly Effect is Need
 		if (skill.getFlyType() != null && (this instanceof L2PcInstance))
 			ThreadPoolManager.getInstance().scheduleEffect(new FlyToLocationTask(this, target, skill), 50);

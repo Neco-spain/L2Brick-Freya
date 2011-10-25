@@ -28,9 +28,12 @@ import l2.brick.L2DatabaseFactory;
 import l2.brick.gameserver.datatables.ArmorSetsTable;
 import l2.brick.gameserver.datatables.ItemTable;
 import l2.brick.gameserver.datatables.SkillTable;
+import l2.brick.gameserver.handler.ISkillHandler;
+import l2.brick.gameserver.handler.SkillHandler;
 import l2.brick.gameserver.model.L2ArmorSet;
 import l2.brick.gameserver.model.L2ItemInstance;
 import l2.brick.gameserver.model.L2ItemInstance.ItemLocation;
+import l2.brick.gameserver.model.L2Object;
 import l2.brick.gameserver.model.L2Skill;
 import l2.brick.gameserver.model.L2World;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
@@ -266,8 +269,19 @@ public abstract class Inventory extends ItemContainer
 						player.removeSkill(enchant4Skill, false, enchant4Skill.isPassive());
 						update = true;
 					}
+				    // Apply skill, if weapon have "unequip_skill"
+				L2Skill unequipSkill = ((L2Weapon)it).getUnequipSkill();
+				if (unequipSkill != null)
+				{
+					ISkillHandler handler = SkillHandler.getInstance().getSkillHandler(unequipSkill.getSkillType());
+					L2Object[] targets = { player };
+					if (handler != null)
+						handler.useSkill(player, unequipSkill, targets);
+					else
+						unequipSkill.useSkill(player, targets);
 				}
 			}
+			
 			else if (it instanceof L2Armor)
 			{
 				// Remove augmentation bonuses on unequip

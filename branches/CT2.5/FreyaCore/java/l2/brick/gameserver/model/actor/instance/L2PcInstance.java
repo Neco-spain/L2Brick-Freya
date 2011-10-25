@@ -425,6 +425,8 @@ public final class L2PcInstance extends L2Playable
 	private ScheduledFuture<?> _dismountTask;
 	private boolean _petItems = false;
 	
+	private String _voiceConfirmCmd = null;
+	
 	/** The list of sub-classes this character has. */
 	private Map<Integer, SubClass> _subClasses;
 	
@@ -7602,11 +7604,13 @@ public final class L2PcInstance extends L2Playable
 			// and reward expertise/lucky skills if necessary.
 			// Note that Clan, Noblesse and Hero skills are given separately and not here.
 			player.restoreCharData();
-			player.rewardSkills();
+			
 			
 			// buff and status icons
 			if (Config.STORE_SKILL_COOLTIME)
 				player.restoreEffects();
+			
+			player.rewardSkills();
 			
 			// Restore current Cp, HP and MP values
 			player.setCurrentCp(currentCp);
@@ -15253,6 +15257,16 @@ public final class L2PcInstance extends L2Playable
 			_pcBangPoints = i;
 		else
 			_pcBangPoints = 200000;
+	}
+	
+	public String getVoiceConfirmCmd()
+	{
+	return _voiceConfirmCmd;
+	}
+	
+	public void setVoiceConfirmCmd(String voiceConfirmCmd)
+	{
+	_voiceConfirmCmd = voiceConfirmCmd;
 	}
 	
 	/**
