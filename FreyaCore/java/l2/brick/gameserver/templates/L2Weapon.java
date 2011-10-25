@@ -57,7 +57,7 @@ public final class L2Weapon extends L2Item
 	private SkillHolder _enchant4Skill = null; // skill that activates when item is enchanted +4 (for duals)
 	private final int _changeWeaponId;
 	// private final String[] _skill;
-	
+	private SkillHolder _unequipSkill = null;
 	// Attached skills for Special Abilities
 	private SkillHolder _skillsOnCast;
 	private Condition _skillsOnCastCondition = null;
@@ -181,7 +181,30 @@ public final class L2Weapon extends L2Item
 			}
 		}
 		
-		_changeWeaponId = set.getInteger("change_weaponId", 0);
+		skill = set.getString("unequip_skill", null);
+                if (skill != null)
+                {
+                        String[] info = skill.split("-");
+                        if (info != null && info.length == 2)
+                        {
+                                int id = 0;
+                                int level = 0;
+                                try
+                                {
+                                        id = Integer.parseInt(info[0]);
+                                        level = Integer.parseInt(info[1]);
+                                }
+                                catch (Exception nfe)
+                                {
+                                        // Incorrect syntax, dont add new skill
+                                        _log.info(StringUtil.concat("> Couldnt parse ", skill, " in weapon unequip skills! item ", this.toString()));
+                                }
+                                if (id > 0 && level > 0)
+                                        _unequipSkill = new SkillHolder(id, level);
+                        }
+                }
+		
+		       _changeWeaponId = set.getInteger("change_weaponId", 0);
 	}
 	
 	/**
@@ -409,5 +432,13 @@ public final class L2Weapon extends L2Item
 		}
 		return _emptyEffectSet;
 	}
-	
+	    
+    /**     
+    * Returns skill that activates, when player unequip this weapon
+    * @return
+    */
+    public L2Skill getUnequipSkill()
+    {
+    return _unequipSkill == null ? null : _unequipSkill.getSkill();
+    }
 }

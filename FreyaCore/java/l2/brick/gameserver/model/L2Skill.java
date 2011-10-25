@@ -180,6 +180,7 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	// Note: see also _effectAbnormalLvl
 	private final int _negateLvl;   // abnormalLvl is negated with negateLvl
 	private final int[] _negateId; 			// cancels the effect of skill ID
+	private final int[] _negateCasterId; 		// cancels the effect of skill ID on caster
 	private final L2SkillType[] _negateStats; 	// lists the effect types that are canceled
 	private final Map<String, Byte> _negateAbnormals; // lists the effect abnormal types with order below the presented that are canceled
 	private final int _maxNegatedEffects; 	// maximum number of effects to negate
@@ -403,7 +404,20 @@ public abstract class L2Skill implements IChanceSkillTrigger
 		}
 		else
 			_negateId = new int[0];
-		_maxNegatedEffects = set.getInteger("maxNegated", 0);
+		String negateCasterId = set.getString("negateCasterId", null);
+		if (negateCasterId != null)
+		{
+			String[] valuesSplit = negateCasterId.split(",");
+			_negateCasterId = new int[valuesSplit.length];
+			for (int i = 0; i < valuesSplit.length;i++)
+			{
+				_negateCasterId[i] = Integer.parseInt(valuesSplit[i]);
+			}
+		}
+		else
+			_negateCasterId = new int[0];
+		
+ 		_maxNegatedEffects = set.getInteger("maxNegated", 0);
 		
 		_stayAfterDeath = set.getBool("stayAfterDeath", false);
 		
@@ -2995,4 +3009,10 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	{
 		return _extractableItems;
 	}
+
+	public final int[] getNegateCasterId()
+	{
+		return _negateCasterId;
+	}
+
 }
