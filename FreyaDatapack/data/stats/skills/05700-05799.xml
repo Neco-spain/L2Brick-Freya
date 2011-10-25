@@ -166,27 +166,46 @@
 		</for>
 	</skill>
 	<skill id="5716" levels="1" name="Stun">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
-		<set name="reuseDelay" val="3000" />
-		<set name="operateType" val="OP_PASSIVE" />
-		<set name="hitTime" val="3000" />
-		<set name="saveVs" val="CON" />
-		<set name="lvlDepend" val="1" />
+		<set name="power" val="80"/>
+		<set name="target" val="TARGET_ONE"/>
+		<set name="isDebuff" val="true"/>
+		<set name="reuseDelay" val="3000"/>
+		<set name="hitTime" val="3000"/>
+		<set name="skillType" val="STUN"/>
+		<set name="operateType" val="OP_ACTIVE"/>
+		<set name="castRange" val="1500"/>
+		<set name="effectRange" val="2000"/>
+		<for>
+			<effect name="Stun" abnormalTime="9" val="0" effectPower="90" effectType="STUN" abnormalLvl="1" abnormalType="Stun"/> <!-- Guessing power -->
+		</for>
 	</skill>
 	<skill id="5717" levels="1" name="Fire Breath">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
-		<set name="reuseDelay" val="5000" />
-		<set name="operateType" val="OP_PASSIVE" />
-		<set name="hitTime" val="1500" />
+		<set name="power" val="100"/>
+		<set name="target" val="TARGET_ONE"/>
+		<set name="element" val="0"/> <!-- Fire -->
+		<set name="elementPower" val="20"/>
+		<set name="skillType" val="MDAM"/>
+		<set name="isMagic" val="true"/>
+		<set name="operateType" val="OP_ACTIVE"/>
+		<set name="reuseDelay" val="5000"/>
+		<set name="hitTime" val="1500"/>
+		<set name="castRange" val="1500"/>
+		<set name="effectRange" val="1800"/>
 	</skill>
 	<skill id="5718" levels="1" name="Anger">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
-		<set name="reuseDelay" val="5000" />
-		<set name="operateType" val="OP_PASSIVE" />
-		<set name="hitTime" val="1500" />
+		<set name="power" val="120"/>
+		<set name="target" val="TARGET_SELF"/>
+		<set name="skillType" val="BUFF"/>
+		<set name="isMagic" val="true"/>
+		<set name="operateType" val="OP_ACTIVE"/>
+		<set name="reuseDelay" val="30000"/>
+		<set name="hitTime" val="1500"/>
+		<for>
+			<effect name="Buff" abnormalTime="30" val="0" abnormalLvl="1" abnormalType="pinch">
+				<mul order="0x30" stat="pAtk" val="2.1"/>
+				<mul order="0x30" stat="pDef" val="0.5"/>
+			</effect>
+		</for>
 	</skill>
 	<skill id="5719" levels="1" name="Kamabion Susceptibility">
 		<set name="target" val="TARGET_NONE" />
@@ -790,21 +809,45 @@
 		<set name="hitTime" val="15000" />
 	</skill>
 	<skill id="5758" levels="1" name="Presentation - Large Firework">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
-		<set name="reuseDelay" val="3000" />
-		<set name="operateType" val="OP_PASSIVE" />
+		<set name="target" val="TARGET_SELF" />
+		<set name="skillType" val="DUMMY" />
+		<set name="operateType" val="OP_ACTIVE" />
+		<set name="staticHitTime" val="true"/>
+		<set name="hitTime" val="3000"/>
 	</skill>
 	<skill id="5759" levels="1" name="Presentation - The Rise of Latana">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
-		<set name="operateType" val="OP_PASSIVE" />
-		<set name="hitTime" val="9700" />
+		<set name="target" val="TARGET_SELF" />
+		<set name="skillType" val="DUMMY" />
+		<set name="operateType" val="OP_ACTIVE" />
+		<set name="staticHitTime" val="true"/>
+		<set name="hitTime" val="9700"/>
 	</skill>
 	<skill id="5760" levels="9" name="Critical Hit">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
-		<set name="operateType" val="OP_PASSIVE" />
+		<table name="#abnormalLvl"> 2 3 4 5 6 7 8 9 10 </table>
+		<table name="#activationChance"> 50 45 40 35 30 25 0 0 0 </table>
+		<table name="#triggeredLevel"> 2 3 4 5 6 7 7 7 7 </table>
+		<table name="#crits"> 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.4 0.4 </table>
+		<table name="#spd"> 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.4 1.4 </table>
+		<set name="weaponsAllowed" val="Pole" /> <!-- Pole -->
+		<set name="magicLvl" val="74" />
+		<set name="target" val="TARGET_SELF" /> 
+		<set name="reuseDelay" val="5000" /> 
+		<set name="skillType" val="BUFF" /> 
+		<set name="operateType" val="OP_ACTIVE" /> 
+		<for> 
+			<effect name="ChanceSkillTrigger" abnormalTime="180" triggeredId="5760" triggeredLevel="#triggeredLevel" activationChance="#activationChance" chanceType="ON_CRIT" abnormalLvl="#abnormalLvl" abnormalType="critical_hit_up" val="0">
+				<basemul order="0x30" stat="rCrit" val="#crits" >
+					<and>
+						<using kind="Pole" />
+					</and>
+				</basemul>
+				<mul order="0x30" stat="pAtkSpd" val="#spd" >
+					<and>
+						<using kind="Pole" />
+					</and>
+				</mul>
+			</effect> 
+		</for>
 	</skill>
 	<skill id="5761" levels="2" name="Power Strike">
 		<table name="#mpConsume"> 91 122 </table>
