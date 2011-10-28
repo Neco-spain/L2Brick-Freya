@@ -235,7 +235,11 @@ public final class CharacterCreate extends L2GameClientPacket
 		newChar.addAdena("Init", Config.STARTING_ADENA, null, false);
 		
 		newChar.setXYZInvisible(template.spawnX, template.spawnY, template.spawnZ);
-		newChar.setTitle("");
+		if (Config.CHAR_TITLE)
+	                 
+	                                        newChar.setTitle(Config.ADD_CHAR_TITLE);
+	                                else
+	                                        newChar.setTitle("");
 		
 		if (Config.ENABLE_VITALITY)
 			newChar.setVitalityPoints(Math.min(Config.STARTING_VITALITY_POINTS, PcStat.MAX_VITALITY_POINTS), true);
