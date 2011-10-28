@@ -1059,6 +1059,8 @@ public final class Config
 	public static TIntIntHashMap L2JMOD_DUALBOX_CHECK_WHITELIST;
 	public static boolean AUTO_ACTIVATE_SHOTS;
 	public static int AUTO_ACTIVATE_SHOTS_MIN;
+	public static boolean CHAR_TITLE;
+	public static String ADD_CHAR_TITLE;
 	public static boolean ALT_HERO_COLOR_ENABLED;
 	public static int ALT_HERO_COLOR;
 	public static boolean ALT_NOBLE_COLOR_ENABLED;
@@ -4487,7 +4489,9 @@ public final class Config
 					ANNOUNCE_PVP_MSG = ExtraConfig.getProperty("AnnouncePvpMsg", "$killer has defeated $target");
 					L2JMOD_ENABLE_MANA_POTIONS_SUPPORT = Boolean.parseBoolean(ExtraConfig.getProperty("EnableManaPotionSupport", "false"));
 					ALT_KEEP_BUFF_AFTER_DEATH = Boolean.parseBoolean(ExtraConfig.getProperty("AltKeepBuffAfterDeath", "False"));                 			
-					ALT_HERO_COLOR_ENABLED = Boolean.parseBoolean(ExtraConfig.getProperty("HeroNameColorEnabled", "False"));
+			CHAR_TITLE              = Boolean.parseBoolean(ExtraConfig.getProperty("CharTitle", "true"));
+			ADD_CHAR_TITLE          = ExtraConfig.getProperty("CharAddTitle", "The Freya");			
+			ALT_HERO_COLOR_ENABLED = Boolean.parseBoolean(ExtraConfig.getProperty("HeroNameColorEnabled", "False"));
                    	ALT_HERO_COLOR = Integer.decode((new StringBuilder()).append("0x").append(ExtraConfig.getProperty("HeroColor", "EE0000")).toString()).intValue();
    		    		ALT_NOBLE_COLOR_ENABLED = Boolean.parseBoolean(ExtraConfig.getProperty("NobleNameColorEnabled", "False"));
    		    		ALT_NOBLE_COLOR = Integer.decode((new StringBuilder()).append("0x").append(ExtraConfig.getProperty("NobleColor", "EE0000")).toString()).intValue();
