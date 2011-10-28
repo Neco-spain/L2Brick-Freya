@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
-import l2.brick.Config;
 import l2.brick.gameserver.ai.CtrlEvent;
 import l2.brick.gameserver.ai.CtrlIntention;
 import l2.brick.gameserver.datatables.SkillTable;
