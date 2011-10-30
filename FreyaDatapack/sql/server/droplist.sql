@@ -27032,26 +27032,25 @@ INSERT INTO `droplist` VALUES
 (22139,5515,1,1,-1,155316),-- Sealed Majestic Gloves Design
 (22139,5522,1,1,-1,31318),-- Sealed Armor of Nightmare Pattern
 (22139,3957,1,1,-1,4087),-- Recipe: Blessed Spiritshot S
-(22140,8273,6,6,3,1000000),-- Anteroom Key
-(22140,57,4415,9013,0,700000),-- Adena
-(22140,1871,1,3,2,157453),-- Charcoal
-(22140,1866,2,6,2,78727),-- Suede
-(22140,1344,100,300,2,59045),-- Mithril Arrow
-(22140,1877,1,1,2,18894),-- Adamantite Nugget
-(22140,4040,1,1,2,9447),-- Mold Lubricant
-(22140,5503,1,1,1,6980),-- Sealed Majestic Boots Lining
-(22140,5502,1,1,1,6080),-- Sealed Boots of Nightmare Lining
-(22140,5515,1,1,1,6980),-- Sealed Majestic Gloves Design
-(22140,5514,1,1,1,6980),-- Sealed Gloves of Nightmare Design
-(22140,4041,1,1,2,4107),-- Mold Hardener
-(22140,960,1,1,2,189),-- Scroll: Enchant Armor (Grade S)
-(22140,5313,1,1,1,61),-- Sealed Gloves of Nightmare
-(22140,5314,1,1,1,61),-- Sealed Boots of Nightmare
-(22140,5318,1,1,1,61),-- Sealed Majestic Gloves
-(22140,5319,1,1,1,61),-- Sealed Majestic Boots
-(22140,5495,1,1,-1,135982),-- Sealed Shield of Nightmare Fragment
-(22140,5488,1,1,-1,40326),-- Sealed Majestic Robe Fabric
-(22140,730,1,1,-1,7463),-- Scroll: Enchant Armor (Grade A)
+(22140,57,4415,9013,0,700000), -- Adena
+(22140,730,1,1,-1,7463), -- Scroll: Enchant Armor (A-Grade)
+(22140,960,1,1,2,189), -- Scroll: Enchant Armor (S-Grade)
+(22140,1344,100,300,2,59045), -- Mithril Arrow
+(22140,1866,2,6,2,78727), -- Suede
+(22140,1871,1,3,2,157453), -- Charcoal
+(22140,1877,1,1,2,18895), -- Adamantite Nugget
+(22140,4040,1,1,2,9448), -- Mold Lubricant
+(22140,4041,1,1,2,4108), -- Mold Hardener
+(22140,5313,1,1,1,62), -- Sealed Gauntlets of Nightmare
+(22140,5314,1,1,1,62), -- Sealed Boots of Nightmare
+(22140,5318,1,1,1,62), -- Sealed Majestic Gauntlets
+(22140,5319,1,1,1,62), -- Sealed Majestic Boots
+(22140,5488,1,1,-1,40326), -- Sealed Majestic Robe Fabric
+(22140,5495,1,1,-1,135982), -- Sealed Shield of Nightmare Fragment
+(22140,5502,1,1,1,6981), -- Sealed Boots of Nightmare Lining
+(22140,5503,1,1,1,6981), -- Sealed Majestic Boots Lining
+(22140,5514,1,1,1,6981), -- Sealed Gauntlets of Nightmare Design
+(22140,5515,1,1,1,6981), -- Sealed Majestic Gauntlets Design
 (22141,57,4566,9322,0,700000),-- Adena
 (22141,1344,100,300,2,42751),-- Mithril Arrow
 (22141,1865,1,3,2,114002),-- Varnish
@@ -27072,42 +27071,40 @@ INSERT INTO `droplist` VALUES
 (22141,5488,1,1,-1,41711),-- Sealed Majestic Robe Fabric
 (22141,730,1,1,-1,7719),-- Scroll: Enchant Armor (Grade A)
 (22141,5480,1,1,-1,41564),-- Sealed Leather Armor of Nightmare Fabric
-(22142,8274,1,1,3,1000000),-- Chapel Key
-(22142,57,4584,9387,0,700000),-- Adena
-(22142,1866,1,3,2,127419),-- Suede
-(22142,1871,1,3,2,286692),-- Charcoal
-(22142,1885,1,1,2,47782),-- High Grade Suede
-(22142,5220,1,1,2,22935),-- Metal Hardener
-(22142,5495,1,1,1,8706),-- Sealed Shield of Nightmare Fragment
-(22142,5527,1,1,1,6855),-- Sealed Helm of Nightmare Design
-(22142,5528,1,1,1,6855),-- Sealed Majestic Circlet Design
-(22142,4041,1,1,2,4986),-- Mold Hardener
-(22142,5315,1,1,1,81),-- Sealed Shield of Nightmare
-(22142,5317,1,1,1,56),-- Sealed Majestic Circlet
-(22142,5312,1,1,1,56),-- Sealed Helm of Nightmare
-(22142,959,1,1,2,23),-- Scroll: Enchant Weapon (Grade S)
-(22142,5220,1,1,-1,372700),-- Metal Hardener
-(22142,5495,1,1,-1,141485),-- Sealed Shield of Nightmare Fragment
-(22142,3957,1,1,-1,4141),-- Recipe: Blessed Spiritshot S
-(22143,8274,1,1,3,990000),-- Chapel Key
-(22143,57,5331,10918,0,700000),-- Adena
-(22143,1869,1,3,2,222260),-- Iron Ore
-(22143,1864,4,12,2,166695),-- Stem
-(22143,1880,1,1,2,66678),-- Steel
-(22143,4043,1,1,2,22226),-- Asofe
-(22143,5503,1,1,1,8446),-- Sealed Majestic Boots Lining
-(22143,5514,1,1,1,8446),-- Sealed Gloves of Nightmare Design
-(22143,5515,1,1,1,8446),-- Sealed Majestic Gloves Design
-(22143,5502,1,1,1,8446),-- Sealed Boots of Nightmare Lining
-(22143,5550,1,1,2,8890),-- Durable Metal Plate
-(22143,960,1,1,1,267),-- Scroll: Enchant Armor (Grade S)
-(22143,5318,1,1,1,74),-- Sealed Majestic Gloves
-(22143,5314,1,1,1,74),-- Sealed Boots of Nightmare
-(22143,5313,1,1,1,74),-- Sealed Gloves of Nightmare
-(22143,5319,1,1,1,74),-- Sealed Majestic Boots
-(22143,5502,1,1,-1,182996),-- Sealed Boots of Nightmare Lining
-(22143,5503,1,1,-1,182996),-- Sealed Majestic Boots Lining
-(22143,5157,1,1,-1,4816),-- Recipe: Soulshot(S) Compressed Package(100%)
+(22142,57,4584,9387,0,700000), -- Adena
+(22142,959,1,1,2,23), -- Scroll: Enchant Weapon (S-Grade)
+(22142,1866,1,3,2,127419), -- Suede
+(22142,1871,1,3,2,286693), -- Charcoal
+(22142,1885,1,1,2,47783), -- High-Grade Suede
+(22142,3957,1,1,-1,4141), -- Recipe: Blessed Spiritshot S
+(22142,4041,1,1,2,4987), -- Mold Hardener
+(22142,5220,1,1,-1,372700), -- Metal Hardener
+(22142,5220,1,1,2,22936), -- Metal Hardener
+(22142,5312,1,1,1,57), -- Sealed Helm of Nightmare
+(22142,5315,1,1,1,81), -- Sealed Shield of Nightmare
+(22142,5317,1,1,1,57), -- Sealed Majestic Circlet
+(22142,5495,1,1,-1,141485), -- Sealed Shield of Nightmare Fragment
+(22142,5495,1,1,1,8707), -- Sealed Shield of Nightmare Fragment
+(22142,5527,1,1,1,6856), -- Sealed Helm of Nightmare Design
+(22142,5528,1,1,1,6856), -- Sealed Majestic Circlet Design
+(22143,57,5331,10918,0,700000), -- Adena
+(22143,960,1,1,2,267), -- Scroll: Enchant Armor (S-Grade)
+(22143,1864,4,12,2,166696), -- Stem
+(22143,1869,1,3,2,222261), -- Iron Ore
+(22143,1880,1,1,2,66678), -- Steel
+(22143,4043,1,1,2,22226), -- Asofe
+(22143,5157,1,1,-1,4816), -- Recipe: Soulshot (S)Compressed Package (100%)
+(22143,5313,1,1,1,74), -- Sealed Gauntlets of Nightmare
+(22143,5314,1,1,1,74), -- Sealed Boots of Nightmare
+(22143,5318,1,1,1,74), -- Sealed Majestic Gauntlets
+(22143,5319,1,1,1,74), -- Sealed Majestic Boots
+(22143,5502,1,1,-1,182996), -- Sealed Boots of Nightmare Lining
+(22143,5502,1,1,1,8446), -- Sealed Boots of Nightmare Lining
+(22143,5503,1,1,-1,182996), -- Sealed Majestic Boots Lining
+(22143,5503,1,1,1,8446), -- Sealed Majestic Boots Lining
+(22143,5514,1,1,1,8446), -- Sealed Gauntlets of Nightmare Design
+(22143,5515,1,1,1,8446), -- Sealed Majestic Gauntlets Design
+(22143,5550,1,1,2,8891), -- Durable Metal Plate
 (22144,57,4643,9510,0,700000),-- Adena
 (22144,1344,40,120,2,108894),-- Mithril Arrow
 (22144,1882,1,1,1,77436),-- Leather
@@ -27190,27 +27187,26 @@ INSERT INTO `droplist` VALUES
 (22148,5481,1,1,-1,35322),-- Sealed Majestic Leather Armor Fabric
 (22148,5480,1,1,-1,35322),-- Sealed Leather Armor of Nightmare Fabric
 (22148,1808,1,1,-1,3499),-- Recipe: Soulshot: S Grade
-(22149,8273,6,6,3,1000000),-- Anteroom Key
-(22149,57,4643,9510,0,700000),-- Adena
-(22149,1895,1,1,2,99559),-- Metallic Fiber
-(22149,1868,4,12,2,87115),-- Thread
-(22149,1876,1,1,2,69692),-- Mithril Ore
-(22149,1344,150,450,2,29039),-- Mithril Arrow
-(22149,1873,1,1,2,139383),-- Silver Nugget
-(22149,4042,1,1,2,5808),-- Enria
-(22149,5529,1,1,1,1593),-- Dragon Slayer Edge
-(22149,5546,1,1,1,1750),-- Sword of Miracles Edge
-(22149,5545,1,1,1,1593),-- Dark Legion's Edge Blade
-(22149,81,1,1,1,6),-- Dragon Slayer
-(22149,151,1,1,1,6),-- Sword of Miracles 
-(22149,2500,1,1,1,6),-- Dark Legion\'s Edge
-(22149,960,1,1,2,139),-- Scroll: Enchant Armor (Grade S)
-(22149,4042,1,1,-1,157290),-- Enria
-(22149,1876,1,3,-1,943743),-- Mithril Ore
-(22149,5487,1,1,-1,42498),-- Sealed Robe of Nightmare Fabric
-(22149,8732,1,1,200,2904),-- Life Stone: level 76
-(22149,8742,1,1,200,726),-- Mid-Grade Life Stone: level 76
-(22149,8752,1,1,200,73),-- High-Grade Life Stone: level 76
+(22149,57,4643,9510,0,700000), -- Adena
+(22149,81,1,1,1,6), -- Dragon Slayer
+(22149,151,1,1,1,6), -- Sword of Miracles
+(22149,960,1,1,2,140), -- Scroll: Enchant Armor (S-Grade)
+(22149,1344,150,450,2,29039), -- Mithril Arrow
+(22149,1868,4,12,2,87115), -- Thread
+(22149,1873,1,1,2,139384), -- Silver Nugget
+(22149,1876,1,3,-1,943743), -- Mithril Ore
+(22149,1876,1,1,2,69692), -- Mithril Ore
+(22149,1895,1,1,2,99560), -- Metallic Fiber
+(22149,2500,1,1,1,6), -- Dark Legion's Edge
+(22149,4042,1,1,-1,157290), -- Enria
+(22149,4042,1,1,2,5808), -- Enria
+(22149,5487,1,1,-1,42497), -- Sealed Robe of Nightmare Fabric
+(22149,5529,1,1,1,1593), -- Dragon Slayer Edge
+(22149,5545,1,1,1,1593), -- Dark Legion's Edge Blade
+(22149,5546,1,1,1,1750), -- Sword of Miracles Edge
+(22149,8732,1,1,2,2904), -- Life Stone -  Level 76
+(22149,8742,1,1,2,726), -- Mid-Grade Life Stone -  Level 76
+(22149,8752,1,1,2,73), -- High-Grade Life Stone -  Level 76
 (22150,57,4087,8341,0,700000),-- Adena
 (22150,1873,2,6,2,50994),-- Silver Nugget
 (22150,1895,1,1,2,145698),-- Metallic Fiber
