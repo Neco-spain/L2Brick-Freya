@@ -188,16 +188,31 @@ public class L2NpcActionShift implements IActionHandler
 				hpMul = 1;
 			final StringBuilder html1 = StringUtil.startAppend(
 					1000,
-					"<html><body>" +
-					"<br><center><font color=\"LEVEL\">[Combat Stats]</font></center>" +
+					"<html><head><title>"+
+					String.valueOf(((L2Character)target).getName()),
+					"</title></head><body>" +
+					"<br><center><font color=\"LEVEL\">Basic Info</font></center>" +
 					"<table border=0 width=\"100%\">" +
-					"<tr><td>Max.HP</td><td>",
+					"<tr><td>Name: </td><td align=right>"+
+					String.valueOf(((L2Character)target).getName()),
+					"</td></tr>" +
+					"<tr><td>Level: </td><td align=right>"+
+					String.valueOf(((L2Character)target).getLevel()),
+					"</td></tr>"+
+					"<tr><td>Aggresive: </td><td align=right>"+
+					String.valueOf((target instanceof L2Attackable) ? "Yes" : "No"),
+					"</td></tr>" +
+					"<tr><td>Respawn: </td><td align=right>"+
+					String.valueOf(((L2Npc)target).getSpawn().getRespawnDelay() / 1000),
+					"</td></tr></table>" +
+					"<table border=0 width=\"100%\">" +
+					"<tr><td>Max.HP</td><td><font color=FF0000>",
 					String.valueOf(((L2Character)target).getMaxHp() / hpMul),
 					"*",
 					String.valueOf(hpMul),
-					"</td><td>Max.MP</td><td>",
+					"</font></td><td>Max.MP</td><td><font color=0099FF>",
 					String.valueOf(((L2Character)target).getMaxMp()),
-					"</td></tr>" +
+					"</font></td></tr>" +
 					"<tr><td>P.Atk.</td><td>",
 					String.valueOf(((L2Character)target).getPAtk(null)),
 					"</td><td>M.Atk.</td><td>",
@@ -226,31 +241,14 @@ public class L2NpcActionShift implements IActionHandler
 					"<tr><td>Race</td><td>",
 					((L2Npc)target).getTemplate().getRace().toString(),
 					"</td><td></td><td></td></tr>" +
-					"</table>" +
-					"<br><center><font color=\"LEVEL\">[Basic Stats]</font></center>" +
-					"<table border=0 width=\"100%\">" +
-					"<tr><td>STR</td><td>",
-					String.valueOf(((L2Character)target).getSTR()),
-					"</td><td>DEX</td><td>",
-					String.valueOf(((L2Character)target).getDEX()),
-					"</td><td>CON</td><td>",
-					String.valueOf(((L2Character)target).getCON()),
-					"</td></tr>" +
-					"<tr><td>INT</td><td>",
-					String.valueOf(((L2Character)target).getINT()),
-					"</td><td>WIT</td><td>",
-					String.valueOf(((L2Character)target).getWIT()),
-					"</td><td>MEN</td><td>",
-					String.valueOf(((L2Character)target).getMEN()),
-					"</td></tr>" +
 					"</table>"
 			);
 			
 			if (((L2Npc)target).getTemplate().getDropData() != null)
 			{
 				StringUtil.append(html1,
-						"<br><center><font color=\"LEVEL\">[Drop Info]</font></center>" +
-						"<br>Rates legend: <font color=\"ff0000\">50%+</font> <font color=\"00ff00\">30%+</font> <font color=\"0000ff\">less than 30%</font>" +
+						"<br><center><font color=\"LEVEL\">Drop Info</font></center>" +
+						"<br>Drop type legend: <font color=\"C12869\">Quest</font> <font color=\"00ff00\">Sweep</font> <font color=\"3BB9FF\">Drop</font>" +
 						"<table border=0 width=\"100%\">"
 				);
 				for (L2DropCategory cat : ((L2Npc)target).getTemplate().getDropData())
@@ -263,21 +261,18 @@ public class L2NpcActionShift implements IActionHandler
 						
 						final String color;
 						
-						if (drop.getChance() >= 500000)
-							color = "ff0000";
-						else if (drop.getChance() >= 300000)
-							color = "00ff00";
-						else
-							color = "0000ff";
-						
-						StringUtil.append(html1,
-								"<tr><td><font color=\"",
-								color,
-								"\">",
-								item.getName(),
-								"</font></td><td>",
-								(drop.isQuestDrop() ? "Quest" : (cat.isSweep() ? "Sweep" : "Drop")),
-								"</td></tr>"
+						color = (drop.isQuestDrop() ? "C12869" : (cat.isSweep() ? "00ff00" : "3BB9FF"));
+
+								double szansa = ((double)drop.getChance()/10000);
+								StringUtil.append(html1,
+										"<tr><td><font color=\"",
+										color,
+										"\">",
+										"<img src=" + item.getIcon() + " width=32 height=32></td><td>"+
+										item.getName(),
+										"</td><td>",
+										String.valueOf(szansa),
+										"%</font></td></tr>"
 						);
 					}
 				}
