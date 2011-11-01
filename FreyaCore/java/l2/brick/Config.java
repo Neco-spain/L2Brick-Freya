@@ -257,6 +257,10 @@ public final class Config
 	public static long CTF_REVIVE_DELAY;
 	public static boolean CTF_BASE_TELEPORT_FIRST;
 	
+	// Fifth Anniversary
+    public static boolean ALLOW_FIFTH_ANNIVERSARY;
+    public static String FIFTH_ANNIVERSARY_DATE;
+	
 	//Vote Reward
 	public static String VOTE_HTML_PATCH;
 	public static int VOTE_REWARD1_ID;
@@ -1879,6 +1883,8 @@ public final class Config
 					EVENT_INTERVAL_RACE = Integer.parseInt(eventmods.getProperty("EventIntervalRace", "300"));
 					EVENT_REG_TIME_RACE = Integer.parseInt(eventmods.getProperty("EventRegTimeRace", "5"));
 					EVENT_RUNNING_TIME_RACE = Integer.parseInt(eventmods.getProperty("EventRunningTimeRace", "10"));
+				    ALLOW_FIFTH_ANNIVERSARY = Boolean.parseBoolean(eventmods.getProperty("AllowFifthAnniversary", "False"));
+                    FIFTH_ANNIVERSARY_DATE = eventmods.getProperty("FifthAnniversaryDate", "1 1 2011-1 1 2012");
 				}
 				catch (Exception e)
 				{
