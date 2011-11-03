@@ -380,10 +380,6 @@ public class FireDragon extends L2AttackableAIScript
 			return null;
 		}
 		i_quest1 = System.currentTimeMillis();
-		if (GrandBossManager.getInstance().getBossStatus(VALAKAS) != FIGHTING)
-		{
-			attacker.teleToLocation(150037, -57255, -2976);
-		}
 		if (attacker.getMountType() == 1)
 		{
 			int sk_4258 = 0;
