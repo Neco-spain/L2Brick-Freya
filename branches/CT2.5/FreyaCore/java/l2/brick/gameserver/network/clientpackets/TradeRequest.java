@@ -107,7 +107,7 @@ public final class TradeRequest extends L2GameClientPacket
 		if (player.isProcessingTransaction())
 		{
 			if (Config.DEBUG)
-				_log.fine("already trading with someone");
+				_log.fine("You are already trading with someone");
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ALREADY_TRADING));
 			return;
 		}
