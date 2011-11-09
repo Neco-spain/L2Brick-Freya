@@ -693,6 +693,7 @@
 				<mul order="0x30" stat="MagicalMpConsumeRate" val="0.95" />
 				<mul order="0x30" stat="PhysicalMpConsumeRate" val="0.95" />
 				<mul order="0x30" stat="DanceMpConsumeRate" val="0.95" />
+			    <mul order="0x30" stat="runSpd" val="0.8" />
 			</effect>
 		</for>
 	</skill>
@@ -721,6 +722,7 @@
 				<mul order="0x30" stat="mAtkSpd" val="1.2" />
 				<add order="0x40" stat="accCombat" val="4" />
 				<sub order="0x40" stat="debuffVuln" val="10" />
+			    <mul order="0x30" stat="runSpd" val="0.8" />
 			</effect>
 		</for>
 	</skill>
@@ -748,6 +750,7 @@
 				<mul order="0x30" stat="mAtkSpd" val="1.2" />
 				<sub order="0x40" stat="debuffVuln" val="10" />
 				<add order="0x40" stat="absorbDam" val="5" /> <!-- absorb 5% HP from damage inflicted on enemies -->
+			    <mul order="0x30" stat="runSpd" val="0.8" />
 			</effect>
 		</for>
 	</skill>

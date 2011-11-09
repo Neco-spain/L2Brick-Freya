@@ -194,9 +194,10 @@ public final class SiegableHall extends ClanHall
 	}
 	
 	public final void removeAttacker(final L2Clan clan)
-	{
-		getSiege().getAttackers().remove(clan.getClanId());
-	}
+	        {
+	            if(getSiege() != null)
+	               getSiege().getAttackers().remove(clan.getClanId());
+	        }
 	
 	public final boolean isRegistered(L2Clan clan)
 	{
