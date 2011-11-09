@@ -28,7 +28,7 @@ public class Chimeras extends L2AttackableAIScript
 		{ 9969, 235570, -1993 }
 	};
 
-	private static final int BOTTLE = 9672;
+	private static final int BOTTLE = 2359;
 
 	private static final int DIM_LIFE_FORCE = 9680;
 	private static final int LIFE_FORCE = 9681;
