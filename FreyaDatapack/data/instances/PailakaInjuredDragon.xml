@@ -23,7 +23,9 @@
                         respawn="0" onkilldelay="0" />
                 <spawn npcId="18637" x="123164" y="-52003" z="-2461" heading="13414"
                         respawn="0" onkilldelay="0" />
-                <spawn npcId="18637" x="123726" y="-51665" z="-2467" heading="6603"
+                <spawn npcId="18637" x="120971" y="-42371" z="-3195" heading="13414"
+                        respawn="0" onkilldelay="0" />
+				<spawn npcId="18637" x="123726" y="-51665" z="-2467" heading="6603"
                         respawn="0" onkilldelay="0" />
                 <spawn npcId="18637" x="111641" y="-56027" z="-2783" heading="43022"
                         respawn="0" onkilldelay="0" />
@@ -91,7 +93,15 @@
                         respawn="0" onkilldelay="0" />
                 <spawn npcId="18651" x="111556" y="-54895" z="-2861" heading="20821"
                         respawn="0" onkilldelay="0" />
-                <spawn npcId="18653" x="116213" y="-50301" z="-2622" heading="50611"
+                <spawn npcId="18651" x="114968" y="-41045" z="-2581" heading="27410"
+                        respawn="0" onkilldelay="0" />
+                <spawn npcId="18651" x="114606" y="-40137" z="-2509" heading="24213"
+                        respawn="0" onkilldelay="0" />
+                <spawn npcId="18651" x="115357" y="-39960" z="-2510" heading="24283"
+                        respawn="0" onkilldelay="0" />
+                <spawn npcId="18651" x="115070" y="-39184" z="-2494" heading="20821"
+                        respawn="0" onkilldelay="0" />
+				<spawn npcId="18653" x="116213" y="-50301" z="-2622" heading="50611"
                         respawn="0" onkilldelay="0" />
                 <spawn npcId="18653" x="116432" y="-55729" z="-2441" heading="65250"
                         respawn="0" onkilldelay="0" />
