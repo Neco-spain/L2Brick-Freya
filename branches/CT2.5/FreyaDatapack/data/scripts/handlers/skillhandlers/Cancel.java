@@ -93,16 +93,11 @@ public class Cancel implements ISkillHandler
 				continue;
 			
 			int lastCanceledSkillId = 0;
+			int count = skill.getMaxNegatedEffects();
 			double rate = skill.getPower();
 			final double vulnModifier = Formulas.calcSkillTypeVulnerability(0, target, skill.getSkillType());
 			final double profModifier = Formulas.calcSkillTypeProficiency(0, activeChar, target, skill.getSkillType());
 			double res = vulnModifier + profModifier;
-			int count = 0;
-			int maxCancelEffects = skill.getMaxNegatedEffects();
-			while (count == 0)
-			{
-			count = Rnd.get(maxCancelEffects);
-			}
 			double resMod = 1;
 			if (res != 0)
 			{
