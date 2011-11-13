@@ -107,6 +107,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			
 			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
 				_title = (Config.L2JMOD_CHAMP_TITLE); // On every subclass
+			else if (Config.L2JMOD_GRANDCHAMPION_ENABLE && cha.isGrandChampion())
+				_title = (Config.L2JMOD_GRANDCHAMP_TITLE);					
 			else if (cha.getTemplate().serverSideTitle)
 				_title = cha.getTemplate().title; // On every subclass
 			else
@@ -326,6 +328,10 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 				writeD(_allyId); // ally id
 				writeD(_allyCrest); // all crest
 				writeC(_npc.isFlying() ? 2 : 0); // C2
+				if (Config.L2JMOD_GRANDCHAMPION_ENABLE && _npc.isGrandChampion())
+                writeC(2);
+				else if (!_npc.isChampion() && !_npc.isGrandChampion())
+                writeC(0);			
                 if (Config.L2JMOD_CHAMPION_ENABLE)
                        {
                                writeC(_npc.isChampion() ? Config.L2JMOD_CHAMPION_ENABLE_AURA : 0);
