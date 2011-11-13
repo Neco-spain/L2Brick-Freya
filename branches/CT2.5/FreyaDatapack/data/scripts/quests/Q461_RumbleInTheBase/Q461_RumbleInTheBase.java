@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 public class Q461_RumbleInTheBase extends Quest
 {
-	private static final String qn = "461_RumbleInTheBase";
+	private static final String qn = "Q461_RumbleInTheBase";
 	private static final int STAN = 30200;
 	private static final int CHIEF = 18908;
 	private static final int FISH = 15503; //5
@@ -56,7 +56,7 @@ public class Q461_RumbleInTheBase extends Quest
 	{
 		String htmltext = getNoQuestMsg(player);
 		QuestState st = player.getQuestState(qn);
-		QuestState _prev = player.getQuestState("252_ItSmellsDelicious");
+		QuestState _prev = player.getQuestState("Q252_ItSmellsDelicious");
 		if (st == null)
 			return htmltext;
 		

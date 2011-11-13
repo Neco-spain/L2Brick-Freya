@@ -14,7 +14,7 @@ public class Q289_NoMoreSoupForYou extends Quest
 	public static final int RATE		= 5;
 	public static final int SOUP		= 15712;
 
-	public static final String qn = "289_NoMoreSoupForYou";
+	public static final String qn = "Q289_NoMoreSoupForYou";
 	
 	private static final int[] MOBS =
 	{
@@ -104,7 +104,7 @@ public class Q289_NoMoreSoupForYou extends Quest
 			switch (st.getState())
 			{
 				case State.CREATED:
-					QuestState PREV = player.getQuestState("252_ItSmellsDelicious");
+					QuestState PREV = player.getQuestState("Q252_ItSmellsDelicious");
 					if ((PREV != null) && (PREV.getState() == State.COMPLETED) && (player.getLevel() >= 82))
 						htmltext = "30200-01.htm";
 					else
