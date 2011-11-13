@@ -545,10 +545,10 @@ if (Config.L2JMOD_GRANDCHAMPION_ENABLE && Config.L2JMOD_CHAMPION_ENABLE)
 				if
 				(
 					mob instanceof L2MonsterInstance
-					&& !getTemplate().isQuestMonster()
+					&& !getTemplate().isQuestMonster
 					&& !mob.isRaid()
 					&& !((L2MonsterInstance)mob).isRaidMinion()
-					&& config.L2JMOD_GRANDCHAMPION_FREQUENCY > 0
+					&& Config.L2JMOD_GRANDCHAMPION_FREQUENCY > 0
 					&& mob.getLevel()>=Config.L2JMOD_GRANDCHAMP_MIN_LVL
 					&& mob.getLevel()<=Config.L2JMOD_GRANDCHAMP_MAX_LVL
 					&& (Config.L2JMOD_GRANDCHAMPION_ENABLE_IN_INSTANCES || getInstanceId() == 0)
