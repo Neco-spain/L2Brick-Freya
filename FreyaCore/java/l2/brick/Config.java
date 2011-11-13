@@ -4236,24 +4236,24 @@ public final class Config
 					if (L2JMOD_CHAMPION_ENABLE_AURA != 0 && L2JMOD_CHAMPION_ENABLE_AURA != 1 && L2JMOD_CHAMPION_ENABLE_AURA != 2) L2JMOD_CHAMPION_ENABLE_AURA = 0;
 					L2JMOD_CHAMPION_ENABLE_IN_INSTANCES = Boolean.parseBoolean(Champions.getProperty("ChampionEnableInInstances", "False"));
 
-L2JMOD_GRANDCHAMPION_ENABLE = Boolean.parseBoolean(champions.getProperty("GrandChampionEnable", "false"));
-					L2JMOD_GRANDCHAMPION_PASSIVE = Boolean.parseBoolean(champions.getProperty("GrandChampionPassive", "false"));
-					L2JMOD_GRANDCHAMPION_FREQUENCY = Integer.parseInt(champions.getProperty("GrandChampionFrequency", "0"));
-					L2JMOD_GRANDCHAMP_TITLE = champions.getProperty("GrandChampionTitle", "Grand Champion");
-					L2JMOD_GRANDCHAMP_MIN_LVL = Integer.parseInt(champions.getProperty("GrandChampionMinLevel", "20"));
-					L2JMOD_GRANDCHAMP_MAX_LVL = Integer.parseInt(champions.getProperty("GrandChampionMaxLevel", "60"));
-					L2JMOD_GRANDCHAMPION_HP = Integer.parseInt(champions.getProperty("GrandChampionHp", "7"));
-					L2JMOD_GRANDCHAMPION_HP_REGEN = Float.parseFloat(champions.getProperty("GrandChampionHpRegen", "1."));
-					L2JMOD_GRANDCHAMPION_REWARDS = Integer.parseInt(champions.getProperty("GrandChampionRewards", "8"));
-					L2JMOD_GRANDCHAMPION_ADENAS_REWARDS = Float.parseFloat(champions.getProperty("GrandChampionAdenasRewards", "1"));
-					L2JMOD_GRANDCHAMPION_ATK = Float.parseFloat(champions.getProperty("GrandChampionAtk", "1."));
-					L2JMOD_GRANDCHAMPION_SPD_ATK = Float.parseFloat(champions.getProperty("GrandChampionSpdAtk", "1."));
-					L2JMOD_GRANDCHAMPION_REWARD_LOWER_LVL_ITEM_CHANCE = Integer.parseInt(champions.getProperty("GrandChampionRewardLowerLvlItemChance", "0"));
-					L2JMOD_GRANDCHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE = Integer.parseInt(champions.getProperty("GrandChampionRewardHigherLvlItemChance", "0"));
-					L2JMOD_GRANDCHAMPION_REWARD_ID = Integer.parseInt(champions.getProperty("GrandChampionRewardItemID", "6393"));
-					L2JMOD_GRANDCHAMPION_REWARD_QTY = Integer.parseInt(champions.getProperty("GrandChampionRewardItemQty", "1"));
-					L2JMOD_GRANDCHAMPION_ENABLE_VITALITY = Boolean.parseBoolean(champions.getProperty("GrandChampionEnableVitality", "False"));
-					L2JMOD_GRANDCHAMPION_ENABLE_IN_INSTANCES = Boolean.parseBoolean(champions.getProperty("GrandChampionEnableInInstances", "False"));
+L2JMOD_GRANDCHAMPION_ENABLE = Boolean.parseBoolean(Champions.getProperty("GrandChampionEnable", "false"));
+					L2JMOD_GRANDCHAMPION_PASSIVE = Boolean.parseBoolean(Champions.getProperty("GrandChampionPassive", "false"));
+					L2JMOD_GRANDCHAMPION_FREQUENCY = Integer.parseInt(Champions.getProperty("GrandChampionFrequency", "0"));
+					L2JMOD_GRANDCHAMP_TITLE = Champions.getProperty("GrandChampionTitle", "Grand Champion");
+					L2JMOD_GRANDCHAMP_MIN_LVL = Integer.parseInt(Champions.getProperty("GrandChampionMinLevel", "20"));
+					L2JMOD_GRANDCHAMP_MAX_LVL = Integer.parseInt(Champions.getProperty("GrandChampionMaxLevel", "60"));
+					L2JMOD_GRANDCHAMPION_HP = Integer.parseInt(Champions.getProperty("GrandChampionHp", "7"));
+					L2JMOD_GRANDCHAMPION_HP_REGEN = Float.parseFloat(Champions.getProperty("GrandChampionHpRegen", "1."));
+					L2JMOD_GRANDCHAMPION_REWARDS = Integer.parseInt(Champions.getProperty("GrandChampionRewards", "8"));
+					L2JMOD_GRANDCHAMPION_ADENAS_REWARDS = Float.parseFloat(Champions.getProperty("GrandChampionAdenasRewards", "1"));
+					L2JMOD_GRANDCHAMPION_ATK = Float.parseFloat(Champions.getProperty("GrandChampionAtk", "1."));
+					L2JMOD_GRANDCHAMPION_SPD_ATK = Float.parseFloat(Champions.getProperty("GrandChampionSpdAtk", "1."));
+					L2JMOD_GRANDCHAMPION_REWARD_LOWER_LVL_ITEM_CHANCE = Integer.parseInt(Champions.getProperty("GrandChampionRewardLowerLvlItemChance", "0"));
+					L2JMOD_GRANDCHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE = Integer.parseInt(Champions.getProperty("GrandChampionRewardHigherLvlItemChance", "0"));
+					L2JMOD_GRANDCHAMPION_REWARD_ID = Integer.parseInt(Champions.getProperty("GrandChampionRewardItemID", "6393"));
+					L2JMOD_GRANDCHAMPION_REWARD_QTY = Integer.parseInt(Champions.getProperty("GrandChampionRewardItemQty", "1"));
+					L2JMOD_GRANDCHAMPION_ENABLE_VITALITY = Boolean.parseBoolean(Champions.getProperty("GrandChampionEnableVitality", "False"));
+					L2JMOD_GRANDCHAMPION_ENABLE_IN_INSTANCES = Boolean.parseBoolean(Champions.getProperty("GrandChampionEnableInInstances", "False"));
 				}
 				
 				catch (Exception e)

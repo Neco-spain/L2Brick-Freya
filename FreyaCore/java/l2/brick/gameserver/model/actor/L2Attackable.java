@@ -1437,7 +1437,9 @@ public class L2Attackable extends L2Npc
 			itemCount *= Config.L2JMOD_CHAMPION_ADENAS_REWARDS;
 		}
 
-		if (Config.L2JMOD_GRANDCHAMPION_ENABLE  && isGrandChampion() && ((drop.getItemId() == PcInventory.ADENA_ID) || Util.contains(SevenSigns.SEAL_STONE_IDS, drop.getItemId())))
+		if (Config.L2JMOD_GRANDCHAMPION_ENABLE ) 
+			if ((drop.getItemId() == 57 || (drop.getItemId() >= 6360 && drop.getItemId() <= 6362)) && isGrandChampion())
+	
 		{
 		    itemCount *= Config.L2JMOD_GRANDCHAMPION_ADENAS_REWARDS;
 		}		
@@ -1604,7 +1606,8 @@ public class L2Attackable extends L2Npc
 				itemCount *= Config.L2JMOD_CHAMPION_ADENAS_REWARDS;
 			}
 
-			if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion() && ((drop.getItemId() == PcInventory.ADENA_ID) || Util.contains(SevenSigns.SEAL_STONE_IDS, drop.getItemId())))
+			if (Config.L2JMOD_GRANDCHAMPION_ENABLE)
+				if ((drop.getItemId() == 57 || (drop.getItemId() >= 6360 && drop.getItemId() <= 6362)) && isGrandChampion())
 			{
 				itemCount *= Config.L2JMOD_GRANDCHAMPION_ADENAS_REWARDS;			
 			}
