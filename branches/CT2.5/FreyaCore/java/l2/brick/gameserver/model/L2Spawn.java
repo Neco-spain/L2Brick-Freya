@@ -81,6 +81,9 @@ public class L2Spawn
 	
 	private static List<SpawnListener> _spawnListeners = new FastList<SpawnListener>();
 
+	/* Champion/GrandChampion */
+	int condForChamp = 0;
+	
 	/** The task launching the function doSpawn() */
 	class SpawnTask implements Runnable
 	{
@@ -516,6 +519,7 @@ public class L2Spawn
         
 		if (mob instanceof L2Attackable)
 			((L2Attackable) mob).setChampion(false);
+			((L2Attackable) mob).setGrandChampion(false);
 
 		if (Config.L2JMOD_CHAMPION_ENABLE)
 		{
@@ -528,15 +532,43 @@ public class L2Spawn
 				&& Config.L2JMOD_CHAMPION_FREQUENCY > 0 
 				&& mob.getLevel()>=Config.L2JMOD_CHAMP_MIN_LVL 
 				&& mob.getLevel()<=Config.L2JMOD_CHAMP_MAX_LVL
-				&& (Config.L2JMOD_CHAMPION_ENABLE_IN_INSTANCES || getInstanceId() == 0)
+				&& (Config.L2JMOD_CHAMPION_ENABLE_IN_INSTANCES || getInstanceId() == 0)//same
 			)
 			{
 				int random = Rnd.get(100);
 				if (random < Config.L2JMOD_CHAMPION_FREQUENCY)
-					((L2Attackable) mob).setChampion(true);
+					condForChamp = 1;
 			}
 		}
-
+if (Config.L2JMOD_GRANDCHAMPION_ENABLE && Config.L2JMOD_CHAMPION_ENABLE)		
+		{    
+				if
+				(
+					mob instanceof L2MonsterInstance
+					&& !getTemplate().isQuestMonster()
+					&& !mob.isRaid()
+					&& !((L2MonsterInstance)mob).isRaidMinion()
+					&& config.L2JMOD_GRANDCHAMPION_FREQUENCY > 0
+					&& mob.getLevel()>=Config.L2JMOD_GRANDCHAMP_MIN_LVL
+					&& mob.getLevel()<=Config.L2JMOD_GRANDCHAMP_MAX_LVL
+					&& (Config.L2JMOD_GRANDCHAMPION_ENABLE_IN_INSTANCES || getInstanceId() == 0)
+				)
+				{
+					int random = Rnd.get(100);
+				
+					if (random < Config.L2JMOD_CHAMPION_FREQUENCY && (condForChamp == 1))
+						condForChamp = 2;
+				}
+		}		
+        switch (condForChamp)
+        {
+           case 1:
+             ((L2Attackable) mob).setChampion(true);
+            break;
+           case 2:
+             ((L2Attackable) mob).setGrandChampion(true);
+        }
+	
         	// Link the L2NpcInstance to this L2Spawn
         	mob.setSpawn(this);
 

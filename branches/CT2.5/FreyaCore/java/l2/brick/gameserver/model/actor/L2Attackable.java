@@ -83,6 +83,7 @@ public class L2Attackable extends L2Npc
 	private boolean _isRaid = false;
 	private boolean _isRaidMinion = false;
 	private boolean _champion = false;
+	private boolean _grandChampion = false;
 	
 	/**
 	 * This class contains all AggroInfo of the L2Attackable against the attacker L2Character.
@@ -843,6 +844,12 @@ public class L2Attackable extends L2Npc
 								exp *= Config.L2JMOD_CHAMPION_REWARDS;
 								sp *= Config.L2JMOD_CHAMPION_REWARDS;
 							}
+							/** GrandChampion **/
+							if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion())
+							{
+								exp *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
+								sp *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
+							}
 							
 							// Check for an over-hit enabled strike
 							if (attacker instanceof L2PcInstance)
@@ -985,6 +992,12 @@ public class L2Attackable extends L2Npc
 						{
 							exp *= Config.L2JMOD_CHAMPION_REWARDS;
 							sp *= Config.L2JMOD_CHAMPION_REWARDS;
+						}
+						/** GrandChampion **/
+						if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion())
+						{
+							exp *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
+							sp *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
 						}
 						
 						exp *= partyMul;
@@ -1373,8 +1386,13 @@ public class L2Attackable extends L2Npc
 				dropChance *= isRaid() && !isRaidMinion() ? Config.RATE_DROP_ITEMS_BY_RAID : Config.RATE_DROP_ITEMS;
 		}
 		if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
+		{	
 			dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
-				
+		}
+		if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion()) 
+		{
+           		dropChance *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
+	        }		
 		// Set our limits for chance of drop
 		if (dropChance < 1)
 			dropChance = 1;
@@ -1415,8 +1433,14 @@ public class L2Attackable extends L2Npc
 		if (Config.L2JMOD_CHAMPION_ENABLE)
 			// TODO (April 11, 2009): Find a way not to hardcode these values.
 			if ((drop.getItemId() == 57 || (drop.getItemId() >= 6360 && drop.getItemId() <= 6362)) && isChampion())
-				itemCount *= Config.L2JMOD_CHAMPION_ADENAS_REWARDS;
-		
+		{		
+			itemCount *= Config.L2JMOD_CHAMPION_ADENAS_REWARDS;
+		}
+
+		if (Config.L2JMOD_GRANDCHAMPION_ENABLE  && isGrandChampion() && ((drop.getItemId() == PcInventory.ADENA_ID) || Util.contains(SevenSigns.SEAL_STONE_IDS, drop.getItemId())))
+		{
+		    itemCount *= Config.L2JMOD_GRANDCHAMPION_ADENAS_REWARDS;
+		}		
 		if (itemCount > 0)
 			return new RewardItem(drop.getItemId(), itemCount);
 		else if (itemCount == 0 && Config.DEBUG)
@@ -1472,8 +1496,14 @@ public class L2Attackable extends L2Npc
 		categoryDropChance *= isRaid() && !isRaidMinion() ? Config.RATE_DROP_ITEMS_BY_RAID : Config.RATE_DROP_ITEMS;
 		
 		if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
+		{
 			categoryDropChance *= Config.L2JMOD_CHAMPION_REWARDS;
-				
+		}
+			
+		if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion()) 
+		{
+			categoryDropChance *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
+		}					
 		// Set our limits for chance of drop
 		if (categoryDropChance < 1)
 			categoryDropChance = 1;
@@ -1517,8 +1547,14 @@ public class L2Attackable extends L2Npc
 			}
 			
 			if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
+			{
 				dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
-			
+			}
+
+			if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion()) 
+			{
+				dropChance *= Config.L2JMOD_GRANDCHAMPION_REWARDS;
+			}
 			dropChance = Math.round(dropChance);
 			
 			if (dropChance < L2DropData.MAX_CHANCE)
@@ -1564,8 +1600,14 @@ public class L2Attackable extends L2Npc
 			if (Config.L2JMOD_CHAMPION_ENABLE)
 				// TODO (April 11, 2009): Find a way not to hardcode these values.
 				if ((drop.getItemId() == 57 || (drop.getItemId() >= 6360 && drop.getItemId() <= 6362)) && isChampion())
-					itemCount *= Config.L2JMOD_CHAMPION_ADENAS_REWARDS;
-			
+			{		
+				itemCount *= Config.L2JMOD_CHAMPION_ADENAS_REWARDS;
+			}
+
+			if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion() && ((drop.getItemId() == PcInventory.ADENA_ID) || Util.contains(SevenSigns.SEAL_STONE_IDS, drop.getItemId())))
+			{
+				itemCount *= Config.L2JMOD_GRANDCHAMPION_ADENAS_REWARDS;			
+			}
 			if (!Config.MULTIPLE_ITEM_DROP && !ItemTable.getInstance().getTemplate(drop.getItemId()).isStackable() && itemCount > 1)
 				itemCount = 1;
 			
@@ -1934,7 +1976,26 @@ public class L2Attackable extends L2Npc
                        dropItem(player, item);
 			}
 		}
-		
+		if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion() && (Config.L2JMOD_GRANDCHAMPION_REWARD_LOWER_LVL_ITEM_CHANCE > 0) || (Config.L2JMOD_GRANDCHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE > 0))
+		{	
+			int champqty = Rnd.get(Config.L2JMOD_GRANDCHAMPION_REWARD_QTY);
+			RewardItem item = new RewardItem(Config.L2JMOD_GRANDCHAMPION_REWARD_ID, ++champqty);			
+
+          if (player.getLevel() <= getLevel() && (Rnd.get(100) < Config.L2JMOD_GRANDCHAMPION_REWARD_LOWER_LVL_ITEM_CHANCE))
+		  {
+				if (Config.AUTO_LOOT || isFlying())
+					player.addItem("GrandChampionLoot", item.getItemId(), item.getCount(), this, true); // Give the item(s) to the L2PcInstance that has killed the L2Attackable
+				else
+					dropItem(player, item);
+		  }
+			else if (player.getLevel() > getLevel() && (Rnd.get(100) < Config.L2JMOD_GRANDCHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE))
+			{
+				if (Config.AUTO_LOOT || isFlying())
+					player.addItem("GrandChampionLoot", item.getItemId(), item.getCount(), this, true); // Give the item(s) to the L2PcInstance that has killed the L2Attackable
+				else
+					dropItem(player, item);
+			}
+        }				
 		//Instant Item Drop :>
 		if (getTemplate().dropherbgroup > 0)
 		{
@@ -2601,7 +2662,7 @@ public class L2Attackable extends L2Npc
 		if (isChampion() && !Config.L2JMOD_CHAMPION_ENABLE_VITALITY)
 			return false;
 		
-		return true;
+		return (!isGrandChampion() || Config.L2JMOD_GRANDCHAMPION_ENABLE_VITALITY);
 	}
 	
 	/** Return True if the L2Character is RaidBoss or his minion. */
@@ -2660,6 +2721,17 @@ public class L2Attackable extends L2Npc
 	{
 		return _champion;
 	}
+
+    public void setGrandChampion(boolean val)
+    {
+        _grandChampion = val;
+    }
+   
+    public boolean isGrandChampion()
+    {
+        return _grandChampion;
+    }
+	
 	//1 Min Counter and the event that happens
 	class CaptchaTimer implements Runnable{
 		L2PcInstance activeChar;

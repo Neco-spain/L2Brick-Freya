@@ -6923,6 +6923,8 @@ public abstract class L2Character extends L2Object
 	{
 		if (Config.L2JMOD_CHAMPION_ENABLE && isChampion() && Config.L2JMOD_CHAMPION_HP != 0)
 			getStatus().reduceHp(i/Config.L2JMOD_CHAMPION_HP, attacker, awake, isDOT, false);
+		else if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion() && Config.L2JMOD_GRANDCHAMPION_HP != 0)
+			getStatus().reduceHp(i / Config.L2JMOD_GRANDCHAMPION_HP, attacker, awake, isDOT, false);		
 		else
 			getStatus().reduceHp(i, attacker, awake, isDOT, false);
 	}
@@ -6947,6 +6949,11 @@ public abstract class L2Character extends L2Object
 		return false;
 	}
 	
+	public boolean isGrandChampion()
+	{	
+	return false;
+	}
+
 	/**
 	 * Check player max buff count
 	 * @return max buff count
