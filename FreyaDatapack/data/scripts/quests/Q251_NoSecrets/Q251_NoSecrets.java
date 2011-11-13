@@ -15,7 +15,7 @@ public class Q251_NoSecrets extends Quest
 	public static final int DIARY		= 15508; //10
 	public static final int TABLE		= 15509; //5
 
-	public static final String qn = "251_NoSecrets";
+	public static final String qn = "Q251_NoSecrets";
 	
 	private static final int[] MOBS =
 	{
