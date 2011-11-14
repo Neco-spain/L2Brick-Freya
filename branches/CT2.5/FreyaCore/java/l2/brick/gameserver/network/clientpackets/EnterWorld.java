@@ -360,6 +360,8 @@ public class EnterWorld extends L2GameClientPacket
 		
 		activeChar.spawnMe(activeChar.getX(), activeChar.getY(), activeChar.getZ());
 		
+		activeChar.getInventory().applyItemSkills();
+		
 		if (L2Event.active && L2Event.connectionLossData.containsKey(activeChar.getName()) && L2Event.isOnEvent(activeChar))
 			L2Event.restoreChar(activeChar);
 		else if (L2Event.connectionLossData.containsKey(activeChar.getName()))
