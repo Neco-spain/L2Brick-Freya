@@ -956,12 +956,6 @@ public abstract class L2Character extends L2Object
 		if (Config.ALT_GAME_TIREDNESS)
 			setCurrentCp(getCurrentCp() - 10);
 		
-		// Recharge any active auto soulshot tasks for player (or player's summon if one exists).
-		if (this instanceof L2PcInstance)
-			((L2PcInstance)this).rechargeAutoSoulShot(true, false, false);
-		else if (this instanceof L2Summon)
-			((L2Summon)this).getOwner().rechargeAutoSoulShot(true, false, true);
-		
 		// Verify if soulshots are charged.
 		boolean wasSSCharged;
 		
@@ -1072,8 +1066,47 @@ public abstract class L2Character extends L2Object
 		
 		// Notify AI with EVT_READY_TO_ACT
 		ThreadPoolManager.getInstance().scheduleAi(new NotifyAITask(CtrlEvent.EVT_READY_TO_ACT), timeAtk+reuse);
-	}
+    }
 	
+	// Recharge any active auto soulshot tasks for player (or player's summon if one exists).	
+	private class AutoSS implements Runnable
+	{
+		private L2Character _character;
+		private L2Skill _skill = null;
+		public AutoSS(L2Character Character,L2Skill Skill)
+		{
+			_character = Character;
+			_skill = Skill;
+		}
+		public void run()
+		{
+				// Recharge AutoSoulShot
+				if (_skill != null)
+				{
+					if (_skill.useSpiritShot())
+					{
+						if (_character instanceof L2PcInstance)
+							((L2PcInstance) _character).rechargeAutoSoulShot(false, true, false);
+						else if (_character instanceof L2Summon)
+							((L2Summon) _character).getOwner().rechargeAutoSoulShot(false, true, true);
+					}
+					else if (_skill.useSoulShot())
+					{
+						if (_character instanceof L2PcInstance)
+							((L2PcInstance) _character).rechargeAutoSoulShot(true, false, false);
+						else if (_character instanceof L2Summon)
+							((L2Summon) _character).getOwner().rechargeAutoSoulShot(true, false, true);
+					}
+				}
+				else
+				{
+					if (_character instanceof L2PcInstance)
+						((L2PcInstance) _character).rechargeAutoSoulShot(true, false, false);
+					else if (_character instanceof L2Summon)
+						((L2Summon) _character).getOwner().rechargeAutoSoulShot(true, false, true);
+				}
+		}
+	}
 	/**
 	 * Launch a Bow attack.<BR><BR>
 	 *
@@ -1148,7 +1181,7 @@ public abstract class L2Character extends L2Object
 		
 		// Create a new hit task with Medium priority
 		ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.soulshot, shld1), sAtk);
-		
+		ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,null), sAtk);
 		// Calculate and set the disable delay of the bow in function of the Attack Speed
 		_disableBowAttackEndTime = (sAtk+reuse)/GameTimeController.MILLIS_IN_TICK + GameTimeController.getGameTicks();
 		
@@ -1231,7 +1264,7 @@ public abstract class L2Character extends L2Object
 		}
 		else
 			ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.soulshot, shld1), sAtk);
-		
+		    ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,null), sAtk);
 		// Calculate and set the disable delay of the bow in function of the Attack Speed
 		_disableCrossBowAttackEndTime = (sAtk+reuse)/GameTimeController.MILLIS_IN_TICK + GameTimeController.getGameTicks();
 		
@@ -1324,11 +1357,11 @@ public abstract class L2Character extends L2Object
 		{
 			// Create a new hit task with Medium priority for hit 1
 			ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.soulshot, shld1), sAtk/2);
-			
+			ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,null), sAtk);
 			// Create a new hit task with Medium priority for hit 2 with a higher delay
 			ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage2, crit2, miss2, attack.soulshot, shld2), sAtk);
 		}
-		
+		ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,null), sAtk);
 		// Add those hits to the Server-Client packet Attack
 		attack.hit(attack.createHit(target, damage1, miss1, crit1, shld1),
 				attack.createHit(target, damage2, miss2, crit2, shld2));
@@ -1514,7 +1547,7 @@ public abstract class L2Character extends L2Object
 		}
 		else
 			ThreadPoolManager.getInstance().scheduleAi(new HitTask(target, damage1, crit1, miss1, attack.soulshot, shld1), sAtk);
-		
+		    ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,null), sAtk);
 		// Add this hit to the Server-Client packet Attack
 		attack.hit(attack.createHit(target, damage1, miss1, crit1, shld1));
 		
@@ -1605,22 +1638,6 @@ public abstract class L2Character extends L2Object
 			simultaneously = true;
 		
 		stopEffectsOnAction();
-		
-		//Recharge AutoSoulShot
-		if (skill.useSoulShot())
-		{
-			if (this instanceof L2PcInstance)
-				((L2PcInstance)this).rechargeAutoSoulShot(true, false, false);
-			else if (this instanceof L2Summon)
-				((L2Summon)this).getOwner().rechargeAutoSoulShot(true, false, true);
-		}
-		else if (skill.useSpiritShot())
-		{
-			if (this instanceof L2PcInstance)
-				((L2PcInstance)this).rechargeAutoSoulShot(false, true, false);
-			else if (this instanceof L2Summon)
-				((L2Summon)this).getOwner().rechargeAutoSoulShot(false, true, true);
-		}
 		
 		// Set the target of the skill in function of Skill Type and Target Type
 		L2Character target = null;
@@ -2024,6 +2041,7 @@ public abstract class L2Character extends L2Object
 				// Create a task MagicUseTask to launch the MagicSkill at the end of the casting time (hitTime)
 				// For client animation reasons (party buffs especially) 400 ms before!
 				_skillCast2 = ThreadPoolManager.getInstance().scheduleEffect(mut, hitTime-400);
+			    ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,skill), hitTime+200);
 			}
 			else
 			{
@@ -2037,6 +2055,7 @@ public abstract class L2Character extends L2Object
 				// Create a task MagicUseTask to launch the MagicSkill at the end of the casting time (hitTime)
 				// For client animation reasons (party buffs especially) 400 ms before!
 				_skillCast = ThreadPoolManager.getInstance().scheduleEffect(mut, hitTime-400);
+			    ThreadPoolManager.getInstance().scheduleGeneral(new AutoSS(this,skill), hitTime+200);
 			}
 		}
 		else
@@ -6924,7 +6943,7 @@ public abstract class L2Character extends L2Object
 		if (Config.L2JMOD_CHAMPION_ENABLE && isChampion() && Config.L2JMOD_CHAMPION_HP != 0)
 			getStatus().reduceHp(i/Config.L2JMOD_CHAMPION_HP, attacker, awake, isDOT, false);
 		else if (Config.L2JMOD_GRANDCHAMPION_ENABLE && isGrandChampion() && Config.L2JMOD_GRANDCHAMPION_HP != 0)
-			getStatus().reduceHp(i / Config.L2JMOD_GRANDCHAMPION_HP, attacker, awake, isDOT, false);		
+			getStatus().reduceHp(i / Config.L2JMOD_GRANDCHAMPION_HP, attacker, awake, isDOT, false);
 		else
 			getStatus().reduceHp(i, attacker, awake, isDOT, false);
 	}
