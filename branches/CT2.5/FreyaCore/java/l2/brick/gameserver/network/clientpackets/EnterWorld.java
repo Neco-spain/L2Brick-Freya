@@ -63,6 +63,7 @@ import l2.brick.gameserver.network.serverpackets.EtcStatusUpdate;
 import l2.brick.gameserver.network.serverpackets.ExAutoSoulShot;
 import l2.brick.gameserver.network.serverpackets.ExBasicActionList;
 import l2.brick.gameserver.network.serverpackets.ExBirthdayPopup;
+import l2.brick.gameserver.network.serverpackets.ExBrPremiumState;
 import l2.brick.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import l2.brick.gameserver.network.serverpackets.ExNoticePostArrived;
 import l2.brick.gameserver.network.serverpackets.ExNotifyPremiumItem;
@@ -326,6 +327,9 @@ public class EnterWorld extends L2GameClientPacket
 		
 		// Send Shortcuts
 		sendPacket(new ShortCutInit(activeChar));
+		
+		// Premium Account State (PA)
+        sendPacket(new ExBrPremiumState(activeChar, activeChar.getPremiumService()));
 		
 		// Send Action list
 		activeChar.sendPacket(ExBasicActionList.getStaticPacket(activeChar));
