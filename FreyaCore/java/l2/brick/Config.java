@@ -807,6 +807,7 @@ public final class Config
 	public static boolean ALLOW_WEAR;
 	public static int WEAR_DELAY;
 	public static int WEAR_PRICE;
+	public static boolean REMOVE_DANCES_ON_RESTART;
 	public static boolean ALLOW_LOTTERY;
 	public static boolean ALLOW_RACE;
 	public static boolean ALLOW_WATER;
@@ -3741,7 +3742,7 @@ public final class Config
 					ALLOW_WEAR = Boolean.parseBoolean(gamefeature.getProperty("AllowWear", "True"));
 					WEAR_DELAY = Integer.parseInt(gamefeature.getProperty("WearDelay", "5"));
 					WEAR_PRICE = Integer.parseInt(gamefeature.getProperty("WearPrice", "10"));
-
+                    REMOVE_DANCES_ON_RESTART = Boolean.parseBoolean(gamefeature.getProperty("RemoveDancesOnRestart", "True"));
 				}
 				
 				catch (Exception e)

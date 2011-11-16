@@ -8112,6 +8112,10 @@ public final class L2PcInstance extends L2Playable
 					if (storedSkills.contains(skill.getReuseHashCode()))
 						continue;
 					
+					// Dances and Songs are not saved on restart. Retail like. Tested on RpgClub
+					if (Config.REMOVE_DANCES_ON_RESTART && skill.isDance())
+					    continue;
+					
 					storedSkills.add(skill.getReuseHashCode());
 					
 					if (!effect.isHerbEffect() && effect.getInUse()
