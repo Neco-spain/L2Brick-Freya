@@ -13,39 +13,34 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package l2.brick.gameserver.network.serverpackets;
-
+import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * format: dc
- * @author  GodKratos
+ * @author GodKratos
  */
-public class ExBrPremiumState extends L2GameServerPacket
+
+ public class ExBrPremiumState extends L2GameServerPacket
 {
 	private static final String _S__FE_BC_EXBRPREMIUMSTATE = "[S] FE:CD ExBrPremiumState";
-	private int _objId;
+	private L2PcInstance _activeChar;
 	private int _state;
 	
-	public ExBrPremiumState(int id, int state)
+	public ExBrPremiumState(L2PcInstance activeChar, int state)
 	{
-		_objId = id;
+		_activeChar = activeChar;
 		_state = state;
 	}
 	
-	/**
-	 * @see l2.brick.gameserver.serverpackets.ServerBasePacket#writeImpl()
-	 */
 	@Override
 	protected void writeImpl()
 	{
 		writeC(0xfe);
 		writeH(0xcd);
-		writeD(_objId);
+		writeD(_activeChar.getObjectId());
 		writeC(_state);
 	}
 	
-	/**
-	 * @see l2.brick.gameserver.BasePacket#getType()
-	 */
 	@Override
 	public String getType()
 	{
