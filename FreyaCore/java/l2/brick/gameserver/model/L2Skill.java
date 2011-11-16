@@ -1088,15 +1088,11 @@ public abstract class L2Skill implements IChanceSkillTrigger
 	
 	public final boolean useSoulShot()
 	{
-		switch (getSkillType())
-		{
-			case PDAM:
-			case CHARGEDAM:
-			case BLOW:
-				return true;
-			default:
-				return false;
-		}
+		boolean result = false;
+
+		if ((!isMagic()) && (getSkillType() != L2SkillType.PUMPING) || (getSkillType() != L2SkillType.REELING))
+			result = true;
+		return result;
 	}
 	
 	public final boolean useSpiritShot()
