@@ -1935,7 +1935,6 @@ public final class Formulas
 			if (target == null)
 				return true; // no effect
 			
-			// little weird, but remember what CRIT_DAMAGE_EVASION > 1 increase chances to _evade_ crit hits
 			if (skill) //skills are excluded from crit dmg evasion
 			        return success;
 			else
