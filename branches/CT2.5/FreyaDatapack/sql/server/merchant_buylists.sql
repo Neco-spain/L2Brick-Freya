@@ -19736,7 +19736,8 @@ INSERT INTO `merchant_buylists` (`item_id`,`price`,`shop_id`,`order`) VALUES
 (9948,0,9915,79),
 (9933,0,9915,80),
 (9941,0,9915,81),
-(9934,0,9915,82);
+(9934,0,9915,82),
+(14813,0,9915,83);
 
 INSERT INTO `merchant_buylists` (`item_id`,`price`,`shop_id`,`order`) VALUES 
 -- (GM-Shop) Currency
