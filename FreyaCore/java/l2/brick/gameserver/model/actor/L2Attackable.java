@@ -1373,8 +1373,7 @@ public class L2Attackable extends L2Npc
 				dropChance *= isRaid() && !isRaidMinion() ? Config.RATE_DROP_ITEMS_BY_RAID : Config.RATE_DROP_ITEMS;
 		}
 		if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
-			
-			dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
+			    dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
 		
 		 // Set our limits for chance of drop
 		if (dropChance < 1)
@@ -1520,11 +1519,9 @@ public class L2Attackable extends L2Npc
 			}
 			
 			if (Config.L2JMOD_CHAMPION_ENABLE && isChampion())
-			{
-				dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
-			}
-
-			dropChance = Math.round(dropChance);
+			        dropChance *= Config.L2JMOD_CHAMPION_REWARDS;
+			
+            dropChance = Math.round(dropChance);
 			
 			if (dropChance < L2DropData.MAX_CHANCE)
 				dropChance = L2DropData.MAX_CHANCE;
