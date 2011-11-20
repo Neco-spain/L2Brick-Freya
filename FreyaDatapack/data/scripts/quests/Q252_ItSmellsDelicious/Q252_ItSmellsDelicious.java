@@ -1,10 +1,24 @@
+/*
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package quests.Q252_ItSmellsDelicious;
 
 import javolution.util.FastList; 
 
 import l2.brick.Config;
-import com.l2jserver.gameserver.model.L2Object;
-import com.l2jserver.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Object;
+import l2.brick.gameserver.model.L2Party;
 import l2.brick.gameserver.model.actor.L2Npc;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.model.quest.Quest;
@@ -34,7 +48,7 @@ public class Q252_ItSmellsDelicious extends Quest
 		
 		addStartNpc(STAN);
 		addTalkId(STAN);
-		addKillId(CHEF);
+		addKillId(CHIEF);
 		for (final int i : MOBS)
 		{	
 			addKillId(i);
@@ -103,7 +117,7 @@ public class Q252_ItSmellsDelicious extends Quest
 					}
 					else if (st.getInt("cond") == 2)
 					{
-						if ((st.getQuestItemsCount(MAHUM_DIARY) >= 10) && (st.getQuestItemsCount(MAHUM_COOKBOOKP) >= 5))
+						if ((st.getQuestItemsCount(MAHUM_DIARY) >= 10) && (st.getQuestItemsCount(MAHUM_COOKBOOK) >= 5))
 						{
 				            htmltext = "30200-07.htm";
 				        }
@@ -129,14 +143,14 @@ public class Q252_ItSmellsDelicious extends Quest
 	                            st.giveItems(MAHUM_DIARY, 1);
 				                st.playSound("ItemSound.quest_itemget");
 				
-				if ((st.getQuestItemsCount(MAHUM_DIARY) >= 10) && (st.getQuestItemsCount(MAHUM_COOKBOOKP) >= 5))
+				if ((st.getQuestItemsCount(MAHUM_DIARY) >= 10) && (st.getQuestItemsCount(MAHUM_COOKBOOK) >= 5))
 				{
 					st.set("cond", "2");
 					st.playSound("ItemSound.quest_middle");
 				}
 			}
 		}
-		else if (npcId == CHEF) 
+		else if (npcId == CHIEF) 
 	                { 
 	                st = player.getQuestState(qn); 
 	                if ((st != null) && st.isStarted() && (st.getInt("cond") == 1) && (st.getQuestItemsCount(MAHUM_COOKBOOK) < 5) && (Rnd.get(1000) < 360)) 
