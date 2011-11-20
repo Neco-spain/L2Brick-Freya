@@ -187,7 +187,6 @@ public class L2VillageMasterInstance extends L2NpcInstance
 				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SUBCLASS_NO_CHANGE_OR_CREATE_WHILE_SKILL_IN_USE));
 				return;
 			}
-			
 			final NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 			// Subclasses may not be changed while a transformated state.
 			if (player.getTransformation() != null)
