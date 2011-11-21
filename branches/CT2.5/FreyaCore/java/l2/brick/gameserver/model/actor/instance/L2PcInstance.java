@@ -3600,7 +3600,7 @@ public final class L2PcInstance extends L2Playable
 			
 			// If over capacity, drop the item
 			if (!isGM() && !_inventory.validateCapacity(0, item.isQuestItem()) && newitem.isDropable() && (!newitem.isStackable() || newitem.getLastChange() != L2ItemInstance.MODIFIED))
-				dropItem("InvDrop", newitem, null, true);
+				dropItem("InvDrop", newitem, null, true, true);
 			
 			// Cursed Weapon
 			else if(CursedWeaponsManager.getInstance().isCursed(newitem.getItemId()))
@@ -3749,6 +3749,7 @@ public final class L2PcInstance extends L2Playable
 	 * @param item : L2ItemInstance to be destroyed
 	 * @param reference : L2Object Object referencing current action like NPC selling item or previous item in transformation
 	 * @param sendMessage : boolean Specifies whether to send message to Client about this action
+	 * @param protectItem: whether or not dropped item must be protected temporary against other players
 	 * @return boolean informing if the action was successfull
 	 */
 	public boolean destroyItem(String process, L2ItemInstance item, L2Object reference, boolean sendMessage)
@@ -4007,7 +4008,7 @@ public final class L2PcInstance extends L2Playable
 	 * @param sendMessage : boolean Specifies whether to send message to Client about this action
 	 * @return boolean informing if the action was successfull
 	 */
-	public boolean dropItem(String process, L2ItemInstance item, L2Object reference, boolean sendMessage)
+	public boolean dropItem(String process, L2ItemInstance item, L2Object reference, boolean sendMessage, boolean protectItem)
 	{
 		item = _inventory.dropItem(process, item, this, reference);
 		
@@ -4021,19 +4022,27 @@ public final class L2PcInstance extends L2Playable
 		
 		item.dropMe(this, getX() + Rnd.get(50) - 25, getY() + Rnd.get(50) - 25, getZ() + 20);
 		
-		if (Config.AUTODESTROY_ITEM_AFTER >0 && Config.DESTROY_DROPPED_PLAYER_ITEM && !Config.LIST_PROTECTED_ITEMS.contains(item.getItemId()))
-		{
-			if ( (item.isEquipable() && Config.DESTROY_EQUIPABLE_PLAYER_ITEM) || !item.isEquipable())
+		if (Config.AUTODESTROY_ITEM_AFTER > 0 
+ 		            && Config.DESTROY_DROPPED_PLAYER_ITEM 
+ 		            && !Config.LIST_PROTECTED_ITEMS.contains(item.getItemId())) { 
+ 		    if ((item.isEquipable() && Config.DESTROY_EQUIPABLE_PLAYER_ITEM) 
+ 		                || !item.isEquipable())
 				ItemsAutoDestroy.getInstance().addItem(item);
 		}
-		if (Config.DESTROY_DROPPED_PLAYER_ITEM){
-			if (!item.isEquipable() || (item.isEquipable()  && Config.DESTROY_EQUIPABLE_PLAYER_ITEM ))
+		
+		// protection against auto destroy dropped item 
+ 		if (Config.DESTROY_DROPPED_PLAYER_ITEM) { 
+ 		        if (!item.isEquipable() 
+ 		                || (item.isEquipable() && Config.DESTROY_EQUIPABLE_PLAYER_ITEM))
 				item.setProtected(false);
 			else
 				item.setProtected(true);
-		}
-		else
+		  } else
 			item.setProtected(true);
+		
+		// retail drop protection  
+ 		if (protectItem) 
+ 		        item.getDropProtection().protect(this);
 		
 		// Send inventory update packet
 		if (!Config.FORCE_INVENTORY_UPDATE)
@@ -4058,6 +4067,11 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		return true;
+	} 
+ 		         
+ 	public boolean dropItem(String process, L2ItemInstance item, L2Object reference, boolean sendMessage) 
+ 	{ 
+ 	    return dropItem(process, item, reference, sendMessage, false);
 	}
 	
 	/**
@@ -4072,7 +4086,7 @@ public final class L2PcInstance extends L2Playable
 	 * @param sendMessage : boolean Specifies whether to send message to Client about this action
 	 * @return L2ItemInstance corresponding to the new item or the updated item in inventory
 	 */
-	public L2ItemInstance dropItem(String process, int objectId, long count, int x, int y, int z, L2Object reference, boolean sendMessage)
+	public L2ItemInstance dropItem(String process, int objectId, long count, int x, int y, int z, L2Object reference, boolean sendMessage, boolean protectItem)
 	{
 		L2ItemInstance invitem = _inventory.getItemByObjectId(objectId);
 		L2ItemInstance item = _inventory.dropItem(process, objectId, count, this, reference);
@@ -4100,6 +4114,10 @@ public final class L2PcInstance extends L2Playable
 		}
 		else
 			item.setProtected(true);
+		
+		// retail drop protection  
+ 		if (protectItem) 
+ 		    item.getDropProtection().protect(this);
 		
 		// Send inventory update packet
 		if (!Config.FORCE_INVENTORY_UPDATE)
@@ -4869,8 +4887,17 @@ public final class L2PcInstance extends L2Playable
 			{
 				// Send a Server->Client packet ActionFailed to this L2PcInstance
 				sendPacket(ActionFailed.STATIC_PACKET);
-				return;
-			}
+				return; 
+ 		} 
+ 		 
+ 		if (!target.getDropProtection().tryPickUp(this)) 
+ 		{ 
+ 		    sendPacket(ActionFailed.STATIC_PACKET); 
+ 		    SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_PICKUP_S1); 
+ 		    smsg.addItemName(target); 
+ 		    sendPacket(smsg);
+			return;
+		}
 			
 			if ( ((isInParty() && getParty().getLootDistribution() == L2Party.ITEM_LOOTER) || !isInParty()) && !_inventory.validateCapacity(target))
 			{
