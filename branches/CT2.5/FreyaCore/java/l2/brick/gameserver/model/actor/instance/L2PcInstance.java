@@ -9372,19 +9372,6 @@ public final class L2PcInstance extends L2Playable
 		
 		if(skill.getSkillType() == L2SkillType.INSTANT_JUMP)
 		{
-			// You cannot jump while rooted right ;)
-			if(isMovementDisabled())
-			{
-				// Sends message that skill cannot be used...
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
-				sm.addSkillName(skill.getId());
-				sendPacket(sm);
-				
-				// Send a Server->Client packet ActionFailed to the L2PcInstance
-				sendPacket(ActionFailed.STATIC_PACKET);
-				
-				return false;
-			}
 			// And this skill cannot be used in peace zone, not even on NPCs!
 			if(this.isInsideZone(L2Character.ZONE_PEACE))
 			{
