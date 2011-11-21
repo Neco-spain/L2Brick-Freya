@@ -583,9 +583,12 @@
 		<set name="operateType" val="OP_PASSIVE" />
 	</skill>
 	<skill id="26049" levels="1" name="Rune of Feather">
-		<set name="target" val="TARGET_NONE" />
-		<set name="skillType" val="NOTDONE" />
+		<set name="target" val="TARGET_SELF" />
+		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="OP_PASSIVE" />
+		<for>
+			<mul order="0x30" stat="maxLoad" val="1.2" />
+		</for>
 	</skill>
 	<skill id="26050" levels="1" name="Blessed Spiritshot - D grade">
 		<set name="target" val="TARGET_SELF" />
