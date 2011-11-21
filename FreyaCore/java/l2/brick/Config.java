@@ -35,6 +35,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import l2.brick.gameserver.model.itemcontainer.PcInventory;
 import l2.brick.gameserver.util.FloodProtectorConfig;
 import l2.brick.util.L2Properties;
 import l2.brick.util.StringUtil;
@@ -2886,9 +2887,9 @@ public final class Config
 							}
 						}
 					}
-					if (PREMIUM_RATE_DROP_ITEMS_ID.get(57) == 0f)
+					if (PREMIUM_RATE_DROP_ITEMS_ID.get(PcInventory.ADENA_ID) == 0f)
 					{
-						PREMIUM_RATE_DROP_ITEMS_ID.put(57, PREMIUM_RATE_DROP_ITEMS); //for Adena rate if not defined
+						PREMIUM_RATE_DROP_ITEMS_ID.put(PcInventory.ADENA_ID, PREMIUM_RATE_DROP_ITEMS); //for Adena rate if not defined
 					}
 				}
 				catch (Exception e)
@@ -4916,7 +4917,7 @@ public final class Config
 		else if (pName.equalsIgnoreCase("PremiumRateSp")) PREMIUM_RATE_SP = Float.parseFloat(pValue);
 		else if (pName.equalsIgnoreCase("PremiumRateDropItems")) PREMIUM_RATE_DROP_ITEMS = Float.parseFloat(pValue);
 		else if (pName.equalsIgnoreCase("PremiumRateDropSpoil")) PREMIUM_RATE_DROP_SPOIL = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("PremiumRateDropAdena")) PREMIUM_RATE_DROP_ITEMS_ID.put(57, Float.parseFloat(pValue));
+		else if (pName.equalsIgnoreCase("PremiumRateDropAdena")) PREMIUM_RATE_DROP_ITEMS_ID.put(PcInventory.ADENA_ID, Float.parseFloat(pValue));
 		// rates.properties
 		else if (pName.equalsIgnoreCase("RateXp")) RATE_XP = Float.parseFloat(pValue);
 		else if (pName.equalsIgnoreCase("RateSp")) RATE_SP = Float.parseFloat(pValue);
