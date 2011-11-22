@@ -230,7 +230,7 @@ public class RegionBBSManager extends BaseBBSManager
 				}
 				
 				final CreatureSay cs = new CreatureSay(activeChar.getObjectId(), Say2.TELL, activeChar.getName(), ar3);
-				if (!receiver.isSilenceMode() && !BlockList.isBlocked(receiver, activeChar) )
+				if (!receiver.isSilenceMode(activeChar.getObjectId()) && !BlockList.isBlocked(receiver, activeChar) )
 				{
 					receiver.sendPacket(cs);
 					activeChar.sendPacket(new CreatureSay(activeChar.getObjectId(), Say2.TELL, "->" + receiver.getName(), ar3));
