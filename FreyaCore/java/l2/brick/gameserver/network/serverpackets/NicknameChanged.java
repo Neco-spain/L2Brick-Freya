@@ -14,7 +14,7 @@
  */
 package l2.brick.gameserver.network.serverpackets;
 
-import l2.brick.gameserver.model.actor.instance.L2PcInstance;
+import l2.brick.gameserver.model.actor.L2Character;
 
 /**
  *
@@ -26,7 +26,7 @@ public class NicknameChanged extends L2GameServerPacket
 	private String _title;
 	private int _objectId;
 	
-	public NicknameChanged(L2PcInstance cha)
+	public NicknameChanged(L2Character cha)
 	{
 		_objectId = cha.getObjectId();
 		_title = cha.getTitle();
