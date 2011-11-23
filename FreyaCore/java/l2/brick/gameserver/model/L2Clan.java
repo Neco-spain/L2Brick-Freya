@@ -452,7 +452,7 @@ public class L2Clan
 		}
 		if (exMember.isOnline())
 		{
-			final L2PcInstance player = exMember.getPlayerInstance();
+			L2PcInstance player = exMember.getPlayerInstance();
 			if (!player.isNoble()) 
             { 
                 player.setTitle(""); 
@@ -479,16 +479,8 @@ public class L2Clan
 			
 			// players leaving from clan academy have no penalty
 			if (exMember.getPledgeType() != -1)
-			{
-				if (!exMember.getPlayerInstance().getClient().isDetached())
-				{
-					player.setClanJoinExpiryTime(clanJoinExpiryTime);
-				}
-				else
-				{
-					removeMemberInDatabase(exMember, clanJoinExpiryTime, getLeaderId() == objectId ? System.currentTimeMillis() + Config.ALT_CLAN_CREATE_DAYS * 86400000L : 0);
-				}
-			}
+			        player.setClanJoinExpiryTime(clanJoinExpiryTime);
+			
 			player.setPledgeClass(exMember.calculatePledgeClass(player));
 			player.broadcastUserInfo();
 			// disable clan tab
