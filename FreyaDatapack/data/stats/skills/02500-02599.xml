@@ -201,12 +201,7 @@
 		<set name="staticReuse" val="true" />
 		<set name="target" val="TARGET_SELF" />
 		<cond msgId="113" addName="1">
-		    <and> 
-                <player flyMounted="False" /> 
-               <not> 
-                    <player transformationId="103" /> 
-	           </not> 
-	        </and>
+		    <player flyMounted="False" />
 		</cond>
 		<for>
 			<effect name="BigHead" abnormalTime="300" val="0" abnormal="bighead" abnormalLvl="1" abnormalType="big_head">
