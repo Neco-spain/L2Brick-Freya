@@ -622,8 +622,10 @@ public final class L2PcInstance extends L2Playable
 	/** The list containing all shortCuts of this L2PcInstance */
 	private ShortCuts _shortCuts = new ShortCuts(this);
 	
-	/** The list containing all macroses of this L2PcInstance */
-	private MacroList _macroses = new MacroList(this);
+	/** 
+     * The list containing all macros of this L2PcInstance. 
+     */ 
+ 	private final MacroList _macros = new MacroList(this);
 	
 	private List<L2PcInstance> _snoopListener = new FastList<L2PcInstance>();
 	private List<L2PcInstance> _snoopedPlayer = new FastList<L2PcInstance>();
@@ -1941,27 +1943,27 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/**
-	 * Add a L2Macro to the L2PcInstance _macroses<BR><BR>
+	 * @param macro the macro to add to this L2PcInstance.
 	 */
 	public void registerMacro(L2Macro macro)
 	{
-		_macroses.registerMacro(macro);
-	}
-	
-	/**
-	 * Delete the L2Macro corresponding to the Identifier from the L2PcInstance _macroses.<BR><BR>
+		_macros.registerMacro(macro); 
+ 	} 
+ 	        
+ 	/** 
+ 	 * @param id the macro Id to delete.
 	 */
 	public void deleteMacro(int id)
 	{
-		_macroses.deleteMacro(id);
+		_macros.deleteMacro(id);
 	}
 	
 	/**
 	 * Return all L2Macro of the L2PcInstance.<BR><BR>
 	 */
-	public MacroList getMacroses()
+	public MacroList getMacros()
 	{
-		return _macroses;
+		return _macros;
 	}
 	
 	/**
@@ -7560,7 +7562,10 @@ public final class L2PcInstance extends L2Playable
 					player.setClassId(player.getBaseClass());
 					_log.warning("Player "+player.getName()+" reverted to base class. Possibly has tried a relogin exploit while subclassing.");
 				}
-				else player._activeClass = activeClassId;
+				else 
+                { 
+                    player._activeClass = activeClassId; 
+                }
 				
 				player.setApprentice(rset.getInt("apprentice"));
 				player.setSponsor(rset.getInt("sponsor"));
@@ -7581,9 +7586,6 @@ public final class L2PcInstance extends L2Playable
 				player.setVitalityPoints(rset.getInt("vitality_points"), true);
 				
 				player.setPcBangPoints(rset.getInt("pccafe_points"));
-				
-				// Add the L2PcInstance object in _allObjects
-				//L2World.getInstance().storeObject(player);
 				
 				// Set the x,y,z position of the L2PcInstance and make it invisible
 				player.setXYZInvisible(rset.getInt("x"), rset.getInt("y"), rset.getInt("z"));
@@ -7619,25 +7621,28 @@ public final class L2PcInstance extends L2Playable
 			statement.close();
 			
 			// Set Hero status if it applies
-			if (Hero.getInstance().getHeroes() != null && Hero.getInstance().getHeroes().containsKey(objectId))
-				player.setHero(true);
+			if (Hero.getInstance().isHero(objectId))
+			{
+			   player.setHero(true);
+			}
 			
-			// Retrieve from the database all skills of this L2PcInstance and add them to _skills
 			// Retrieve from the database all items of this L2PcInstance and add them to _inventory
 			player.getInventory().restore();
 			if (!Config.WAREHOUSE_CACHE)
+			{	
 				player.getWarehouse();
+			}
 			
 			// Retrieve from the database all secondary data of this L2PcInstance
-			// and reward expertise/lucky skills if necessary.
 			// Note that Clan, Noblesse and Hero skills are given separately and not here.
+			// Retrieve from the database all skills of this L2PcInstance and add them to _skills
 			player.restoreCharData();
 			
 			
 			// buff and status icons
 			if (Config.STORE_SKILL_COOLTIME)
 				player.restoreEffects();
-			
+			// Reward auto-get skills and all available skills if auto-learn skills is true.
 			player.rewardSkills();
 			
 			// Restore current Cp, HP and MP values
@@ -7645,7 +7650,8 @@ public final class L2PcInstance extends L2Playable
 			player.setCurrentHp(currentHp);
 			player.setCurrentMp(currentMp);
 			
-			if (currentHp < 0.5) {
+			if (currentHp < 0.5)
+			{	
 				player.setIsDead(true);
 				player.stopHpMpRegeneration();
 			}
@@ -7772,20 +7778,30 @@ public final class L2PcInstance extends L2Playable
 		{
 			L2DatabaseFactory.close(con);
 		}
-		
 		return true;
 	}
 	
 	/**
-	 * Restores secondary data for the L2PcInstance, based on the current class index.
+	 * Restores: 
+     * <ul> 
+     *      <li>Skills</li> 
+     *      <li>Macros</li> 
+     *      <li>Short-cuts</li> 
+	 *      <li>Henna</li> 
+     *      <li>Teleport Bookmark</li> 
+     *      <li>Recipe Book</li> 
+     *      <li>Recipe Shop List (If configuration enabled)</li> 
+     *      <li>Premium Item List</li> 
+     *      <li>Pet Inventory Items</li> 
+     * </ul>
 	 */
 	private void restoreCharData()
 	{
 		// Retrieve from the database all skills of this L2PcInstance and add them to _skills.
 		restoreSkills();
 		
-		// Retrieve from the database all macroses of this L2PcInstance and add them to _macroses.
-		_macroses.restore();
+		// Retrieve from the database all macroses of this L2PcInstance and add them to _macros.
+		_macros.restore();
 		
 		// Retrieve from the database all shortCuts of this L2PcInstance and add them to _shortCuts.
 		_shortCuts.restore();
@@ -7799,15 +7815,15 @@ public final class L2PcInstance extends L2Playable
 		// Retrieve from the database the recipe book of this L2PcInstance.
 		restoreRecipeBook(true);
 		
-		// Restore Recipe Shop list
+		// Restore Recipe Shop list.
 		if(Config.STORE_RECIPE_SHOPLIST)
 			restoreRecipeShopList();
 		
-		// Load Premium Item List
+		// Load Premium Item List.
 		loadPremiumItemList();
 		
-		// Check for items in pet inventory
-		checkPetInvItems();
+		// Restore items in pet inventory.
+		restorePetInventoryItems();
 	}
 	
 	/**
@@ -15579,10 +15595,12 @@ public final class L2PcInstance extends L2Playable
 		_petItems = haveit;
 	}
 	
-	private void checkPetInvItems()
+	/** 
+ 	 * Restore Pet's inventory items from database. 
+ 	 */ 
+ 	private void restorePetInventoryItems()
 	{
 		Connection con = null;
-		
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();

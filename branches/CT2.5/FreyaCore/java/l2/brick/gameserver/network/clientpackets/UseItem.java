@@ -19,6 +19,10 @@ import java.util.logging.Logger;
 import l2.brick.Config;
 import l2.brick.gameserver.GameTimeController;
 import l2.brick.gameserver.ThreadPoolManager;
+import l2.brick.gameserver.ai.CtrlEvent; 
+import l2.brick.gameserver.ai.CtrlIntention; 
+import l2.brick.gameserver.ai.NextAction; 
+import l2.brick.gameserver.ai.NextAction.NextActionCallback;
 import l2.brick.gameserver.handler.IItemHandler;
 import l2.brick.gameserver.handler.ItemHandler;
 import l2.brick.gameserver.instancemanager.FortSiegeManager;
@@ -251,18 +255,13 @@ public final class UseItem extends L2GameClientPacket
 				case L2Item.SLOT_L_HAND:
 				case L2Item.SLOT_R_HAND:
 				{
-					// prevent players to equip weapon while wearing combat flag
+					// Prevent players to equip weapon while wearing combat flag
 					if (activeChar.getActiveWeaponItem() != null && activeChar.getActiveWeaponItem().getItemId() == 9819)
 					{
 						activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION));
 						return;
 					}
-					// Prevent player to remove the weapon on special conditions
-					if (activeChar.isCastingNow() || activeChar.isCastingSimultaneouslyNow())
-					{
-						activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_USE_ITEM_WHILE_USING_MAGIC));
-						return;
-					}
+					
 					if (activeChar.isMounted() || (activeChar._inEventCTF && activeChar._haveFlagCTF))
 					{
 						activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION));
@@ -345,18 +344,29 @@ public final class UseItem extends L2GameClientPacket
 			if (activeChar.isCursedWeaponEquipped() && _itemId == 6408) // Don't allow to put formal wear
 				return;
 			
-			if (activeChar.isAttackingNow())
-			{
-				ThreadPoolManager.getInstance().scheduleGeneral( new WeaponEquipTask(item,activeChar), (activeChar.getAttackEndTime()-GameTimeController.getGameTicks())*GameTimeController.MILLIS_IN_TICK);
-				return;
-			}
-			// Equip or unEquip
-			if (FortSiegeManager.getInstance().isCombat(item.getItemId()))
-				return;	//no message
-			else if (activeChar.isCombatFlagEquipped())
-				return;
-			
-			activeChar.useEquippableItem(item, true);
+			if (activeChar.isCastingNow() || activeChar.isCastingSimultaneouslyNow()) 
+            { 
+                // Creating next action class. 
+                final NextAction nextAction = new NextAction(CtrlEvent.EVT_FINISH_CASTING, CtrlIntention.AI_INTENTION_CAST, new NextActionCallback() 
+                { 
+                    @Override 
+                    public void doWork() 
+                    { 
+                        activeChar.useEquippableItem(item, true); 
+                    } 
+                }); 
+                              
+                // Binding next action to AI. 
+                activeChar.getAI().setNextAction(nextAction); 
+            } 
+            else if (activeChar.isAttackingNow()) 
+            { 
+                ThreadPoolManager.getInstance().scheduleGeneral(new WeaponEquipTask(item, activeChar), (activeChar.getAttackEndTime() - GameTimeController.getGameTicks()) * GameTimeController.MILLIS_IN_TICK); 
+            } 
+            else 
+            { 
+                activeChar.useEquippableItem(item, true); 
+            }
 		}
 		else
 		{
