@@ -34,6 +34,7 @@ import l2.brick.gameserver.datatables.SkillTable;
 import l2.brick.gameserver.datatables.SpawnTable;
 import l2.brick.gameserver.instancemanager.InstanceManager;
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.L2Skill;
 import l2.brick.gameserver.model.L2Spawn;
 import l2.brick.gameserver.model.L2World;
@@ -1009,7 +1010,7 @@ public class DM
 		if (activeChar.getParty() != null)
 		{
 			L2Party party = activeChar.getParty();
-			party.removePartyMember(activeChar);
+			party.removePartyMember(activeChar, messageType.Expelled);
 		}
 	}
 	

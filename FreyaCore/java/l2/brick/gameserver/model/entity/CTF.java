@@ -38,6 +38,7 @@ import l2.brick.gameserver.datatables.SpawnTable;
 import l2.brick.gameserver.model.L2Effect;
 import l2.brick.gameserver.model.L2ItemInstance;
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.L2Radar;
 import l2.brick.gameserver.model.L2Spawn;
 import l2.brick.gameserver.model.actor.L2Summon;
@@ -1242,7 +1243,7 @@ public class CTF
 					if (player.getParty() != null)
 					{
 						L2Party party = player.getParty();
-						party.removePartyMember(player);
+						party.removePartyMember(player, messageType.Expelled);
 					}
 					
 					player.teleToLocation(_teamsBaseX.get(_teams.indexOf(player._teamNameCTF)), _teamsBaseY.get(_teams.indexOf(player._teamNameCTF)), _teamsBaseZ.get(_teams.indexOf(player._teamNameCTF)));
@@ -1292,7 +1293,7 @@ public class CTF
 							if (player.getParty() != null)
 							{
 								L2Party party = player.getParty();
-								party.removePartyMember(player);
+								party.removePartyMember(player, messageType.Expelled);
 							}
 							
 							player.teleToLocation(_teamsX.get(_teams.indexOf(player._teamNameCTF)), _teamsY.get(_teams.indexOf(player._teamNameCTF)), _teamsZ.get(_teams.indexOf(player._teamNameCTF)));
@@ -1359,7 +1360,7 @@ public class CTF
 					if (player.getParty() != null)
 					{
 						L2Party party = player.getParty();
-						party.removePartyMember(player);
+						party.removePartyMember(player, messageType.Expelled);
 					}
 					
 					player.teleToLocation(_teamsBaseX.get(_teams.indexOf(player._teamNameCTF)), _teamsBaseY.get(_teams.indexOf(player._teamNameCTF)), _teamsBaseZ.get(_teams.indexOf(player._teamNameCTF)));
@@ -1409,7 +1410,7 @@ public class CTF
 							if (player.getParty() != null)
 							{
 								L2Party party = player.getParty();
-								party.removePartyMember(player);
+								party.removePartyMember(player, messageType.Expelled);
 							}
 							
 							player.teleToLocation(_teamsX.get(_teams.indexOf(player._teamNameCTF)), _teamsY.get(_teams.indexOf(player._teamNameCTF)), _teamsZ.get(_teams.indexOf(player._teamNameCTF)));

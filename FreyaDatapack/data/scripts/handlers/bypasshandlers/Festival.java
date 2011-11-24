@@ -23,6 +23,7 @@ import l2.brick.gameserver.SevenSignsFestival;
 import l2.brick.gameserver.handler.IBypassHandler;
 import l2.brick.gameserver.model.L2ItemInstance;
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.actor.L2Character;
 import l2.brick.gameserver.model.actor.instance.L2FestivalGuideInstance;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
@@ -306,7 +307,7 @@ public class Festival implements IBypassHandler
 						else
 						{
 							if (party.getMemberCount() > Config.ALT_FESTIVAL_MIN_PLAYER)
-								party.removePartyMember(activeChar);
+								party.removePartyMember(activeChar, messageType.Expelled);
 							else
 								activeChar.sendMessage("Only the party leader can leave a festival when a party has minimum number of members.");
 						}
