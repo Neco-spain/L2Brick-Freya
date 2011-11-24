@@ -40,6 +40,7 @@ import l2.brick.gameserver.model.L2CharPosition;
 import l2.brick.gameserver.model.L2Clan;
 import l2.brick.gameserver.model.L2ItemInstance;
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.L2Spawn;
 import l2.brick.gameserver.model.L2World;
 import l2.brick.gameserver.model.SpawnListener;
@@ -1448,7 +1449,7 @@ public class SevenSignsFestival implements SpawnListener
 			if (festivalParty != null && festivalParty.getMemberCount() < Config.ALT_FESTIVAL_MIN_PLAYER)
 			{
 				updateParticipants(player, null); // under minimum count
-				festivalParty.removePartyMember(player);
+				festivalParty.removePartyMember(player, messageType.Expelled);
 			}
 		}
 	}

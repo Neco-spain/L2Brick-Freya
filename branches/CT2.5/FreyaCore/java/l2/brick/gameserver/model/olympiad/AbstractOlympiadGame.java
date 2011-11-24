@@ -26,6 +26,7 @@ import l2.brick.gameserver.instancemanager.CastleManager;
 import l2.brick.gameserver.instancemanager.FortManager;
 import l2.brick.gameserver.model.L2ItemInstance;
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.L2Skill;
 import l2.brick.gameserver.model.Location;
 import l2.brick.gameserver.model.actor.L2Character;
@@ -243,7 +244,7 @@ public abstract class AbstractOlympiadGame
 			{
 				final L2Party party = player.getParty();
 				if (party != null)
-					party.removePartyMember(player);
+					party.removePartyMember(player, messageType.Expelled);
 			}
 			// Remove Agathion
 			if (player.getAgathionId() > 0)

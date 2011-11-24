@@ -99,6 +99,7 @@ import l2.brick.gameserver.model.L2ManufactureItem;
 import l2.brick.gameserver.model.L2ManufactureList;
 import l2.brick.gameserver.model.L2Object;
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.L2PetData;
 import l2.brick.gameserver.model.L2PetLevelData;
 import l2.brick.gameserver.model.L2PremiumItem;
@@ -7160,7 +7161,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (isInParty())
 		{
-			_party.removePartyMember(this);
+			_party.removePartyMember(this, messageType.Disconnected);
 			_party = null;
 		}
 	}
@@ -10399,7 +10400,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		if (getParty() != null)
-			getParty().removePartyMember(this);
+			getParty().removePartyMember(this, messageType.Expelled);
 		
 		_olympiadGameId = id;
 		if (isSitting())

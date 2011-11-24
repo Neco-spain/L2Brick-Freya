@@ -27,6 +27,7 @@ import l2.brick.gameserver.ThreadPoolManager;
 import l2.brick.gameserver.datatables.SkillTable;
 import l2.brick.gameserver.instancemanager.CursedWeaponsManager;
 import l2.brick.gameserver.instancemanager.TransformationManager;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.actor.L2Attackable;
 import l2.brick.gameserver.model.actor.L2Character;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
@@ -436,7 +437,7 @@ public class CursedWeapon
 		_player.setKarma(9999999);
 		_player.setPkKills(0);
 		if (_player.isInParty())
-			_player.getParty().removePartyMember(_player);
+			_player.getParty().removePartyMember(_player, messageType.Expelled);
 		
 		// Disable All Skills
 		// Do Transform

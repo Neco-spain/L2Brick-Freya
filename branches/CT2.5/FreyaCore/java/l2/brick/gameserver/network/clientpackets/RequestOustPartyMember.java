@@ -14,6 +14,7 @@
  */
 package l2.brick.gameserver.network.clientpackets;
 
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 
 /**
@@ -46,7 +47,7 @@ public final class RequestOustPartyMember extends L2GameClientPacket
 			if (activeChar.getParty().isInDimensionalRift() && !activeChar.getParty().getDimensionalRift().getRevivedAtWaitingRoom().contains(activeChar))
 				activeChar.sendMessage("You can't dismiss party member when you are in Dimensional Rift.");
 			else
-				activeChar.getParty().removePartyMember(_name);
+				activeChar.getParty().removePartyMember(_name, messageType.Expelled);
 		}
 	}
 	
