@@ -95,6 +95,18 @@ public class L2Party
 	private Future<?> _positionBroadcastTask = null;
 	private PartyMemberPosition _positionPacket;
 	private Object _ucState = null;
+	private boolean _disbanding = false; 
+        
+    /** 
+     * The message type send to the party members. 
+     */ 
+    public enum messageType 
+    { 
+        Expelled, 
+        Left, 
+        None, 
+        Disconnected 
+    }
 	
 	/**
 	 * constructor ensures party has always one member - leader
@@ -221,31 +233,41 @@ public class L2Party
 	}
 	
 	/**
-	 * true if player is party leader
-	 * @param player
-	 * @return
-	 */
-	public boolean isLeader(L2PcInstance player) { return (getLeader().equals(player)); }
-	
-	/**
-	 * Returns the Object ID for the party leader to be used as a unique identifier of this party
-	 * @return int
-	 */
-	public int getPartyLeaderOID() { return getLeader().getObjectId(); }
-	
-	/**
-	 * Broadcasts packet to every party member
-	 * @param msg
-	 */
-	public void broadcastToPartyMembers(L2GameServerPacket msg)
+	 *  
+     * @param player the player to check. 
+     * @return {code true} if player is party leader. 
+     */ 
+    public boolean isLeader(L2PcInstance player) 
+    { 
+        return getLeader().equals(player); 
+    } 
+      
+    /** 
+     * @return the Object ID for the party leader to be used as a unique identifier of this party- 
+     */ 
+    public int getPartyLeaderOID() 
+    { 
+        return getLeader().getObjectId(); 
+    } 
+        
+    /** 
+     * Broadcasts packet to all party member. 
+     * @param packet the packet to be broadcasted. 
+     */ 
+    public void broadcastToPartyMembers(L2GameServerPacket packet)
 	{
 		for (L2PcInstance member : getPartyMembers())
 		{
-			if (member != null)
-				member.sendPacket(msg);
-		}
-	}
-	
+		if (member != null)
+		    { 
+                member.sendPacket(packet); 
+            } 
+        } 
+    }  
+       
+    /** 
+     * Broadcasts UI update and User Info for new party leader. 
+     */
 	public void broadcastToPartyMembersNewLeader()
 	{
 		for (L2PcInstance member : getPartyMembers())
@@ -363,78 +385,97 @@ public class L2Party
 	}
 	
 	/**
-	 * Remove player from party
-	 * Overloaded method that takes player's name as parameter
-	 * @param name
-	 */
-	public void removePartyMember(String name)
-	{
-		L2PcInstance player = getPlayerByName(name);
-		
-		if (player != null)
-			removePartyMember(player);
-	}
-	
-	/**
-	 * Remove player from party
-	 * @param player
-	 */
-	public void removePartyMember(L2PcInstance player)
-	{
-		removePartyMember(player, true);
-	}
-	
-	public synchronized void removePartyMember(L2PcInstance player, boolean sendMessage)
+	 * Removes a party member using its name. 
+ 	 * @param name player the player to be removed from the party. 
+ 	 * @param type the message type {@link messageType}. 
+ 	 */ 
+ 	public synchronized void removePartyMember(String name, messageType type) 
+ 	{ 
+ 	    removePartyMember(getPlayerByName(name), type); 
+ 	} 
+ 	     
+ 	/** 
+ 	 * Removes a party member instance. 
+ 	 * @param player the player to be removed from the party. 
+ 	 * @param type the message type {@link messageType}. 
+ 	 */ 
+ 	public synchronized void removePartyMember(L2PcInstance player, messageType type)
 	{
 		if (getPartyMembers().contains(player))
 		{
-			boolean isLeader = isLeader(player);
+			final boolean isLeader = isLeader(player); 
+            if (!_disbanding) 
+            { 
+                if ((getPartyMembers().size() == 2) || isLeader && !Config.ALT_LEAVE_PARTY_LEADER && (type != messageType.Disconnected)) 
+                { 
+                    disbandParty(); 
+                    return; 
+                } 
+            } 
+                        
 			getPartyMembers().remove(player);
 			recalculatePartyLevel();
 			
 			if (player.isFestivalParticipant())
+			{	
 				SevenSignsFestival.getInstance().updateParticipants(player, this);
+			}
 			
 			if(player.isInDuel())
+			{	
 				DuelManager.getInstance().onRemoveFromParty(player);
+			}
 			
 			try
 			{
 				if (player.getFusionSkill() != null)
+				{	
 					player.abortCast();
+				}
 				
 				for (L2Character character : player.getKnownList().getKnownCharacters())
-					if (character.getFusionSkill() != null && character.getFusionSkill().getTarget() == player)
+				{ 
+                    if ((character.getFusionSkill() != null) && (character.getFusionSkill().getTarget() == player)) 
+                    {
 						character.abortCast();
-			}
+			        }
+			    } 
+ 	        }
 			catch (Exception e)
 			{
 				_log.log(Level.WARNING, "", e);
 			}
 			
 			SystemMessage msg;
-			
-			if (sendMessage)
-			{
-				msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_LEFT_PARTY);
-				player.sendPacket(msg);
+			if (type == messageType.Expelled) 
+            { 
+                player.sendPacket(SystemMessageId.HAVE_BEEN_EXPELLED_FROM_PARTY); 
+                msg = SystemMessage.getSystemMessage(SystemMessageId.C1_WAS_EXPELLED_FROM_PARTY); 
+                msg.addString(player.getName()); 
+                broadcastToPartyMembers(msg); 
+            } 
+            else if ((type == messageType.Left) || (type == messageType.Disconnected)) 
+            { 
+                player.sendPacket(SystemMessageId.YOU_LEFT_PARTY);
 				msg = SystemMessage.getSystemMessage(SystemMessageId.C1_LEFT_PARTY);
 				msg.addString(player.getName());
 				broadcastToPartyMembers(msg);
 			}
 			
+			//UI update.
 			player.sendPacket(new PartySmallWindowDeleteAll());
 			player.setParty(null);
-			
 			broadcastToPartyMembers(new PartySmallWindowDelete(player));
-			L2Summon summon = player.getPet();
+			final L2Summon summon = player.getPet();
 			if (summon != null)
 			{
 				broadcastToPartyMembers(new ExPartyPetWindowDelete(summon));
 			}
 			
 			if (isInDimensionalRift())
+			{	
 				_dr.partyMemberExited(player);
+			}
 			
 			// Close the CCInfoWindow
 			if (isInCommandChannel())
@@ -442,7 +483,7 @@ public class L2Party
 				player.sendPacket(new ExCloseMPCC());
 			}
 			
-			if (isLeader && getPartyMembers().size() > 1)
+			if (isLeader && (getPartyMembers().size() > 1) && (Config.ALT_LEAVE_PARTY_LEADER || (type == messageType.Disconnected)))
 			{
 				msg = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_BECOME_A_PARTY_LEADER);
 				msg.addString(getLeader().getName());
@@ -486,7 +527,7 @@ public class L2Party
 							}
 							
 			
-			if (getPartyMembers().size() == 1)
+			else if (getPartyMembers().size() == 1)
 			{
 				if (isInCommandChannel())
 				{
@@ -500,12 +541,14 @@ public class L2Party
 						getCommandChannel().removeParty(this);
 					}
 				}
-				L2PcInstance leader = getLeader();
-				if (leader != null)
-				{
-					leader.setParty(null);
-					if (leader.isInDuel())
-						DuelManager.getInstance().onRemoveFromParty(leader);
+				 
+                if (getLeader() != null) 
+                { 
+                    getLeader().setParty(null); 
+                    if (getLeader().isInDuel()) 
+                    { 
+                        DuelManager.getInstance().onRemoveFromParty(getLeader()); 
+                    }
 				}
 				if (_checkTask != null)
 				{
@@ -518,10 +561,28 @@ public class L2Party
 					_positionBroadcastTask = null;
 				}
 				_members.clear();
-				
-			}
-		}
-	}
+				} 
+            } 
+        } 
+       
+        /** 
+         * Disperse a party and sends a message to all its members. 
+         */ 
+	    public void disbandParty() 
+        { 
+            _disbanding = true; 
+	        if (_members != null) 
+            { 
+	            broadcastToPartyMembers(SystemMessage.getSystemMessage(SystemMessageId.PARTY_DISPERSED)); 
+                for (L2PcInstance member : _members) 
+                { 
+                    if (member != null) 
+	                { 
+                        removePartyMember(member, messageType.None); 
+                    }
+			    }
+		    }
+	    }
 	
 	/**
 	 * Change party leader (used for string arguments)
@@ -584,7 +645,8 @@ public class L2Party
 	{
 		for(L2PcInstance member : getPartyMembers())
 		{
-			if (member.getName().equalsIgnoreCase(name)) return member;
+			if (member.getName().equalsIgnoreCase(name))
+		    return member;
 		}
 		return null;
 	}

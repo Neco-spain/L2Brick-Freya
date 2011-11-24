@@ -15,6 +15,7 @@
 package l2.brick.gameserver.network.clientpackets;
 
 import l2.brick.gameserver.model.L2Party;
+import l2.brick.gameserver.model.L2Party.messageType;
 import l2.brick.gameserver.model.PartyMatchRoom;
 import l2.brick.gameserver.model.PartyMatchRoomList;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
@@ -55,7 +56,7 @@ public final class RequestWithDrawalParty extends L2GameClientPacket
 				player.sendMessage("You can't exit party when you are in Dimensional Rift.");
 			else
 			{
-				party.removePartyMember(player);
+				party.removePartyMember(player, messageType.Left);
 				
 				if(player.isInPartyMatchRoom())
 				{
