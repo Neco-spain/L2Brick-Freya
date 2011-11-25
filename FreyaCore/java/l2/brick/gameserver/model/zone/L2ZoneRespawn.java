@@ -79,8 +79,7 @@ public abstract class L2ZoneRespawn extends L2ZoneType
 	{
 		if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
 			return _spawnLocs.get(Rnd.get(_spawnLocs.size()));
-		else
-			return _spawnLocs.get(0);
+		return _spawnLocs.get(0);
 	}
 	
 	public final Location getOtherSpawnLoc()
@@ -89,11 +88,9 @@ public abstract class L2ZoneRespawn extends L2ZoneType
 		{
 			if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
 				return _otherSpawnLocs.get(Rnd.get(_otherSpawnLocs.size()));
-			else
-				return _otherSpawnLocs.get(0);
+			return _otherSpawnLocs.get(0);
 		}
-		else
-			return getSpawnLoc();
+		return getSpawnLoc();
 	}
 	
 	public final Location getChaoticSpawnLoc()
@@ -102,11 +99,9 @@ public abstract class L2ZoneRespawn extends L2ZoneType
 		{
 			if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
 				return _chaoticSpawnLocs.get(Rnd.get(_chaoticSpawnLocs.size()));
-			else
-				return _chaoticSpawnLocs.get(0);
+			return _chaoticSpawnLocs.get(0);
 		}
-		else
-			return getSpawnLoc();
+		return getSpawnLoc();
 	}
 	
 	public final Location getBanishSpawnLoc()
@@ -115,10 +110,8 @@ public abstract class L2ZoneRespawn extends L2ZoneType
 		{
 			if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
 				return _banishSpawnLocs.get(Rnd.get(_banishSpawnLocs.size()));
-			else
-				return _banishSpawnLocs.get(0);
+			return _banishSpawnLocs.get(0);
 		}
-		else
-			return getSpawnLoc();
+		return getSpawnLoc();
 	}
 }

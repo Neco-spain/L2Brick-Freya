@@ -20,7 +20,7 @@ import l2.brick.gameserver.model.actor.L2Character;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.model.entity.ClanHall;
 import l2.brick.gameserver.model.entity.clanhall.AuctionableHall;
-import l2.brick.gameserver.model.zone.L2ZoneRespawn;
+import l2.brick.gameserver.model.zone.L2SpawnZone;
 import l2.brick.gameserver.network.serverpackets.AgitDecoInfo;
 
 /**
@@ -28,7 +28,7 @@ import l2.brick.gameserver.network.serverpackets.AgitDecoInfo;
  *
  * @author  durgus
  */
-public class L2ClanHallZone extends L2ZoneRespawn
+public class L2ClanHallZone extends L2SpawnZone
 {
 	private int _clanHallId;
 	

@@ -19,14 +19,14 @@ import l2.brick.gameserver.instancemanager.MapRegionManager;
 import l2.brick.gameserver.model.actor.L2Character;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.model.entity.Castle;
-import l2.brick.gameserver.model.zone.L2ZoneRespawn;
+import l2.brick.gameserver.model.zone.L2SpawnZone;
 
 /**
  * A castle zone
  *
  * @author  durgus
  */
-public class L2CastleZone extends L2ZoneRespawn
+public class L2CastleZone extends L2SpawnZone
 {
 	private int _castleId;
 	private Castle _castle = null;
