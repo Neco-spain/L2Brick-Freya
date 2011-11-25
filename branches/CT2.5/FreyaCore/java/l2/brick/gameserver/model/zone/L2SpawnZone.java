@@ -29,7 +29,9 @@ import l2.brick.util.Rnd;
 public abstract class L2SpawnZone extends L2ZoneType
 {
 	private List<Location> _spawnLocs = null;
+	private List<Location> _otherSpawnLocs = null;
 	private List<Location> _chaoticSpawnLocs = null;
+	private List<Location> _banishSpawnLocs = null;
 	
 	public L2SpawnZone(int id)
 	{
@@ -44,12 +46,28 @@ public abstract class L2SpawnZone extends L2ZoneType
 		_spawnLocs.add(new Location(x, y, z));
 	}
 	
+	public final void addOtherSpawn(int x, int y, int z)
+	{
+		if (_otherSpawnLocs == null)
+			_otherSpawnLocs = new ArrayList<Location>();
+		
+		_otherSpawnLocs.add(new Location(x, y, z));
+	}
+
 	public final void addChaoticSpawn(int x, int y, int z)
 	{
 		if (_chaoticSpawnLocs == null)
 			_chaoticSpawnLocs = new ArrayList<Location>();
 		
 		_chaoticSpawnLocs.add(new Location(x, y, z));
+	}
+	
+	public final void addBanishSpawn(int x, int y, int z)
+	{
+		if (_banishSpawnLocs == null)
+			_banishSpawnLocs = new ArrayList<Location>();
+		
+		_banishSpawnLocs.add(new Location(x, y, z));
 	}
 	
 	public final List<Location> getSpawns()
@@ -61,15 +79,35 @@ public abstract class L2SpawnZone extends L2ZoneType
 	{
 		if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
 			return _spawnLocs.get(Rnd.get(_spawnLocs.size()));
-		else
-			return _spawnLocs.get(0);
+		return _spawnLocs.get(0);
 	}
 	
+	public final Location getOtherSpawnLoc()
+	{
+		if (_otherSpawnLocs != null)
+		{
+			if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
+				return _otherSpawnLocs.get(Rnd.get(_otherSpawnLocs.size()));
+			return _otherSpawnLocs.get(0);
+		}
+		return getSpawnLoc();
+	}
+
 	public final Location getChaoticSpawnLoc()
 	{
 		if (_chaoticSpawnLocs != null)
 			return _chaoticSpawnLocs.get(Rnd.get(_chaoticSpawnLocs.size()));
-		else
-			return getSpawnLoc();
+		return getSpawnLoc();
+	}
+	
+	public final Location getBanishSpawnLoc()
+	{
+		if (_banishSpawnLocs != null)
+		{
+			if (Config.RANDOM_RESPAWN_IN_TOWN_ENABLED)
+				return _banishSpawnLocs.get(Rnd.get(_banishSpawnLocs.size()));
+			return _banishSpawnLocs.get(0);
+		}
+		return getSpawnLoc();
 	}
 }

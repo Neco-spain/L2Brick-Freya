@@ -383,6 +383,10 @@ public class L2BossZone extends L2ZoneType
 		return;
 	}
 
+      /**
+       * @param i
+       * @param instanceId
+       */
 	public void broadcastMovie(int id, int instanceId)
 	{
 		if (_characterList == null || _characterList.isEmpty())

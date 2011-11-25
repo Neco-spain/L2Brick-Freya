@@ -27,7 +27,7 @@ import l2.brick.gameserver.model.actor.instance.L2DoorInstance;
 import l2.brick.gameserver.model.actor.instance.L2OlympiadManagerInstance;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.model.olympiad.OlympiadGameTask;
-import l2.brick.gameserver.model.zone.L2SpawnZone;
+import l2.brick.gameserver.model.zone.L2ZoneRespawn;
 import l2.brick.gameserver.network.SystemMessageId;
 import l2.brick.gameserver.network.serverpackets.ExOlympiadMatchEnd;
 import l2.brick.gameserver.network.serverpackets.ExOlympiadUserInfo;
@@ -39,7 +39,7 @@ import l2.brick.gameserver.network.serverpackets.SystemMessage;
  *
  * @author  durgus, DS
  */
-public class L2OlympiadStadiumZone extends L2SpawnZone
+public class L2OlympiadStadiumZone extends L2ZoneRespawn
 {
 	private final List<L2DoorInstance> _doors;
 	private final List<L2Spawn> _buffers;
