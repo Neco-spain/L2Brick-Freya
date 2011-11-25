@@ -352,7 +352,7 @@ public final class UseItem extends L2GameClientPacket
                     @Override 
                     public void doWork() 
                     { 
-                        activeChar.useEquippableItem(item, true); 
+                         
                     } 
                 }); 
                               
