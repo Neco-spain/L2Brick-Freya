@@ -377,6 +377,17 @@ public class EnterWorld extends L2GameClientPacket
 			engage(activeChar);
 			notifyPartner(activeChar,activeChar.getPartnerId());
 		}
+		        
+		 
+		// Announce Hero Login
+		        if (Config.ANNOUNCE_HERO_LOGIN)
+	    {
+		        	if (activeChar.isHero())
+		        	{
+		        		Announcements.getInstance().announceToAll("Hero: "+activeChar.getName()+" has been logged in.");
+		            }
+		}
+		
 		
 		if(Config.SHOW_WELCOME_PM)
 		{

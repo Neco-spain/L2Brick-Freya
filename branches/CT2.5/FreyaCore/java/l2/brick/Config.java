@@ -994,6 +994,8 @@ public final class Config
 	public static boolean L2JMOD_WEDDING_SAMESEX;
 	public static boolean L2JMOD_WEDDING_FORMALWEAR;
 	public static int L2JMOD_WEDDING_DIVORCE_COSTS;
+	
+	public static boolean ANNOUNCE_HERO_LOGIN;
 	public static boolean BANKING_SYSTEM_ENABLED;
 	public static int BANKING_SYSTEM_GOLDBARS;
 	public static int BANKING_SYSTEM_ADENA;
@@ -4454,8 +4456,8 @@ public final class Config
 					TOPDEBUG = Boolean.valueOf(ExtraConfig.getProperty("TopNpcDebug", "false"));
 					TOPID = Integer.parseInt(ExtraConfig.getProperty("TopNpcID", "1"));
 					SHOW_WELCOME_PM = Boolean.valueOf(ExtraConfig.getProperty("ShowWelcomePM", "false"));
-					PM_FROM = ExtraConfig.getProperty("PMFrom", "L2JBrick");
-					PM_TEXT = ExtraConfig.getProperty("PMText", "Remember Vote For L2JBrick");
+					PM_FROM = ExtraConfig.getProperty("PMFrom", "L2JFreya");
+					PM_TEXT = ExtraConfig.getProperty("PMText", "Remember Vote For L2JFreya");
 					START_SUBCLASS_LEVEL = Byte.parseByte(ExtraConfig.getProperty("StartSubclassLevel", "40"));
 					SHOW_ONLINE_PLAYERS = Boolean.parseBoolean(ExtraConfig.getProperty("ShowOnlinePlayers","False"));
 					ENABLE_BOTREPORT = Boolean.valueOf(ExtraConfig.getProperty("EnableBotReport", "false"));
@@ -4470,6 +4472,8 @@ public final class Config
 					L2JMOD_WEDDING_SAMESEX = Boolean.parseBoolean(ExtraConfig.getProperty("WeddingAllowSameSex", "False"));
 					L2JMOD_WEDDING_FORMALWEAR = Boolean.parseBoolean(ExtraConfig.getProperty("WeddingFormalWear", "True"));
 					L2JMOD_WEDDING_DIVORCE_COSTS = Integer.parseInt(ExtraConfig.getProperty("WeddingDivorceCosts", "20"));
+					               
+					ANNOUNCE_HERO_LOGIN   = Boolean.parseBoolean(ExtraConfig.getProperty("AnnounceHeroLogin", "False"));
 					L2JMOD_ENABLE_WAREHOUSESORTING_CLAN = Boolean.valueOf(ExtraConfig.getProperty("EnableWarehouseSortingClan", "False"));
 					L2JMOD_AUTO_LOOT_INDIVIDUAL = Boolean.parseBoolean(ExtraConfig.getProperty("AutoLootIndividual", "False"));
 					L2JMOD_ENABLE_WAREHOUSESORTING_PRIVATE = Boolean.valueOf(ExtraConfig.getProperty("EnableWarehouseSortingPrivate", "False"));
@@ -4479,9 +4483,9 @@ public final class Config
 					BANKING_SYSTEM_GOLDBARS = Integer.parseInt(ExtraConfig.getProperty("BankingGoldbarCount", "1"));
 					BANKING_SYSTEM_ADENA = Integer.parseInt(ExtraConfig.getProperty("BankingAdenaCount", "500000000"));
 					L2JMOD_DISPLAY_SERVER_TIME = Boolean.parseBoolean(ExtraConfig.getProperty("DisplayServerTime", "false"));
-					//Welcme message
+					//Welcome message
 					WELCOME_MESSAGE_ENABLED = Boolean.parseBoolean(ExtraConfig.getProperty("ScreenWelcomeMessageEnable", "false"));
-					WELCOME_MESSAGE_TEXT = ExtraConfig.getProperty("ScreenWelcomeMessageText", "Welcome to L2JBrick server!");
+					WELCOME_MESSAGE_TEXT = ExtraConfig.getProperty("ScreenWelcomeMessageText", "Welcome to L2Freya server!");
 					WELCOME_MESSAGE_TIME = Integer.parseInt(ExtraConfig.getProperty("ScreenWelcomeMessageTime", "10")) * 1000;
 					//welcome message - advance
 					WELCOME_ADVANCE_MESSAGE_ENABLED = Boolean.parseBoolean(ExtraConfig.getProperty("ScreenWelcomeAdvanceMessageEnable", "false"));
