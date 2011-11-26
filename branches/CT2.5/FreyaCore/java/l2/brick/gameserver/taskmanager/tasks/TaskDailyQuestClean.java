@@ -36,10 +36,10 @@ public class TaskDailyQuestClean extends Task
 	
 	private static final String NAME = "daily_quest_clean";
 	
-	private static final String[] _daily_names = {
+	private static final String[] _daily_names = 
+	{
 		"463_IMustBeaGenius",
 		"464_Oath",
-		"458_PerfectForm",
 		"461_RumbleInTheBase"
 	};
 	/**
