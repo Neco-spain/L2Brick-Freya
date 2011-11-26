@@ -300,6 +300,30 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
                 final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
                 activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
             }
+		
+		    // Stop if use mass recharge. 
+            if(skill.getSkillType() == L2SkillType.MANARECHARGE && skill.getTargetType() == SkillTargetType.TARGET_PARTY) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use common craft. 
+            if(skill.getSkillType() == L2SkillType.COMMON_CRAFT && skill.getTargetType() == SkillTargetType.TARGET_SELF) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use dwarven craft. 
+            if(skill.getSkillType() == L2SkillType.DWARVEN_CRAFT && skill.getTargetType() == SkillTargetType.TARGET_SELF) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
 		}
 		else
 		{
