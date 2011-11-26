@@ -324,6 +324,94 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
                 final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
                 activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
             }
+		
+		    // Stop if use heroic valor. 
+            if(skill.getSkillType() == L2SkillType.BUFF && skill.getTargetType() == SkillTargetType.TARGET_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use the heart of paagrio etc. 
+            if(skill.getSkillType() == L2SkillType.HEAL && skill.getTargetType() == SkillTargetType.TARGET_PARTY_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use the honor of pa'agrio. 
+            if(skill.getSkillType() == L2SkillType.COMBATPOINTHEAL && skill.getTargetType() == SkillTargetType.TARGET_PARTY_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use ritual of life. 
+            if(skill.getSkillType() == L2SkillType.COMBATPOINTHEAL && skill.getTargetType() == SkillTargetType.TARGET_ONE) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use miracle. 
+            if(skill.getSkillType() == L2SkillType.HEAL_PERCENT && skill.getTargetType() == SkillTargetType.TARGET_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use purification field. 
+            if(skill.getSkillType() == L2SkillType.CANCEL_DEBUFF && skill.getTargetType() == SkillTargetType.TARGET_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use cleanse - soul cleanse. 
+            if(skill.getSkillType() == L2SkillType.CANCEL_DEBUFF && skill.getTargetType() == SkillTargetType.TARGET_ONE) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use benediction. 
+            if(skill.getSkillType() == L2SkillType.HEAL_PERCENT && skill.getTargetType() == SkillTargetType.TARGET_PARTY) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use resurrection. 
+            if(skill.getSkillType() == L2SkillType.RESURRECT && skill.getTargetType() == SkillTargetType.TARGET_CORPSE_PLAYER) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use mass resurrection. 
+            if(skill.getSkillType() == L2SkillType.RESURRECT && skill.getTargetType() == SkillTargetType.TARGET_CORPSE_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
+		
+		    // Stop if use victory of pa'agrio. 
+            if(skill.getSkillType() == L2SkillType.CPHEAL_PERCENT && skill.getTargetType() == SkillTargetType.TARGET_PARTY_CLAN) 
+            { 
+                final PcPosition charPos = activeChar.getPosition(); 
+                final L2CharPosition stopPos = new L2CharPosition(charPos.getX(), charPos.getY(), charPos.getZ(), charPos.getHeading()); 
+                activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, stopPos); 
+            }
 		}
 		else
 		{

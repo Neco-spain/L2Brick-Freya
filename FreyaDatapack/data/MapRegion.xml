@@ -349,12 +349,8 @@
 		<respawnPoint X="79832" Y="154009" Z="-3500" isChaotic="true" />
 		<respawnPoint X="75501" Y="147178" Z="-3530" isChaotic="true" />
 		<map X="21" Y="23" />
-		<map X="22" Y="21" />
 		<map X="22" Y="22" />
-		<map X="23" Y="21" />
 		<map X="23" Y="22" />
-		<map X="24" Y="21" />
-		<map X="25" Y="21" />
 	</region>
 
 	<!-- Giran Habor -->
@@ -539,10 +535,14 @@
 		<respawnPoint X="104257" Y="82194" Z="-2581" isChaotic="true" />
 		<respawnPoint X="104474" Y="81109" Z="-2651" isChaotic="true" />
 		<map X="20" Y="10" />
+		<map X="22" Y="21" />
 		<map X="23" Y="20" />
+		<map X="23" Y="21" />
 		<map X="23" Y="19" />
 		<map X="24" Y="20" />
+		<map X="24" Y="21" />
 		<map X="25" Y="20" />
+	    <map X="25" Y="21" />
 	</region>
 
 	<!-- Aden Town -->
