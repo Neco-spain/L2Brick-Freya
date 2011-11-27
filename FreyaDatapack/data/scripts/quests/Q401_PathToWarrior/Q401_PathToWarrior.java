@@ -3,6 +3,7 @@ package quests.Q401_PathToWarrior;
 import l2.brick.Config;
 import l2.brick.gameserver.model.actor.L2Npc;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
+import l2.brick.gameserver.model.base.ClassId;
 import l2.brick.gameserver.model.itemcontainer.Inventory;
 import l2.brick.gameserver.model.quest.Quest;
 import l2.brick.gameserver.model.quest.QuestState;
@@ -60,7 +61,7 @@ public class Q401_PathToWarrior extends Quest
 					htmltext = "30010-02.htm";
 				}
 			}
-			else if (player.getClassId().getId() == 0x01)
+			else if (player.getClassId() == ClassId.warrior)
 			{
 				htmltext = "30010-03.htm";
 			}
