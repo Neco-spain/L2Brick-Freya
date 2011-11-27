@@ -53,6 +53,9 @@ public class L2SummonInstance extends L2Summon
 	private Future<?> _summonLifeTask;
 	private int _referenceSkill;
 	
+	private boolean _shareElementals = false; 
+ 	private double _sharedElementalsPercent = 1;
+	
 	public L2SummonInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, L2Skill skill)
 	{
 		super(objectId, template, owner);
@@ -122,6 +125,26 @@ public class L2SummonInstance extends L2Summon
 	public float getExpPenalty()
 	{
 		return _expPenalty;
+	} 
+	         
+	public void setSharedElementals(final boolean val) 
+    { 
+        _shareElementals = val; 
+    } 
+        
+	public boolean isSharingElementals() 
+	{ 
+        return _shareElementals; 
+    } 
+         
+    public void setSharedElementalsValue(final double val) 
+    { 
+        _sharedElementalsPercent = val; 
+	} 
+         
+    public double sharedElementalsPercent() 
+    { 
+        return _sharedElementalsPercent;
 	}
 	
 	public int getItemConsumeCount()
@@ -555,42 +578,37 @@ public class L2SummonInstance extends L2Summon
 		return getOwner().destroyItemByItemId(process, itemId, count, reference, sendMessage);
 	}
 	
+	public void setTimeRemaining(int time) 
+    { 
+        _timeRemaining = time; 
+    } 
+         
+	public int getReferenceSkill() 
+    { 
+	    return _referenceSkill; 
+    } 
+         
 	@Override
 	public byte getAttackElement()
 	{
-		if (getOwner() == null || !getOwner().getClassId().isSummoner())
-			return super.getAttackElement();
-		
-		return getOwner().getAttackElement();
-	}
-	
-	@Override
-	public int getAttackElementValue(byte attribute)
-	{
-		if (getOwner() == null || !getOwner().getClassId().isSummoner() || getOwner().getExpertiseWeaponPenalty() > 0)
-			return super.getAttackElementValue(attribute);
-		
-		// 80% of the owner (onwer already has only 20%)
-		return 4 * getOwner().getAttackElementValue(attribute);
-	}
-	
-	@Override
-	public int getDefenseElementValue(byte attribute)
-	{
-		if (getOwner() == null || !getOwner().getClassId().isSummoner())
-			return super.getDefenseElementValue(attribute);
-		
-		// bonus from owner
-		return super.getDefenseElementValue(attribute) + getOwner().getDefenseElementValue(attribute);
-	}
-
-	public void setTimeRemaining(int time)
-	{
-		_timeRemaining = time;
-	}
-	
-	public int getReferenceSkill()
-	{
-		return _referenceSkill;
+		if(isSharingElementals() && getOwner() != null) 
+            return getOwner().getAttackElement(); 
+        return super.getAttackElement(); 
+    } 
+        
+    @Override 
+    public int getAttackElementValue(byte attackAttribute) 
+    { 
+        if(isSharingElementals() && getOwner() != null) 
+            return (int)(getOwner().getAttackElementValue(attackAttribute) * sharedElementalsPercent()); 
+        return super.getAttackElementValue(attackAttribute); 
+	} 
+         
+    @Override 
+    public int getDefenseElementValue(byte defenseAttribute) 
+	{ 
+        if(isSharingElementals() && getOwner() != null) 
+	        return (int)(getOwner().getDefenseElementValue(defenseAttribute) * sharedElementalsPercent()); 
+        return super.getDefenseElementValue(defenseAttribute);
 	}
 }
