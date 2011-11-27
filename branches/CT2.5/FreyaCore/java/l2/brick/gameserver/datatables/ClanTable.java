@@ -260,12 +260,13 @@ public class ClanTable
 			clan.removeClanMember(member.getObjectId(), 0);
 		}
 		
+		if(Config.CLEAR_CREST_CACHE) 
+ 	        deleteClanCrests(clan);
+		
 		_clans.remove(clanId);
 		IdFactory.getInstance().releaseId(clanId);
 		
-		CrestCache.getInstance().removePledgeCrest(clan.getCrestId());
-		
-		Connection con = null;
+        Connection con = null;
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
@@ -333,6 +334,34 @@ public class ClanTable
 		finally
 		{
 			L2DatabaseFactory.close(con);
+		} 
+    } 
+         
+	private void deleteClanCrests(L2Clan clan) 
+    { 
+	    try 
+        { 
+            CrestCache.getInstance().removePledgeCrest(clan.getCrestId()); 
+	        CrestCache.getInstance().removePledgeCrestLarge(clan.getCrestLargeId()); 
+                        
+            int allyCrestId = clan.getAllyCrestId(); 
+            if(allyCrestId > 0) 
+            { 
+                boolean erase = true; 
+                for(L2Clan cln : getClans()) 
+                    if(cln.getAllyId() == allyCrestId) 
+                    { 
+                        erase = false; 
+                        break; 
+	                } 
+                if(erase) 
+                    CrestCache.getInstance().removeAllyCrest(allyCrestId); 
+            } 
+                         
+        } 
+        catch(Exception e) 
+        { 
+            _log.log(Level.WARNING, "ClanTable: Couldnt erased clan crests", e);
 		}
 	}
 	

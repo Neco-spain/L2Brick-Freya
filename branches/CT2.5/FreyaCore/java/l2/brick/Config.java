@@ -917,6 +917,7 @@ public final class Config
 	public static int MIN_BLOCK_CHECKER_TEAM_MEMBERS;
 	public static boolean HBCE_FAIR_PLAY;
 	public static int PLAYER_MOVEMENT_BLOCK_TIME;
+	public static boolean CLEAR_CREST_CACHE;
 	public static FloodProtectorConfig FLOOD_PROTECTOR_USE_ITEM;
 	public static FloodProtectorConfig FLOOD_PROTECTOR_ROLL_DICE;
 	public static FloodProtectorConfig FLOOD_PROTECTOR_FIREWORK;
@@ -3858,6 +3859,7 @@ public final class Config
 					else if(MIN_BLOCK_CHECKER_TEAM_MEMBERS > 6)
 						MIN_BLOCK_CHECKER_TEAM_MEMBERS = 6;
 					HBCE_FAIR_PLAY = Boolean.parseBoolean(handysblockchecker.getProperty("HBCEFairPlay", "false"));
+				    CLEAR_CREST_CACHE = Boolean.parseBoolean(General.getProperty("ClearClanCache", "false"));
 				}
 				
 				catch (Exception e)
