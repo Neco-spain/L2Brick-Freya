@@ -3382,6 +3382,7 @@ public final class Config
 					JAIL_IS_PVP = Boolean.parseBoolean(General.getProperty("JailIsPvp", "False"));
 					JAIL_DISABLE_CHAT = Boolean.parseBoolean(General.getProperty("JailDisableChat", "True"));
 					JAIL_DISABLE_TRANSACTION = Boolean.parseBoolean(General.getProperty("JailDisableTransaction", "False"));
+				    CLEAR_CREST_CACHE = Boolean.parseBoolean(General.getProperty("ClearClanCache", "false"));
 				}
 				catch (Exception e)
 				{
@@ -3859,7 +3860,6 @@ public final class Config
 					else if(MIN_BLOCK_CHECKER_TEAM_MEMBERS > 6)
 						MIN_BLOCK_CHECKER_TEAM_MEMBERS = 6;
 					HBCE_FAIR_PLAY = Boolean.parseBoolean(handysblockchecker.getProperty("HBCEFairPlay", "false"));
-				    CLEAR_CREST_CACHE = Boolean.parseBoolean(General.getProperty("ClearClanCache", "false"));
 				}
 				
 				catch (Exception e)
