@@ -482,15 +482,7 @@ public abstract class L2Summon extends L2Playable
 	{
 	}
 	
-	public void storeEffect(boolean storeEffects)
-	{
-	}
-	
-	public void store()
-	{
-	}
-	
-	@Override
+    @Override
 	public L2ItemInstance getActiveWeaponInstance()
 	{
 		return null;
@@ -946,9 +938,4 @@ public abstract class L2Summon extends L2Playable
         if (getOwner() != null) 
             getOwner().sendPacket(id); 
     }
-	
-	public void restoreEffects()
-	{
-	
-	}
 }
