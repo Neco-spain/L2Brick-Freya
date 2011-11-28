@@ -25,6 +25,7 @@ import l2.brick.gameserver.model.actor.knownlist.ObjectKnownList;
 import l2.brick.gameserver.model.actor.poly.ObjectPoly;
 import l2.brick.gameserver.model.actor.position.ObjectPosition;
 import l2.brick.gameserver.model.entity.Instance;
+import l2.brick.gameserver.network.SystemMessageId;
 import l2.brick.gameserver.network.serverpackets.ActionFailed;
 import l2.brick.gameserver.network.serverpackets.ExSendUIEvent;
 import l2.brick.gameserver.network.serverpackets.L2GameServerPacket;
@@ -702,4 +703,9 @@ public abstract class L2Object
 	{
 		// default implementation
 	}
+ 
+    public void sendPacket(SystemMessageId id) 
+    { 
+        // default implementation 
+    }
 }
