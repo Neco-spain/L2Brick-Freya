@@ -23,20 +23,20 @@ public class SubClassSkills extends Quest
 	private static final int[] SKILLITEMS = { 10280, 10281, 10282, 10283, 10284, 10285, 10286, 10287, 10288, 10289, 10290, 10291, 10292, 10293, 10294, 10612 };
 	private static final int[][] SUBSKILLS = { { 10280, 631, 632, 633, 634 }, // Common
 			{ 10612, 637, 638, 639, 640, 799, 800 }, // Enhanced
-			{ 10281, 801, 650, 651 },   // Warriors
-			{ 10282, 804, 641, 652 },   // Knights
-			{ 10283, 644, 645, 653 },   // Rogues
-			{ 10284, 802, 646, 654 },   // Wizards
-			{ 10285, 803, 648, 1490 },  // Healers
+			{ 10281, 801, 650, 651 }, // Warriors
+			{ 10282, 804, 641, 652 }, // Knights
+			{ 10283, 644, 645, 653 }, // Rogues
+			{ 10284, 802, 646, 654 }, // Wizards
+			{ 10285, 803, 648, 1490 }, // Healers
 			{ 10286, 643, 1489, 1491 }, // Summoners
-			{ 10287, 642, 647, 655 },   // Enchanters
-			{ 10289, 656 }, 	    // Warriors
-			{ 10288, 657 }, 	    // Knights
-			{ 10290, 658 }, 	    // Rogues
-			{ 10292, 659 }, 	    // Wizards
-			{ 10291, 661 }, 	    // Healers
-			{ 10294, 660 }, 	    // Summoners
-			{ 10293, 662 } 		    // Enchanters
+			{ 10287, 642, 647, 655 }, // Enchanters
+			{ 10289, 656 }, // Warriors
+			{ 10288, 657 }, // Knights
+			{ 10290, 658 }, // Rogues
+			{ 10292, 659 }, // Wizards
+			{ 10291, 661 }, // Healers
+			{ 10294, 660 }, // Summoners
+			{ 10293, 662 } 	// Enchanters
 	};
 	
 	private static final String[] QUESTVARSITEMSS = { "EmergentAbility65-", "EmergentAbility70-", "ClassAbility75-", "ClassAbility80-" };
