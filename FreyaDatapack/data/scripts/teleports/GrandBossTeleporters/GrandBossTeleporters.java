@@ -49,9 +49,9 @@ public class GrandBossTeleporters extends Quest
         return QuestManager.getInstance().getQuest("FireDragon");
     }
     
-    private Quest AntharasAI()
+    private Quest antharasAI()
     {
-        return QuestManager.getInstance().getQuest("Antharas");
+        return QuestManager.getInstance().getQuest("antharas");
     }
  
 	private static int playerCount = 0;
@@ -89,7 +89,7 @@ public class GrandBossTeleporters extends Quest
 		switch (npc.getNpcId())
 		{
 			case 13001:
-				if (AntharasAI() != null)
+				if (antharasAI() != null)
 				{
 					int status = GrandBossManager.getInstance().getBossStatus(29019);
 					int statusW = GrandBossManager.getInstance().getBossStatus(29066);
@@ -117,7 +117,7 @@ public class GrandBossTeleporters extends Quest
 							if (status == 0)
 							{
 								L2GrandBossInstance antharas = GrandBossManager.getInstance().getBoss(29019);
-								AntharasAI().notifyEvent("waiting", antharas, player);
+								antharasAI().notifyEvent("waiting", antharas, player);
 							}
 						}
 						
