@@ -1,16 +1,37 @@
+/*
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package zone_scripts.AntharasLair.AntharasNest;
 
 import gnu.trove.TIntObjectHashMap;
+
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+
 import javolution.util.FastList;
-import l2.brick.Config;
 import l2.brick.bflmpsvz.a.L2AttackableAIScript;
+
+import l2.brick.Config;
 import l2.brick.gameserver.GeoData;
 import l2.brick.gameserver.ThreadPoolManager;
 import l2.brick.gameserver.ai.CtrlIntention;
 import l2.brick.gameserver.datatables.NpcTable;
+import l2.brick.gameserver.datatables.SkillTable;
 import l2.brick.gameserver.datatables.SpawnTable;
 import l2.brick.gameserver.instancemanager.GrandBossManager;
 import l2.brick.gameserver.model.L2CharPosition;
+import l2.brick.gameserver.model.L2Skill;
 import l2.brick.gameserver.model.L2Spawn;
 import l2.brick.gameserver.model.L2World;
 import l2.brick.gameserver.model.actor.L2Character;
@@ -27,23 +48,31 @@ import l2.brick.gameserver.templates.StatsSet;
 import l2.brick.gameserver.templates.L2NpcTemplate;
 import l2.brick.util.Rnd;
 
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
-
-public class LandDragon extends L2AttackableAIScript
+/**
+ * 
+ * This class ... control for sequence of fight against Antharas.
+ * 
+ * @version $Revision: $ $Date: $
+ * @author L2J_JP SANDMAN
+ */
+public class Antharas extends L2AttackableAIScript
 {
 	// config
 	private static final int FWA_ACTIVITYTIMEOFANTHARAS = 120;
+	//private static final int FWA_APPTIMEOFANTHARAS = 1800000;
 	private static final int FWA_INACTIVITYTIME = 900000;
 	private static final boolean FWA_OLDANTHARAS = false;
 	private static final boolean FWA_MOVEATRANDOM = true;
 	private static final boolean FWA_DOSERVEREARTHQUAKE = true;
 	private static final int FWA_LIMITOFWEAK = 45;
 	private static final int FWA_LIMITOFNORMAL = 63;
+	
 	private static final int FWA_MAXMOBS = 10; // this includes Antharas itself
+	private static final int FWA_INTERVALOFMOBSWEAK = 180000;
 	private static final int FWA_INTERVALOFMOBSNORMAL = 150000;
 	private static final int FWA_INTERVALOFMOBSSTRONG = 120000;
 	private static final int FWA_PERCENTOFBEHEMOTH = 60;
+	private static final int FWA_SELFDESTRUCTTIME = 15000;
 	// Location of teleport cube.
 	private final int _teleportCubeId = 31859;
 	private final int _teleportCubeLocation[][] = { { 177615, 114941, -7709, 0 } };
@@ -59,9 +88,9 @@ public class LandDragon extends L2AttackableAIScript
 	protected L2GrandBossInstance _antharas = null;
 	
 	// monstersId
-	private static final int ANTHARASOLDID = 29068;
-	private static final int ANTHARASWEAKID = 29068;
-	private static final int ANTHARASNORMALID = 29068;
+	private static final int ANTHARASOLDID = 29019;
+	private static final int ANTHARASWEAKID = 29066;
+	private static final int ANTHARASNORMALID = 29067;
 	private static final int ANTHARASSTRONGID = 29068;
 	
 	// Tasks.
@@ -71,6 +100,7 @@ public class LandDragon extends L2AttackableAIScript
 	protected ScheduledFuture<?> _socialTask = null;
 	protected ScheduledFuture<?> _mobiliseTask = null;
 	protected ScheduledFuture<?> _mobsSpawnTask = null;
+	protected ScheduledFuture<?> _selfDestructionTask = null;
 	protected ScheduledFuture<?> _moveAtRandomTask = null;
 	protected ScheduledFuture<?> _movieTask = null;
 	
@@ -88,16 +118,14 @@ public class LandDragon extends L2AttackableAIScript
 	public static void main(String[] args)
 	{
 		// now call the constructor (starts up the ai)
-		new LandDragon(-1,"LandDragon","ai");
-		if (Config.ENABLE_LOADING_INFO_FOR_SCRIPTS)
-			_log.info("Loaded Antharas Lair: Antharas Nest - Land Dragon");
+		new Antharas(-1,"antharas","ai");
 	}
 	
 	// Boss: Antharas
-	public LandDragon(int id,String name,String descr)
+	public Antharas(int id,String name,String descr)
 	{
 		super(id,name,descr);
-		int[] mob = {ANTHARASOLDID,ANTHARASWEAKID,ANTHARASNORMALID,ANTHARASSTRONGID,29069};
+		int[] mob = {ANTHARASOLDID,ANTHARASWEAKID,ANTHARASNORMALID,ANTHARASSTRONGID,29069,29070,29071,29072,29073,29074,29075,29076};
 		this.registerMobs(mob);
 		init();
 	}
@@ -288,6 +316,11 @@ public class LandDragon extends L2AttackableAIScript
 			_mobsSpawnTask.cancel(true);
 			_mobsSpawnTask = null;
 		}
+		if (_selfDestructionTask != null)
+		{
+			_selfDestructionTask.cancel(true);
+			_selfDestructionTask = null;
+		}
 		if (_activityCheckTask != null)
 		{
 			_activityCheckTask.cancel(false);
@@ -316,6 +349,15 @@ public class LandDragon extends L2AttackableAIScript
 		}
 	}
 	
+	@Override
+	public String onAdvEvent(String event, L2Npc npc, L2PcInstance player)
+	{
+		if(event.equalsIgnoreCase("waiting"))
+			setAntharasSpawnTask();
+
+		return super.onAdvEvent(event, npc, player);
+	}
+	
 	private void startMinionSpawns(int antharasId)
 	{
 		int intervalOfMobs;
@@ -324,6 +366,9 @@ public class LandDragon extends L2AttackableAIScript
 		// that invaded the lair.
 		switch (antharasId)
 		{
+			case ANTHARASWEAKID:
+				intervalOfMobs = FWA_INTERVALOFMOBSWEAK;
+				break;
 			case ANTHARASNORMALID:
 				intervalOfMobs = FWA_INTERVALOFMOBSNORMAL;
 				break;
@@ -342,11 +387,12 @@ public class LandDragon extends L2AttackableAIScript
 		private int _taskId = 0;
 		private final L2Character[] _players = _Zone.getCharactersInsideArray();
 		
-		AntharasSpawn(int taskId)
+		public AntharasSpawn(int taskId)
 		{
 			_taskId = taskId;
 		}
 		
+		@Override
 		public void run()
 		{
 			int npcId;
@@ -377,7 +423,7 @@ public class LandDragon extends L2AttackableAIScript
 					_antharas.setIsImmobilized(true);
 					
 					GrandBossManager.getInstance().setBossStatus(ANTHARASOLDID,DORMANT);
-					GrandBossManager.getInstance().setBossStatus(ANTHARASOLDID,FIGHTING);
+					GrandBossManager.getInstance().setBossStatus(npcId,FIGHTING);
 					_LastAction = System.currentTimeMillis();
 					// Start repeating timer to check for inactivity
 					_activityCheckTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new CheckActivity(), 60000, 60000);
@@ -496,6 +542,7 @@ public class LandDragon extends L2AttackableAIScript
 		{
 		}
 		
+		@Override
 		public void run()
 		{
 			L2NpcTemplate template1;
@@ -513,7 +560,7 @@ public class LandDragon extends L2AttackableAIScript
 					if (isBehemoth)
 						npcId = 29069;
 					else
-						npcId = Rnd.get(29069);
+						npcId = Rnd.get(29070, 29076);
 					template1 = NpcTable.getInstance().getTemplate(npcId);
 					tempSpawn = new L2Spawn(template1);
 					// allocates it at random in the lair of Antharas.
@@ -554,9 +601,93 @@ public class LandDragon extends L2AttackableAIScript
 			}
 		}
 	}
+	
+	@Override
+	public String onAggroRangeEnter (L2Npc npc, L2PcInstance player, boolean isPet)
+	{
+		switch (npc.getNpcId())
+		{
+			case 29070:
+			case 29071:
+			case 29072:
+			case 29073:
+			case 29074:
+			case 29075:
+			case 29076:
+				if (_selfDestructionTask == null && !npc.isDead())
+					_selfDestructionTask = ThreadPoolManager.getInstance().scheduleGeneral(new SelfDestructionOfBomber(npc), FWA_SELFDESTRUCTTIME);
+				break;
+		}
+		return super.onAggroRangeEnter(npc, player, isPet);
+	}
+	
+	// Do self destruction.
+	private class SelfDestructionOfBomber implements Runnable
+	{
+		private final L2Npc _bomber;
+		
+		public SelfDestructionOfBomber(L2Npc bomber)
+		{
+			_bomber = bomber;
+		}
+		
+		@Override
+		public void run()
+		{
+			L2Skill skill = null;
+			switch (_bomber.getNpcId())
+			{
+				case 29070:
+				case 29071:
+				case 29072:
+				case 29073:
+				case 29074:
+				case 29075:
+					skill = SkillTable.getInstance().getInfo(5097, 1);
+					break;
+				case 29076:
+					skill = SkillTable.getInstance().getInfo(5094, 1);
+					break;
+			}
+			
+			_bomber.doCast(skill);
+			if (_selfDestructionTask != null)
+			{
+				_selfDestructionTask.cancel(false);
+				_selfDestructionTask = null;
+			}
+		}
+	}
+	
+	@Override
+	public String onSpellFinished(L2Npc npc, L2PcInstance player, L2Skill skill)
+	{
+		if (npc.isInvul())
+		{
+			return null;
+		}
+		else if (skill != null && (skill.getId() == 5097 || skill.getId() == 5094))
+		{
+			switch (npc.getNpcId())
+			{
+				case 29070:
+				case 29071:
+				case 29072:
+				case 29073:
+				case 29074:
+				case 29075:
+				case 29076:
+					npc.doDie(npc);
+					break;
+			}
+		}
+		return super.onSpellFinished(npc, player, skill);
+	}
+	
 	// At end of activity time.
 	private class CheckActivity implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			Long temp = (System.currentTimeMillis() - _LastAction);
@@ -605,6 +736,11 @@ public class LandDragon extends L2AttackableAIScript
 			_mobsSpawnTask.cancel(true);
 			_mobsSpawnTask = null;
 		}
+		if (_selfDestructionTask != null)
+		{
+			_selfDestructionTask.cancel(true);
+			_selfDestructionTask = null;
+		}
 		if (_moveAtRandomTask != null)
 		{
 			_moveAtRandomTask.cancel(true);
@@ -631,13 +767,14 @@ public class LandDragon extends L2AttackableAIScript
 	// Do spawn teleport cube.
 	private class CubeSpawn implements Runnable
 	{
-		private int _type;
+		private final int _type;
 		
-		CubeSpawn(int type)
+		public CubeSpawn(int type)
 		{
 			_type = type;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (_type == 0)
@@ -653,13 +790,14 @@ public class LandDragon extends L2AttackableAIScript
 	// UnLock Antharas.
 	private static class UnlockAntharas implements Runnable
 	{
-		private int _bossId;
+		private final int _bossId;
 		
 		public UnlockAntharas(int bossId)
 		{
 			_bossId = bossId;
 		}
 		
+		@Override
 		public void run()
 		{
 			GrandBossManager.getInstance().setBossStatus(_bossId,DORMANT);
@@ -672,13 +810,14 @@ public class LandDragon extends L2AttackableAIScript
 	// Action is enabled the boss.
 	private class SetMobilised implements Runnable
 	{
-		private L2GrandBossInstance _boss;
+		private final L2GrandBossInstance _boss;
 		
 		public SetMobilised(L2GrandBossInstance boss)
 		{
 			_boss = boss;
 		}
 		
+		@Override
 		public void run()
 		{
 			_boss.setIsImmobilized(false);
@@ -695,8 +834,8 @@ public class LandDragon extends L2AttackableAIScript
 	// Move at random on after Antharas appears.
 	private static class MoveAtRandom implements Runnable
 	{
-		private L2Npc _npc;
-		private L2CharPosition _pos;
+		private final L2Npc _npc;
+		private final L2CharPosition _pos;
 		
 		public MoveAtRandom(L2Npc npc, L2CharPosition pos)
 		{
@@ -704,6 +843,7 @@ public class LandDragon extends L2AttackableAIScript
 			_pos = pos;
 		}
 		
+		@Override
 		public void run()
 		{
 			_npc.getAI().setIntention(CtrlIntention.AI_INTENTION_MOVE_TO, _pos);
@@ -724,6 +864,26 @@ public class LandDragon extends L2AttackableAIScript
 			{
 				startMinionSpawns(npc.getNpcId());
 			}
+		}
+		else if (npc.getNpcId() > 29069 && npc.getNpcId() < 29077 && npc.getCurrentHp() <= damage)
+		{
+			L2Skill skill = null;
+			switch (npc.getNpcId())
+			{
+				case 29070:
+				case 29071:
+				case 29072:
+				case 29073:
+				case 29074:
+				case 29075:
+					skill = SkillTable.getInstance().getInfo(5097, 1);
+					break;
+				case 29076:
+					skill = SkillTable.getInstance().getInfo(5094, 1);
+					break;
+			}
+			
+			npc.doCast(skill);
 		}
 		return super.onAttack(npc, attacker, damage, isPet);
 	}
