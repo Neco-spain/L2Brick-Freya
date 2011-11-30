@@ -1,3 +1,17 @@
+/*
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package teleports.GrandBossTeleporters;
 
 import l2.brick.Config;
@@ -12,181 +26,204 @@ import l2.brick.gameserver.model.quest.QuestState;
 import l2.brick.gameserver.model.zone.type.L2BossZone;
 import l2.brick.util.Rnd;
 
+/**
+ * @author Plim
+ * Original python script by Emperorc
+ */
 public class GrandBossTeleporters extends Quest
 {
-	private static final String qn = "GrandBossTeleporters";
-
-	private final static int[] NPCs =
-	{
-		13001,31859,31384,31385,31540,31686,31687,31759
+	private static final int[] NPCs = 
+	{ 
+		13001, //Heart of Warding : Teleport into Lair of Antharas
+		31859, //Teleportation Cubic : Teleport out of Lair of Antharas
+		31384, //Gatekeeper of Fire Dragon : Opening some doors
+		31385, //Heart of Volcano : Teleport into Lair of Valakas
+		31540, //Watcher of Valakas Klein : Teleport into Hall of Flames
+		31686, //Gatekeeper of Fire Dragon : Opens doors to Heart of Volcano
+		31687, //Gatekeeper of Fire Dragon : Opens doors to Heart of Volcano
+		31759 //Teleportation Cubic : Teleport out of Lair of Valakas
 	};
-
-	private Quest LandDragonAI()
-	{
-		return QuestManager.getInstance().getQuest("LandDragon");
-	}
-
-	private Quest FireDragonAI()
-	{
-		return QuestManager.getInstance().getQuest("FireDragon");
-	}
-
-	private int count = 0;
-
-	public GrandBossTeleporters(int questId, String name, String descr)
-	{
-		super(questId, name, descr);
-		for (int id : NPCs)
-		{
-			addStartNpc(id);
-			addTalkId(id);
-		}
-	}
-
+	 
+    private Quest FireDragonAI()
+    {
+        return QuestManager.getInstance().getQuest("FireDragon");
+    }
+    
+    private Quest AntharasAI()
+    {
+        return QuestManager.getInstance().getQuest("Antharas");
+    }
+ 
+	private static int playerCount = 0;
+	
+	@Override
 	public String onAdvEvent(String event, L2Npc npc, L2PcInstance player)
 	{
 		String htmltext = "";
 		QuestState st = player.getQuestState(getName());
+		
 		if (st == null)
+			st = newQuestState(player);
+		
+		if (st.hasQuestItems(7267))
 		{
-			Quest q = QuestManager.getInstance().getQuest(getName());
-			st = q.newQuestState(player);
+			st.takeItems(7267, 1);
+			player.teleToLocation(183813, -115157, -3303);
+			st.set("allowEnter", "1");
 		}
-
-		if (event.equalsIgnoreCase("31540"))
-		{
-			if (st.hasQuestItems(7267))
-			{
-				st.takeItems(7267, 1);
-				player.teleToLocation(183813, -115157, -3303);
-				st.set("allowEnter","1");
-			}
-			else
-				htmltext = "31540-06.htm";
-		}
-
+		else
+			htmltext = "31540-06.htm";
+		
 		return htmltext;
 	}
-
+	
+	@Override
 	public String onTalk(L2Npc npc, L2PcInstance player)
 	{
 		String htmltext = "";
 		QuestState st = player.getQuestState(getName());
-
-		int npcId = npc.getNpcId();
-		if (npcId == 13001)
+		
+		if (st == null)
+			return null;
+		
+		switch (npc.getNpcId())
 		{
-			if (LandDragonAI() != null)
-			{
-				int status = GrandBossManager.getInstance().getBossStatus(29068);
-				int statusW = GrandBossManager.getInstance().getBossStatus(29068);
-				int statusN = GrandBossManager.getInstance().getBossStatus(29068);
-				int statusS = GrandBossManager.getInstance().getBossStatus(29068);
-
-				if (status == 2 || statusW == 2 || statusN == 2 || statusS == 2)
-					htmltext = "13001-02.htm";
-				else if (status == 3 || statusW == 3 || statusN == 3 || statusS == 3)
-					htmltext = "13001-01.htm";
-				else if (status == 0 || status == 1)
+			case 13001:
+				if (AntharasAI() != null)
 				{
-					if (st.hasQuestItems(3865))
+					int status = GrandBossManager.getInstance().getBossStatus(29019);
+					int statusW = GrandBossManager.getInstance().getBossStatus(29066);
+					int statusN = GrandBossManager.getInstance().getBossStatus(29067);
+					int statusS = GrandBossManager.getInstance().getBossStatus(29068);
+					
+					if (status == 2 || statusW == 2 || statusN == 2 || statusS == 2)
+						htmltext = "13001-02.htm";
+					
+					else if (status == 3 || statusW == 3 || statusN == 3 || statusS == 3)
+						htmltext = "13001-01.htm";
+					
+					else if (status == 0 || status == 1) //If entrance to see Antharas is unlocked (he is Dormant or Waiting)
 					{
-						st.takeItems(3865, 1);
-						L2BossZone zone = GrandBossManager.getInstance().getZone(179700, 113800, -7709);
-						if (zone != null)
-							zone.allowPlayerEntry(player, 30);
-						int x = 174170 + Rnd.get(260);
-						int y = 113983 + Rnd.get(1500);
-						player.teleToLocation(x, y, -7709);
-						if (status == 0)
+						if (st.hasQuestItems(3865))
 						{
-							L2GrandBossInstance antharas = GrandBossManager.getInstance().getBoss(29068);
-							LandDragonAI().startQuestTimer("1001", 1000, antharas, null);
-							GrandBossManager.getInstance().setBossStatus(29068, 1);						}
-					}
-					else
-						htmltext = "13001-03.htm";
-				}
-			}
-			else
-				htmltext = "13001-01.htm";
-		}
-		else if (npcId == 31859)
-		{
-			int x = 79800 + Rnd.get(600);
-			int y = 151200 + Rnd.get(1100);
-			player.teleToLocation(x, y, -3534);
-		}
-		else if (npcId == 31385)
-		{
-			if (FireDragonAI() != null)
-			{
-				int status = GrandBossManager.getInstance().getBossStatus(29028);
-				if (status == 0 || status == 1)
-				{
-					if (count >= 200)
-						htmltext = "31385-03.htm";
-					else if (st.getInt("allowEnter") == 1)
-					{
-						st.unset("allowEnter");
-						L2BossZone zone = GrandBossManager.getInstance().getZone(212852, -114842, -1632);
-						if (zone != null)
-							zone.allowPlayerEntry(player, 30);
-						int x = 204328 + Rnd.get(600);
-						int y = -111874 + Rnd.get(600);
-						player.teleToLocation(x, y, 70);
-						count++;
-						if (status == 0)
-						{
-							L2GrandBossInstance valakas = GrandBossManager.getInstance().getBoss(29028);
-							FireDragonAI().startQuestTimer("1001", Config.Valakas_Wait_Time, valakas, null);
-							GrandBossManager.getInstance().setBossStatus(29028, 1);
+							st.takeItems(3865, 1);
+							L2BossZone zone = GrandBossManager.getInstance().getZone(179700, 113800, -7709);
+							
+							if (zone != null)
+								zone.allowPlayerEntry(player, 30);
+							
+							player.teleToLocation(179700 + Rnd.get(700), 113800 + Rnd.get(2100), -7709);
+							
+							if (status == 0)
+							{
+								L2GrandBossInstance antharas = GrandBossManager.getInstance().getBoss(29019);
+								AntharasAI().notifyEvent("waiting", antharas, player);
+							}
 						}
+						
+						else
+							htmltext = "13001-03.htm";
 					}
-					else
-						htmltext = "31385-04.htm";
 				}
-				else if (status == 2)
-					htmltext = "31385-02.htm";
+				break;
+			
+			case 31859:
+				player.teleToLocation(79800 + Rnd.get(600), 151200 + Rnd.get(1100), -3534);
+				break;
+			
+			case 31385:
+				if (FireDragonAI() != null)
+				{
+					int status = GrandBossManager.getInstance().getBossStatus(29028);
+					
+					if (status == 0 || status == 1)
+					{
+						if (playerCount >= 200)
+							htmltext = "31385-03.htm";
+						
+						else if (st.getInt("allowEnter") == 1)
+						{
+							st.unset("allowEnter");
+							L2BossZone zone = GrandBossManager.getInstance().getZone(212852, -114842, -1632);
+							
+							if (zone != null)
+								zone.allowPlayerEntry(player, 30);
+							
+							player.teleToLocation(204328 + Rnd.get(600), -111874 + Rnd.get(600), 70);
+							
+							playerCount++;
+							
+							if (status == 0)
+							{
+								L2GrandBossInstance valakas = GrandBossManager.getInstance().getBoss(29028);
+								FireDragonAI().startQuestTimer("1001", Config.Valakas_Wait_Time, valakas, null);
+								GrandBossManager.getInstance().setBossStatus(29028, 1);
+							}
+						}
+						
+						else
+							htmltext = "31385-04.htm";
+					}
+					else if (status == 2)
+						htmltext = "31385-02.htm";
+					else
+						htmltext = "31385-01.htm";
+				}
+				
 				else
 					htmltext = "31385-01.htm";
-			}
-			else
-				htmltext = "31385-01.htm";
+				break;
+			
+			case 31384:
+				DoorTable.getInstance().getDoor(24210004).openMe();
+				break;
+			
+			case 31686:
+				DoorTable.getInstance().getDoor(24210006).openMe();
+				break;
+			
+			case 31687:
+				DoorTable.getInstance().getDoor(24210005).openMe();
+				break;
+			
+			case 31540:
+				if (playerCount < 50)
+					htmltext = "31540-01.htm";
+				
+				else if (playerCount < 100)
+					htmltext = "31540-02.htm";
+				
+				else if (playerCount < 150)
+					htmltext = "31540-03.htm";
+				
+				else if (playerCount < 200)
+					htmltext = "31540-04.htm";
+				
+				else
+					htmltext = "31540-05.htm";
+				break;
+				
+			case 31759:
+				player.teleToLocation(150037 + Rnd.get(500), -57720 + Rnd.get(500), -2976);
+				break;
 		}
-		else if (npcId == 31384)
-			DoorTable.getInstance().getDoor(24210004).openMe();
-		else if (npcId == 31686)
-			DoorTable.getInstance().getDoor(24210006).openMe();
-		else if (npcId == 31687)
-			DoorTable.getInstance().getDoor(24210005).openMe();
-		else if (npcId == 31540)
-		{
-			if (count < 50)
-				htmltext = "31540-01.htm";
-			else if (count < 100)
-				htmltext = "31540-02.htm";
-			else if (count < 150)
-				htmltext = "31540-03.htm";
-			else if (count < 200)
-				htmltext = "31540-04.htm";
-			else
-				htmltext = "31540-05.htm";
-		}
-		else if (npcId == 31759)
-		{
-			int x = 150037 + Rnd.get(500);
-			int y = -57720 + Rnd.get(500);
-			player.teleToLocation(x, y, -2976);
-		}
-
+		
 		return htmltext;
 	}
-
+	
+	public GrandBossTeleporters(int questId, String name, String descr)
+	{
+		super(questId, name, descr);
+		
+		for (int npcId : NPCs)
+		{
+			addStartNpc(npcId);
+			addTalkId(npcId);
+		}
+	}
+	
 	public static void main(String[] args)
 	{
-		new GrandBossTeleporters(-1, qn, "teleports");
-		if (Config.ENABLE_LOADING_INFO_FOR_SCRIPTS)
-			_log.info("Loaded Teleport: Grand Boss Teleporters");
+		new GrandBossTeleporters(-1, GrandBossTeleporters.class.getSimpleName(), "teleports");
 	}
 }
