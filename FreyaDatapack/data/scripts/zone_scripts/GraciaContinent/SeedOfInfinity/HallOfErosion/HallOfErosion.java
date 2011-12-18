@@ -15,7 +15,6 @@ import l2.brick.gameserver.model.L2Skill;
 import l2.brick.gameserver.model.actor.L2Character;
 import l2.brick.gameserver.model.actor.L2Npc;
 import l2.brick.gameserver.model.actor.L2Summon;
-import l2.brick.gameserver.model.actor.instance.L2DoorInstance;
 import l2.brick.gameserver.model.actor.instance.L2PcInstance;
 import l2.brick.gameserver.model.quest.Quest;
 import l2.brick.gameserver.model.quest.QuestState;
@@ -27,12 +26,22 @@ public class HallOfErosion extends Quest
 {
 	private class HallOfErosionWorld extends InstanceWorld
 	{
-		public boolean ZoneWaitForTP                = true;
+		private boolean ZoneWaitForTP                = true;
 		public List<L2PcInstance> PlayersInInstance = new FastList<L2PcInstance>();
 		
 		public HallOfErosionWorld(Long time)
 		{
 			InstanceManager.getInstance();
+		}
+
+		@SuppressWarnings("unused")
+		public boolean isZoneWaitForTP() {
+			return ZoneWaitForTP;
+		}
+
+		@SuppressWarnings("unused")
+		public void setZoneWaitForTP(boolean zoneWaitForTP) {
+			ZoneWaitForTP = zoneWaitForTP;
 		}
 	}
 	
@@ -46,7 +55,7 @@ public class HallOfErosion extends Quest
 	private static final int[] ENTER_TELEPORT = {-187567,205570,-9538};
 	//npc a prisery
 	private static final int MOUTHOFEKIMUS                 = 32526;
-	private static final int[] TUMOR_MOBY 			= {22509,22510,22511,22512,22513,22514,22515}; //neni retail
+	private static final int[] TUMOR_MOBY 			= {22509,22510,22511,22512,22513,22514,22515};
 	private static final int KAHAMENES 				= 25651;
 	private static final int TUMOR_ZIVY 			= 18708;
 	private static final int TUMOR_MRTVI 			= 18705;
@@ -346,6 +355,48 @@ public class HallOfErosion extends Quest
 		new HallOfErosion(-1,qn,"zone_scripts/GraciaContinent");
 		if (Config.ENABLE_LOADING_INFO_FOR_SCRIPTS)
 			_log.config("Loaded Gracia Area: Hall Of Erosion");
+	}
+	public static int[] getEnterTeleport() {
+		return ENTER_TELEPORT;
+	}
+	public static int getExitTime() {
+		return EXIT_TIME;
+	}
+	public static int getKahamenes() {
+		return KAHAMENES;
+	}
+	public static int[] getTumorMoby() {
+		return TUMOR_MOBY;
+	}
+	public static int getTumorZivy() {
+		return TUMOR_ZIVY;
+	}
+	public static int getTumorMrtvi() {
+		return TUMOR_MRTVI;
+	}
+	public static int[][] getMistnost1() {
+		return MISTNOST_1;
+	}
+	public static int[][] getMistnost2() {
+		return MISTNOST_2;
+	}
+	public static int[][] getMistnost4() {
+		return MISTNOST_4;
+	}
+	public static int[][] getMistnost5() {
+		return MISTNOST_5;
+	}
+	public static int[][] getMistnost6() {
+		return MISTNOST_6;
+	}
+	public static int[][] getMistnost7() {
+		return MISTNOST_7;
+	}
+	public static int[][] getMistnost8() {
+		return MISTNOST_8;
+	}
+	public static int[][] getMistnost3() {
+		return MISTNOST_3;
 	}
 }
 
